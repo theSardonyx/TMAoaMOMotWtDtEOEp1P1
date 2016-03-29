@@ -1,0 +1,1 @@
+public abstract class PlayerBullet extends BenevolentEntity {}
