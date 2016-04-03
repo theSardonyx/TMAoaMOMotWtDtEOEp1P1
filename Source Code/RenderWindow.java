@@ -26,16 +26,17 @@ public class RenderWindow extends JFrame {
 		canvas.setIgnoreRepaint(true);
 		canvas.createBufferStrategy(2);
 		buffer = canvas.getBufferStrategy();
-		g = (Graphics2D) buffer.getDrawGraphics();
 	}
 	
 	public void preDraw() {
+		g = (Graphics2D) buffer.getDrawGraphics();
 		g.clearRect(0, 0, width, height);
 		g.setColor(new Color(0x000000));
 		g.fillRect(0, 0, width, height);
 	}
 	
-	public void draw() {
+	public void draw(Drawable d) {
+		d.draw(g);
 	}
 	
 	public void finishDraw() {
