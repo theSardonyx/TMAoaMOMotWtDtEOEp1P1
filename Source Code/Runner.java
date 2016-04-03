@@ -19,4 +19,12 @@ public class Runner {
 			}
 		}
 	}
+	
+	public static float toSecond(long nanoSecond) {
+		return (float) (nanoSecond/1e9);
+	}
+
+	public static long toMilliSecond(float second) {
+		return (long) ((1e3)*second); 
+	}
 }
