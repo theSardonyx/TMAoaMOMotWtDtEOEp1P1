@@ -4,10 +4,14 @@ public abstract class State {
 	// abstract methods
 	protected abstract void handleInput (InputHandler input);
 	protected abstract void update (float delta);
-	protected abstract render (Graphics g);
+	protected abstract void render (Graphics g);
 	
 	// final method
-	public final void work (InputHandler input, Graphics g, float delta);
+	public final void work (InputHandler input, Graphics g, float delta) {
+		handleInput(input);
+		update(delta);
+		render(g);
+	}
 	
 	// others
 	public void popSelf (inr level, String s);
