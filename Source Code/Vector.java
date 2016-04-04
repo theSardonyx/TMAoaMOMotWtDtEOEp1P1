@@ -20,7 +20,7 @@ public class Vector {
 	}
 	
 	public Vector rotate (double degree) {
-		double radians =  Math.PI * (degree/180);
+		double radians =  Math.toRadians(degree);
 		return new Vector(	(Math.cos(radians)*x - Math.sin(radians)*y),
 							(Math.sin(radians)*x + Math.cos(radians)*y));
 	}
@@ -39,7 +39,15 @@ public class Vector {
 	
 	public double getAngle() {
 		double radians = Math.atan2(y, x);
-		return 180*(radians/Math.PI);
+		return Math.toDegrees(radians);
+	}
+	
+	public void setAngle(double degree) {
+		double targetRadians = Math.toRadians(degree);
+		double currentRadians = Math.atan2(y, x);
+		double deltaRadians = targetRadians-currentRadians;
+				
+		this.rotate(Math.toDegrees(deltaRadians));
 	}
 	
 	//getters
