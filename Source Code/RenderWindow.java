@@ -14,7 +14,7 @@ public class RenderWindow extends JFrame {
 		canvas = new Canvas();
 		canvas.setPreferredSize(new Dimension(width, height));
 		add(canvas);
-		//canvas.setBackground(Color.BLACK);
+		
 		setTitle(title);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);

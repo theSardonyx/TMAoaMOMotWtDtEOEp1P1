@@ -1,16 +1,16 @@
 
 public class Runner {
-	public final static float FPS = 30.0f;
-	public final static float SPF = 1.0f/FPS;
+	public final static double FPS = 30.0;
+	public final static double SPF = 1.0/FPS;
 	public final static int RES_WIDTH = 800;
 	public final static int RES_HEIGHT = 600;
 	public final static String TITLE = "Magical Old Man";
 	
 	public static void main(String[] args) {
 		RenderWindow w = new RenderWindow(TITLE, RES_WIDTH, RES_HEIGHT);
-		float lag = 0;
-		float past;
-		float benchmark;
+		double lag = 0;
+		double past;
+		double benchmark;
 		while(true){
 			past = toSecond(System.nanoTime());
 			
@@ -37,11 +37,11 @@ public class Runner {
 		}
 	}
 	
-	public static float toSecond(long nanoSecond) {
-		return (float) (nanoSecond/1e9);
+	public static double toSecond(long nanoSecond) {
+		return  (nanoSecond/1e9);
 	}
 
-	public static long toMilliSecond(float second) {
+	public static long toMilliSecond(double second) {
 		return (long) ((1e3)*second); 
 	}
 }
