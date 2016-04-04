@@ -52,11 +52,11 @@ public class Vector {
 	
 	//getters
 	public int getX() {
-		return (int) Math.round(x);
+		return (int) (x + 0.5);
 	}
 	
 	public int getY() {
-		return (int) Math.round(y);
+		return (int) (y + 0.5);
 	}
 	
 }
