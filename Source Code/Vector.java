@@ -1,6 +1,6 @@
 public class Vector {
-	private double x;
-	private double y;
+	public double x;
+	public double y;
 	
 	public Vector (double x, double y) {
 		this.x = x;
