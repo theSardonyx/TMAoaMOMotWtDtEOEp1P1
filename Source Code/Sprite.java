@@ -3,6 +3,7 @@ import java.awt.image.*;
 
 public class Sprite implements Drawable {
 	private int state, stateCount;
+	private double stateRate, secPerState, ticCounter, ticCap;
 	private BufferedImage[] animation;
 	private Vector position;
 	private Vector dimension;
@@ -12,10 +13,11 @@ public class Sprite implements Drawable {
 	public Sprite(Vector position, Vector dimension, BufferedImage[] base, BufferedImage[] part, Color c) {
 		this.dimension = dimension;
 		this.origin = dimension.scalarMult(0.5);
+		this.stateCount = base.length;
 		setPosition( position );
+		setStateRate(1);
 		
 		this.state = 0;
-		this.stateCount = base.length;
 		animation = new BufferedImage[ stateCount ];
 		for(int i = 0; i < stateCount; i++) {
  			animation[i] = Sprite.integrateSprites(base[i], part[i], c);
@@ -35,6 +37,13 @@ public class Sprite implements Drawable {
 	
 	public int getState() {
 		return state;
+	}
+	
+	public void update(double delta) {
+		ticCounter += delta;
+		if(ticCounter-ticCap >= 0 )
+			ticCounter -= ticCap;
+		state = (int) (ticCounter / secPerState);
 	}
 	
 	@Override
@@ -72,6 +81,17 @@ public class Sprite implements Drawable {
 		}
 		
 		return finished;
+	}
+
+	public double getStateRate() {
+		return stateRate;
+	}
+
+	public void setStateRate(double stateRate) {
+		this.stateRate = stateRate;
+		this.secPerState = 1.0/this.stateRate;
+		this.ticCounter = 0;
+		this.ticCap = stateCount * secPerState;
 	}
 
 }
