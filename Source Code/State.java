@@ -1,20 +1,41 @@
+import java.awt.Graphics2D;
+
 public abstract class State {
-	StateManager sm;
+	protected StateManager sm;
+	protected boolean isActive;
+	protected int id;
 	
 	// abstract methods
-	protected abstract void handleInput (InputHandler input);
-	protected abstract void update (float delta);
-	protected abstract void render (Graphics g);
-	
-	// final method
-	public final void work (InputHandler input, Graphics g, float delta) {
-		handleInput(input);
-		update(delta);
-		render(g);
-	}
+	public abstract void handleInput (InputCollector input);
+	public abstract void update (double delta);
+	public abstract void render (RenderWindow rw);
 	
 	// others
-	public void popSelf (inr level, String s);
-	public void onActivate (String s);
-	public void onDeactivate ();
+	public void popSelf (int level, String s) {
+		sm.pop(level, s);
+	}
+	
+	public void onActivate (String s) {
+		isActive = true;
+	}
+	
+	public void onDeactivate () {
+		isActive = false;
+	}
+	
+	public void setStateManager(StateManager sm) {
+		this.sm = sm;
+	}
+	
+	public int getID() {
+		return id;
+	}
+	
+	public void setID(int id) {
+		this.id = id;
+	}
+	
+	public boolean isActive() {
+		return isActive;
+	}
 }

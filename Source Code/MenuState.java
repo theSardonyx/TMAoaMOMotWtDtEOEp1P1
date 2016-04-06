@@ -1,6 +1,6 @@
 import java.awt.Graphics2D;
 
-public class SplashState extends State {
+public class MenuState extends State {
 
 	@Override
 	public void handleInput(InputCollector input) {
