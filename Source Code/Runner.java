@@ -8,17 +8,27 @@ public class Runner {
 	
 	public static void main(String[] args) {
 		RenderWindow w = new RenderWindow(TITLE, RES_WIDTH, RES_HEIGHT);
+		InputCollector ic = new InputCollector(w);
+		
 		double lag = 0;
 		double past;
 		double benchmark;
 		while(true){
 			past = toSecond(System.nanoTime());
 			
-			// HandleInput
-			// Update
+			// HANDLE INPUT
+			ic.preProcess();
+			// ...
+			ic.postProcess();
 			
+			
+			// UPDATE
+			// ...
+			
+			
+			// RENDER
 			w.preDraw();
-			// Render
+			// ...
 			w.finishDraw();
 			
 			benchmark = toSecond(System.nanoTime()) - past + lag;
