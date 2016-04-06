@@ -1,4 +1,6 @@
 import java.awt.Component;
+import java.awt.MouseInfo;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
@@ -15,6 +17,7 @@ public class InputCollector implements MouseInputListener, KeyListener{
 	private boolean hasTyped;
 	private int backspaced;
 	private String typedContent;
+	private Vector mousePosition;
 	
 	public static final int MOUSE_CLICKED = MouseEvent.MOUSE_CLICKED;
 	public static final int MOUSE_PRESSED = MouseEvent.MOUSE_PRESSED;
@@ -29,6 +32,8 @@ public class InputCollector implements MouseInputListener, KeyListener{
 	public static final int KEY_RELEASED = KeyEvent.KEY_RELEASED;
 	
 	public InputCollector(Component component) {
+		mousePosition = new Vector(0, 0);
+		
 		mouseClicked = new boolean[4];
 		mouseDragged = new boolean[4];
 		mouseReleased = new boolean[4];
@@ -62,6 +67,7 @@ public class InputCollector implements MouseInputListener, KeyListener{
 			else if(event.getID()== InputCollector.MOUSE_DRAGGED) {
 				MouseEvent me = (MouseEvent) event;
 				mouseDragged[ me.getButton() ] = true;
+				mousePosition = new Vector( me.getX(), me.getY() );
 			}
 			else if(event.getID()== InputCollector.MOUSE_PRESSED) {
 				MouseEvent me = (MouseEvent) event;
@@ -71,8 +77,12 @@ public class InputCollector implements MouseInputListener, KeyListener{
 				MouseEvent me = (MouseEvent) event;
 				mouseReleased[ me.getButton() ] = true;
 			}
-			else if(event.getID()== InputCollector.MOUSE_MOVED)
+			else if(event.getID()== InputCollector.MOUSE_MOVED) {
 				mouseMoved = true;
+				
+				MouseEvent me = (MouseEvent) event;
+				mousePosition = new Vector( me.getX(), me.getY() );
+			}
 			else if(event.getID()== InputCollector.MOUSE_ENTERED)
 				mouseEntered = true;
 			else if(event.getID()== InputCollector.MOUSE_EXITED)
@@ -152,6 +162,10 @@ public class InputCollector implements MouseInputListener, KeyListener{
 
 	public boolean isMouseExited() {
 		return mouseExited;
+	}
+	
+	public Vector getMousePosition() {
+		return mousePosition;
 	}
 
 	public boolean isKeyTyped(char key) {
