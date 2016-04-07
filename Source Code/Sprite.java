@@ -1,20 +1,14 @@
 import java.awt.*;
 import java.awt.image.*;
 
-public class Sprite implements Drawable {
+public class Sprite extends Drawable {
 	private int state, stateCount;
 	private double stateRate, secPerState, ticCounter, ticCap;
 	private BufferedImage[] animation;
-	private Vector position;
-	private Vector dimension;
-	private Vector topLeftPosition;
-	private Vector origin;
 	
 	public Sprite(Vector position, Vector dimension, BufferedImage[] base, BufferedImage[] part, Color c) {
-		this.dimension = dimension;
-		this.origin = dimension.scalarMult(0.5);
+		super(position, dimension);
 		this.stateCount = base.length;
-		setPosition( position );
 		setStateRate(1);
 		
 		this.state = 0;
@@ -22,17 +16,6 @@ public class Sprite implements Drawable {
 		for(int i = 0; i < stateCount; i++) {
  			animation[i] = Sprite.integrateSprites(base[i], part[i], c);
 		}
-	}
-	
-	public void setDimension(Vector dimension) {
-		this.dimension = dimension;
-		this.origin = dimension.scalarMult(0.5);
-		setPosition( this.position );
-	}
-	
-	public void setPosition(Vector position) {
-		this.position = position;
-		this.topLeftPosition = position.subtract( origin );
 	}
 	
 	public int getState() {
