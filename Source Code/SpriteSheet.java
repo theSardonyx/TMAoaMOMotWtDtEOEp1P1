@@ -14,11 +14,7 @@ public class SpriteSheet{
 		this.cellHeight = cellHeight;
 		this.cellWidth = cellWidth;
 		
-		try {
-			sheet = ImageIO.read(new File(address));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		sheet = image;
 		
 		if(sheet==null) return;
 		int width = sheet.getWidth();
