@@ -10,7 +10,7 @@ public class SpriteSheet{
 	private int cellWidth, cellHeight;
 	private int row, column;
 	
-	public SpriteSheet(String address, int cellWidth, int cellHeight) {
+	public SpriteSheet(BufferedImage image, int cellWidth, int cellHeight) {
 		this.cellHeight = cellHeight;
 		this.cellWidth = cellWidth;
 		
@@ -20,16 +20,16 @@ public class SpriteSheet{
 		int width = sheet.getWidth();
 		int height = sheet.getHeight();
 		
-		this.setRows(height/cellHeight);
-		this.setColumns(width/cellWidth);
+		this.setRows(height/this.cellHeight);
+		this.setColumns(width/this.cellWidth);
 		
 		sprites = new BufferedImage[column][row];
-		for(int i=0; i<column; i++)
-			for(int j=0; j<row; j++)
-				sprites[i][j] = sheet.getSubimage(i*cellWidth, j*cellHeight, cellWidth, cellHeight);
 	}
 	
 	public BufferedImage get(int i, int j) {
+		if(sprites[i][j] == null)
+			sprites[i][j] = sheet.getSubimage(i*cellWidth, j*cellHeight, cellWidth, cellHeight);
+		
 		return sprites[i][j];
 	}
 
@@ -48,6 +48,5 @@ public class SpriteSheet{
 	public void setRows(int row) {
 		this.row = row;
 	}
-	
 	
 }
