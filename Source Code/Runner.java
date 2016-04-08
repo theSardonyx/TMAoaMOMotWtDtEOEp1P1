@@ -5,10 +5,16 @@ public class Runner {
 	public final static int RES_WIDTH = 800;
 	public final static int RES_HEIGHT = 600;
 	public final static String TITLE = "Magical Old Man";
+	public static int SPLASH_STATE;
+	public static int MENU_STATE;
 	
 	public static void main(String[] args) {
 		RenderWindow w = new RenderWindow(TITLE, RES_WIDTH, RES_HEIGHT);
 		InputCollector ic = new InputCollector(w);
+		StateManager sm = StateManager.getInstance();
+		SPLASH_STATE = sm.addState(new SplashState());
+		MENU_STATE = sm.addState(new MenuState());
+		sm.push(SPLASH_STATE, null);
 		
 		double lag = 0;
 		double past;
@@ -18,17 +24,15 @@ public class Runner {
 			
 			// HANDLE INPUT
 			ic.preProcess();
-			// ...
+			sm.handleInput(ic);
 			ic.postProcess();
 			
-			
 			// UPDATE
-			// ...
-			
+			sm.update(SPF);
 			
 			// RENDER
 			w.preDraw();
-			// ...
+			sm.render(w);
 			w.finishDraw();
 			
 			benchmark = toSecond(System.nanoTime()) - past + lag;
