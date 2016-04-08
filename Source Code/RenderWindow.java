@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.*;
 
 import javax.swing.*;
@@ -26,6 +27,24 @@ public class RenderWindow extends JFrame {
 		canvas.setIgnoreRepaint(true);
 		canvas.createBufferStrategy(2);
 		buffer = canvas.getBufferStrategy();
+	}
+	
+	@Override
+	public void addMouseListener(MouseListener ml) {
+		super.addMouseListener(ml);
+		canvas.addMouseListener(ml);
+	}
+	
+	@Override
+	public void addMouseMotionListener(MouseMotionListener mml) {
+		super.addMouseMotionListener(mml);
+		canvas.addMouseMotionListener(mml);
+	}
+	
+	@Override
+	public void addKeyListener(KeyListener kl) {
+		super.addKeyListener(kl);
+		canvas.addKeyListener(kl);
 	}
 	
 	public void preDraw() {
