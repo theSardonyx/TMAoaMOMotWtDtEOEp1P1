@@ -1,3 +1,11 @@
-public abstract class ShootBehavior extends Entity {
-	public abstract void shoot (Entity source, Entity target, Game g);
+
+public abstract class ShootBehavior {
+	private Entity subject;
+	private double fireRate;
+	
+	public ShootBehavior(Entity subject, double fireRate) {
+		this.subject = subject;
+	}
+	
+	public abstract void shoot(double delta);
 }

@@ -1,3 +1,10 @@
+
 public abstract class MoveBehavior {
-	public abstract void move (Entity e);
+	private Entity subject;
+	
+	public MoveBehavior(Entity subject) {
+		this.subject = subject;
+	}
+	
+	public abstract void move(double delta);
 }
