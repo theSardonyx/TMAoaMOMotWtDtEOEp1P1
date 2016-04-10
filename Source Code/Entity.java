@@ -1,28 +1,61 @@
-public abstract class Entity {
-	StateManager sm;
-	MoveBehavior move_behave;
-	ShootBehavior shoot_behave;
-	private Vector position;
-	private Vector showSize;
-	private Vector hitSize;
+import java.awt.Graphics2D;
+
+public abstract class Entity extends Drawable {
 	
-	// abstract methods
-	public abstract void handleInput (InputHandler  input);
-	public abstract void render (Graphics g);
-	public abstract void update (float dt);
+	private MoveBehavior move;
+	private ShootBehavior shoot;
+	private AnimatedDrawable visual;
+	private CollideShape hitbox;
+	private int health;
+	private BulletStage stage;
+
+	public Entity(Vector position, Vector dimension, BulletStage stage) {
+		super(position, dimension);
+		this.stage = stage;
+		health = 0;
+	}
 	
-	// final methods
-	public final void move (float dt);
-	public final void shoot();
+	public final void update( double delta ) {
+		move.move(delta);
+		shoot.shoot(delta);
+		visual.update(delta);
+	}
 	
-	// setters
-	public void setShowSize (Vector v);
-	public void setHitSize (Vector v);
-	public void setPosition (Vector v);
+	public abstract void updateHook();
 	
-	// getters
-	public Vector getShowSize();
-	public Vector getHitSize();
-	public Vector getPosition();
-	public getPointClosestTo (Vector target);
+	@Override
+	public final void draw(Graphics2D g) {
+		visual.setPosition( position );
+		visual.setDimension( dimension );
+		visual.draw(g);
+	}
+	
+	public boolean isCollidingWith( Entity e ) {
+		return hitbox.isCollidingWith( e.getHitbox() );
+	}
+	
+	public int getHealth() {
+		return health;
+	}
+	
+	public void getDamaged( int damage ) {
+		health -= damage;
+	}
+	
+	public CollideShape getHitbox() {
+		return hitbox;
+	}
+	
+	public void spawnEntity( Entity e ) {
+		stage.addRequest( new SpawnRequest( e , stage ) );
+	}
+	
+	public void despawn() {
+		deathAction();
+		stage.addRequest( new DespawnRequest( this , stage ) );
+	}
+	
+	public void deathAction() {
+		// EMPTY
+	}
 }
