@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.image.*;
 
-public class Sprite extends Drawable {
+public class Sprite extends AnimatedDrawable {
 	private int state, stateCount;
 	private double stateRate, secPerState, ticCounter, ticCap;
 	private BufferedImage[] animation;
@@ -18,10 +18,7 @@ public class Sprite extends Drawable {
 		}
 	}
 	
-	public int getState() {
-		return state;
-	}
-	
+	@Override
 	public void update(double delta) {
 		ticCounter += delta;
 		if(ticCounter-ticCap >= 0 )
