@@ -1,5 +1,3 @@
-import java.awt.Graphics2D;
-
 public abstract class State {
 	protected StateManager sm;
 	protected boolean isActive;
