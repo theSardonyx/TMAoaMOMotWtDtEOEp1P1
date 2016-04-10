@@ -33,6 +33,11 @@ public class BulletStage {
 		for(Entity e: entities) {
 			e.update(delta);
 		}
+		
+		while(!requestQueue.isEmpty()) {
+			Request curr = requestQueue.poll();
+			curr.execute();
+		}
 	}
 	
 	public void render(RenderWindow rw) {
