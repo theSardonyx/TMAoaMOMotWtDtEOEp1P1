@@ -1,7 +1,7 @@
 
 public abstract class ShootBehavior {
-	private Entity subject;
-	private double fireRate;
+	protected Entity subject;
+	protected double fireRate;
 	
 	public ShootBehavior(Entity subject, double fireRate) {
 		this.subject = subject;
