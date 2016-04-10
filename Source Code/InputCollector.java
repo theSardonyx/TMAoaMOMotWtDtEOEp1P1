@@ -1,6 +1,4 @@
 import java.awt.Component;
-import java.awt.MouseInfo;
-import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
