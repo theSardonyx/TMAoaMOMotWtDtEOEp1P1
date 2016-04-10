@@ -56,7 +56,7 @@ public class SplashState extends State {
 				sm.push(Runner.MENU_STATE, null);
 			}
 		}
-		System.out.println(alpha);
+		
 		Color a = new Color(0, 0, 0, (int) alpha);
 		shade.setColor(a);
 		shade.setFilled(true);
