@@ -26,7 +26,29 @@ public class BulletStage {
 	}
 	
 	public void handleInput(InputCollector input) {
-		// TODO
+		if(input.isKeyPressed()) {
+			
+			int particleCount = 1 + (int) (Math.random()*4); 
+			for(int i=0; i<particleCount; i++) {
+				
+				double diameter = 5 + Math.random()*5;
+				double speed = 50 + Math.random()*50;
+				double direction = Math.random()*360;
+				Vector velocity = new Vector(speed, 0).rotate(direction);
+				Vector acceleration = new Vector(0, 500);
+				double growRate = 5;
+				double duration = 1;
+				
+				Particle p = new Particle(input.getMousePosition(), diameter, Color.YELLOW, this);
+				p.setVelocity(velocity);
+				p.setAcceleration(acceleration);
+				p.setGrowRate(growRate);
+				p.adjustDuration(duration);
+				addEntity(p);
+			}
+			
+			
+		}
 	}
 	
 	public void update(double delta) {
