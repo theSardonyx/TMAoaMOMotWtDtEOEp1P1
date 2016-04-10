@@ -2,26 +2,28 @@ import java.awt.Graphics2D;
 
 public abstract class Entity extends Drawable {
 	
-	private MoveBehavior move;
-	private ShootBehavior shoot;
-	private AnimatedDrawable visual;
-	private CollideShape hitbox;
-	private int health;
-	private BulletStage stage;
+	protected MoveBehavior move;
+	protected ShootBehavior shoot;
+	
+	protected Drawable visual;
+	protected CollideShape hitbox;
+	protected int health;
+	protected BulletStage stage;
 
 	public Entity(Vector position, Vector dimension, BulletStage stage) {
 		super(position, dimension);
 		this.stage = stage;
-		health = 0;
 	}
 	
 	public final void update( double delta ) {
 		move.move(delta);
-		shoot.shoot(delta);
-		visual.update(delta);
+		if(shoot != null)
+			shoot.shoot(delta);
+		
+		updateHook(delta);
 	}
 	
-	public abstract void updateHook();
+	public abstract void updateHook(double delta);
 	
 	@Override
 	public final void draw(Graphics2D g) {
@@ -32,6 +34,22 @@ public abstract class Entity extends Drawable {
 	
 	public boolean isCollidingWith( Entity e ) {
 		return hitbox.isCollidingWith( e.getHitbox() );
+	}
+	
+	public Vector getPosition() {
+		return position;
+	}
+	
+	public Vector getDimension() {
+		return dimension;
+	}
+
+	public void setVelocity(Vector velocity) {
+		move.setVelocity(velocity);
+	}
+	
+	public void setAcceleration(Vector acceleration) {
+		move.setAcceleration(acceleration);
 	}
 	
 	public int getHealth() {
