@@ -1,22 +1,24 @@
 
 public class GameState extends State {
 
+	BulletStage bulletStage;
+	
+	public GameState() {
+		bulletStage = new BulletStage();
+	}
+	
 	@Override
 	public void handleInput(InputCollector input) {
-		// TODO Auto-generated method stub
-
+		bulletStage.handleInput(input);
 	}
 
 	@Override
 	public void update(double delta) {
-		// TODO Auto-generated method stub
-
+		bulletStage.update(delta);
 	}
 
 	@Override
 	public void render(RenderWindow rw) {
-		// TODO Auto-generated method stub
-
+		bulletStage.render(rw);
 	}
-
 }
