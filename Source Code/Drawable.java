@@ -14,9 +14,17 @@ public abstract class Drawable {
 	
 	public abstract void draw(Graphics2D g);
 
+	public Vector getPosition() {
+		return position;
+	}
+	
 	public void setPosition(Vector position) {
 		this.position = position;
 		this.topLeftPosition = position.subtract( origin );
+	}
+
+	public Vector getDimension() {
+		return dimension;
 	}
 	
 	public void setDimension(Vector dimension) {
