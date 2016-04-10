@@ -18,7 +18,7 @@ public class SplashState extends State {
 		Vector dimension = new Vector(image.getWidth(), image.getHeight());
 		
 		logo = new DrawableImage(position, dimension, image);
-		shade = new DrawableRectangle(position, dimension);
+		shade = new DrawableRectangle(position, dimension, Color.BLACK);
 	}
 	
 	@Override

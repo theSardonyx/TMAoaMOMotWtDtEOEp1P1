@@ -1,9 +1,9 @@
-import java.awt.Graphics2D;
+import java.awt.*;
 
 public class DrawableRectangle extends DrawableShape {
 
-	public DrawableRectangle(Vector position, Vector dimension) {
-		super(position, dimension);
+	public DrawableRectangle(Vector position, Vector dimension, Color color) {
+		super(position, dimension, color);
 	}
 
 	@Override

@@ -6,9 +6,9 @@ public abstract class DrawableShape extends Drawable {
 	protected Color color;
 	protected boolean filled;
 	
-	public DrawableShape(Vector position, Vector dimension) {
+	public DrawableShape(Vector position, Vector dimension, Color color) {
 		super(position, dimension);
-		// TODO Auto-generated constructor stub
+		this.color = color;
 	}
 	
 	@Override
