@@ -42,7 +42,7 @@ public class InputCollector implements MouseInputListener, KeyListener{
 		mouseReleased = new boolean[4];
 		mousePressed = new boolean[4];
 		mouseMoved = mouseEntered = mouseExited = false;
-		isKeyPressed = isKeyReleased = isKeyTyped = false;
+		isKeyReleased = isKeyTyped = false;
 		typedContent = "";
 		
 		keyTyped = new HashSet<Character>();
@@ -118,7 +118,7 @@ public class InputCollector implements MouseInputListener, KeyListener{
 			}
 			else if(event.getID()== InputCollector.KEY_RELEASED) {
 				isKeyReleased = true;
-				
+				isKeyPressed = false;
 				KeyEvent ke = (KeyEvent) event;
 				
 				keyReleased.add( ke.getKeyCode() );
@@ -140,7 +140,7 @@ public class InputCollector implements MouseInputListener, KeyListener{
 		mouseReleased[1] = mouseReleased[2] = mouseReleased[3] = false;
 		mousePressed[1] = mousePressed[2] = mousePressed[3] = false;
 		mouseMoved = mouseEntered = mouseExited = false;
-		isKeyPressed = isKeyReleased = isKeyTyped = false;
+		isKeyReleased = isKeyTyped = false;
 		
 		Queue<InputEvent> temp = eventPoll;
 		eventPoll = altEventPoll;
