@@ -49,7 +49,6 @@ public class RenderWindow extends JFrame {
 	
 	public void preDraw() {
 		g = (Graphics2D) buffer.getDrawGraphics();
-		g.clearRect(0, 0, width, height);
 		g.setColor(new Color(0x000000));
 		g.fillRect(0, 0, width, height);
 	}
