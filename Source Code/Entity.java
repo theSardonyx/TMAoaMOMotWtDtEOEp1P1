@@ -4,6 +4,7 @@ public abstract class Entity extends Drawable {
 	
 	protected MoveBehavior move;
 	protected ShootBehavior shoot;
+	protected CollideReaction collideReaction;
 	
 	protected Drawable visual;
 	protected CollideShape hitbox;
@@ -71,6 +72,18 @@ public abstract class Entity extends Drawable {
 	public void despawn() {
 		deathAction();
 		stage.addRequest( new DespawnRequest( this , stage ) );
+	}
+	
+	public void addCollideReaction(CollideReaction next) {
+		if(this.collideReaction == null)
+			this.collideReaction = next;
+		else
+			this.collideReaction.addNext(next);
+	}
+	
+	public void collide(Entity other) {
+		if(collideReaction!=null)
+			collideReaction.collide(other);
 	}
 	
 	public void deathAction() {
