@@ -15,7 +15,7 @@ public abstract class CollideShape {
 		double pDistance = p.getDistanceFromPointNearestTo(position);
 		double actualDistance = position.subtract( p.getPosition() ).magnitude();
 		
-		return ( myDistance + pDistance > actualDistance );
+		return ( myDistance + pDistance >= actualDistance );
 	}
 
 	public Vector getPosition() {

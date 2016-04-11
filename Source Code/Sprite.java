@@ -21,7 +21,7 @@ public class Sprite extends AnimatedDrawable {
 	@Override
 	public void update(double delta) {
 		ticCounter += delta;
-		if(ticCounter-ticCap >= 0 )
+		if(ticCounter >= ticCap )
 			ticCounter -= ticCap;
 		state = (int) (ticCounter / secPerState);
 	}

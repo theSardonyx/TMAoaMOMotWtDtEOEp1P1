@@ -56,7 +56,7 @@ public class Particle extends Entity {
 		// SET GROWTH
 		dimension = dimension.add( growRate.scalarMult( delta ) );
 		
-		if(alpha <= 0 && dimension.getX()<=0)
+		if(alpha <= 0 || dimension.getX()<=0 || dimension.getY()<=0)
 			despawn();
 	}
 
