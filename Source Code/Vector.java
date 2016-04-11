@@ -19,8 +19,7 @@ public class Vector {
 		return new Vector(this.x * factor, this.y * factor);
 	}
 	
-	public Vector rotate (double degree) {
-		double radians =  Math.toRadians(degree);
+	public Vector rotate (double radians) {
 		return new Vector(	(Math.cos(radians)*x - Math.sin(radians)*y),
 							(Math.sin(radians)*x + Math.cos(radians)*y));
 	}
@@ -38,16 +37,14 @@ public class Vector {
 	}
 	
 	public double getAngle() {
-		double radians = Math.atan2(y, x);
-		return Math.toDegrees(radians);
+		return Math.atan2(y, x);
 	}
 	
-	public void setAngle(double degree) {
-		double targetRadians = Math.toRadians(degree);
+	public void setAngle(double targetRadians) {
 		double currentRadians = Math.atan2(y, x);
 		double deltaRadians = targetRadians-currentRadians;
 				
-		this.rotate(Math.toDegrees(deltaRadians));
+		this.rotate(deltaRadians);
 	}
 	
 	//getters

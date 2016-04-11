@@ -33,10 +33,10 @@ public class BulletStage {
 				
 				double diameter = 5 + Math.random()*5;
 				double speed = 50 + Math.random()*50;
-				double direction = Math.random()*360;
+				double direction = Math.random() * 2 * Math.PI;
 				Vector velocity = new Vector(speed, 0).rotate(direction);
-				Vector acceleration = new Vector(0, 500);
-				double growRate = 5;
+				Vector acceleration = new Vector(00, 00);
+				Vector growRate = new Vector(10, 10);
 				double duration = 1;
 				
 				Particle p = new Particle(input.getMousePosition(), diameter, Color.YELLOW, this);
@@ -45,9 +45,7 @@ public class BulletStage {
 				p.setGrowRate(growRate);
 				p.adjustDuration(duration);
 				addEntity(p);
-			}
-			
-			
+			}			
 		}
 	}
 	
