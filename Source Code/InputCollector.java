@@ -11,7 +11,6 @@ public class InputCollector implements MouseInputListener, KeyListener{
 	private boolean[] mouseClicked, mouseDragged, mouseReleased, mousePressed;
 	private boolean mouseMoved, mouseEntered, mouseExited;
 	private HashSet<Integer> keyPressed, keyReleased;
-	private boolean isKeyPressed, isKeyReleased, isKeyTyped;
 	private HashSet<Character> keyTyped;
 	private boolean hasTyped;
 	private int backspaced;
@@ -42,7 +41,6 @@ public class InputCollector implements MouseInputListener, KeyListener{
 		mouseReleased = new boolean[4];
 		mousePressed = new boolean[4];
 		mouseMoved = mouseEntered = mouseExited = false;
-		isKeyReleased = isKeyTyped = false;
 		typedContent = "";
 		
 		keyTyped = new HashSet<Character>();
@@ -92,7 +90,6 @@ public class InputCollector implements MouseInputListener, KeyListener{
 			else if(event.getID()== InputCollector.MOUSE_EXITED)
 				mouseExited = true;
 			else if(event.getID()== InputCollector.KEY_TYPED) {
-				isKeyTyped = true;
 				
 				KeyEvent ke = (KeyEvent) event;
 				char typed = ke.getKeyChar();
@@ -110,15 +107,13 @@ public class InputCollector implements MouseInputListener, KeyListener{
 					typedContent += ke.getKeyChar();
 			}
 			else if(event.getID()== InputCollector.KEY_PRESSED) {
-				isKeyPressed = true;
 				
 				KeyEvent ke = (KeyEvent) event;
 				if(!isKeyPressed( ke.getKeyCode() ))
 					keyPressed.add( ke.getKeyCode() );
 			}
 			else if(event.getID()== InputCollector.KEY_RELEASED) {
-				isKeyReleased = true;
-				isKeyPressed = false;
+				
 				KeyEvent ke = (KeyEvent) event;
 				
 				keyReleased.add( ke.getKeyCode() );
@@ -140,7 +135,6 @@ public class InputCollector implements MouseInputListener, KeyListener{
 		mouseReleased[1] = mouseReleased[2] = mouseReleased[3] = false;
 		mousePressed[1] = mousePressed[2] = mousePressed[3] = false;
 		mouseMoved = mouseEntered = mouseExited = false;
-		isKeyReleased = isKeyTyped = false;
 		
 		Queue<InputEvent> temp = eventPoll;
 		eventPoll = altEventPoll;
@@ -267,15 +261,15 @@ public class InputCollector implements MouseInputListener, KeyListener{
 	}
 	
 	public boolean isKeyPressed() {
-		return isKeyPressed;
+		return !keyPressed.isEmpty();
 	}
 	
 	public boolean isKeyTyped() {
-		return isKeyTyped;
+		return !keyTyped.isEmpty();
 	}
 	
 	public boolean isKeyReleased() {
-		return isKeyReleased;
+		return !keyReleased.isEmpty();
 	}
 	
 }

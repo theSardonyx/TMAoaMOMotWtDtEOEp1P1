@@ -21,10 +21,9 @@ public class Runner {
 		sm.push(GAME_STATE, null);
 		
 		double lag = 0;
-		double past;
+		double past = toSecond(System.nanoTime());
 		double benchmark;
 		while(true){
-			past = toSecond(System.nanoTime());
 			
 			// HANDLE INPUT
 			ic.preProcess();
@@ -32,7 +31,10 @@ public class Runner {
 			ic.postProcess();
 			
 			// UPDATE
-			sm.update(SPF);
+			double now = toSecond(System.nanoTime());
+			double dt = now - past;
+			sm.update(dt);
+			past = now;
 			
 			// RENDER
 			w.preDraw();
