@@ -27,8 +27,8 @@ public class Particle extends Entity {
 		duration = newDuration;
 	}
 	
-	public void setGrowRate(double growRate) {
-		this.growRate = new Vector(growRate, growRate);
+	public void setGrowRate(Vector growRate) {
+		this.growRate = growRate;
 	}
 	
 	public void setFilled(boolean filled) {
