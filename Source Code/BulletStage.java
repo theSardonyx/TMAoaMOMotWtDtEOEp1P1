@@ -16,7 +16,7 @@ public class BulletStage {
 	
 	public BulletStage() {
 		position = new Vector( 0, 0 );
-		dimension = new Vector( 550, 600 );
+		dimension = new Vector( Runner.RES_HEIGHT, Runner.RES_HEIGHT );
 		BufferedImage image = new BufferedImage(dimension.getX(), dimension.getY(), BufferedImage.TYPE_4BYTE_ABGR);
 		visual = new DrawableImage(position.add( dimension.scalarMult( 0.5 ) ), dimension, image);
 		graphics = (Graphics2D) image.getGraphics();

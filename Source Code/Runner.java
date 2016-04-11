@@ -2,8 +2,8 @@
 public class Runner {
 	public final static double FPS = 30.0;
 	public final static double SPF = 1.0/FPS;
-	public final static int RES_WIDTH = 800;
-	public final static int RES_HEIGHT = 600;
+	public final static int RES_WIDTH = 960;
+	public final static int RES_HEIGHT = 720;
 	public final static String TITLE = "Magical Old Man";
 	
 	public static int SPLASH_STATE;
