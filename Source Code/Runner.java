@@ -18,7 +18,7 @@ public class Runner {
 		SPLASH_STATE = sm.addState(new SplashState());
 		MENU_STATE = sm.addState(new MenuState());
 		GAME_STATE = sm.addState(new GameState());
-		sm.push(SPLASH_STATE, null);
+		sm.push(GAME_STATE, null);
 		
 		double lag = 0;
 		double past;
