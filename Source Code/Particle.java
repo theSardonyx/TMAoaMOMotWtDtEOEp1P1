@@ -38,7 +38,15 @@ public class Particle extends Entity {
 	@Override
 	public boolean isCollidingWith(Entity e) {
 		return false;
-	};
+	}
+
+	public void setVelocity(Vector velocity) {
+		((AccelerateMoveBehavior)move.peek()).setVelocity(velocity);
+	}
+	
+	public void setAcceleration(Vector acceleration) {
+		((AccelerateMoveBehavior)move.peek()).setAcceleration(acceleration);
+	}
 
 	@Override
 	public void updateHook(double delta) {
