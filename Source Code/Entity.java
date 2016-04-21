@@ -1,8 +1,9 @@
 import java.awt.Graphics2D;
+import java.util.LinkedList;
 
 public abstract class Entity extends Drawable {
 	
-	protected MoveBehavior move;
+	protected LinkedList<MoveBehavior> move;
 	protected ShootBehavior shoot;
 	protected CollideReaction collideReaction;
 	
@@ -14,20 +15,21 @@ public abstract class Entity extends Drawable {
 	public Entity(Vector position, Vector dimension, BulletStage stage) {
 		super(position, dimension);
 		this.stage = stage;
+		move = new LinkedList<MoveBehavior>();
 	}
 	
 	public final void update( double delta ) {
-		move.move(delta);
+		if(!move.isEmpty())
+			move.peek().move(delta);
 		if(shoot != null)
 			shoot.shoot(delta);
-		
 		updateHook(delta);
 	}
 	
 	public abstract void updateHook(double delta);
 	
 	@Override
-	public final void draw(Graphics2D g) {
+	public void draw(Graphics2D g) {
 		visual.setPosition( position );
 		visual.setDimension( dimension );
 		visual.draw(g);
@@ -43,14 +45,6 @@ public abstract class Entity extends Drawable {
 	
 	public Vector getDimension() {
 		return dimension;
-	}
-
-	public void setVelocity(Vector velocity) {
-		move.setVelocity(velocity);
-	}
-	
-	public void setAcceleration(Vector acceleration) {
-		move.setAcceleration(acceleration);
 	}
 	
 	public int getHealth() {
@@ -88,5 +82,38 @@ public abstract class Entity extends Drawable {
 	
 	public void deathAction() {
 		// EMPTY
+	}
+	
+	public void queueMoveBehavior(MoveBehavior mb) {
+		move.offer(mb);
+	}
+	
+	public MoveBehavior pollMoveBehavior() {
+		return move.poll();
+	}
+	
+	public void stackMoveBehavior(MoveBehavior mb) {
+		move.push(mb);
+	}
+	
+	public void setMoveBehavior(MoveBehavior mb) {
+		move.clear();
+		move.offer(mb);
+	}
+	
+	public void clearMoveBehavior() {
+		move.clear();
+	}
+	
+	public void setDrawable(Drawable d) {
+		visual = d;
+	}
+	
+	public Drawable getDrawable() {
+		return visual;
+	}
+	
+	public void handleInput(InputCollector ic) {
+		
 	}
 }
