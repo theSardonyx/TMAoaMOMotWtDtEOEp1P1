@@ -9,20 +9,4 @@ public abstract class MoveBehavior {
 	}
 	
 	public abstract void move(double delta);
-
-	public Vector getVelocity() {
-		return velocity;
-	}
-
-	public void setVelocity(Vector velocity) {
-		this.velocity = velocity;
-	}
-
-	public Vector getAcceleration() {
-		return acceleration;
-	}
-
-	public void setAcceleration(Vector acceleration) {
-		this.acceleration = acceleration;
-	}
 }
