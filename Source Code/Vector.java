@@ -29,7 +29,11 @@ public class Vector {
 	}
 	
 	public Vector normalize() {
-		return this.scalarMult( 1 / this.magnitude() );
+		double magnitude = this.magnitude();
+		if(magnitude!=0)
+			return this.scalarMult( 1 / this.magnitude() );
+		else
+			return new Vector(0, 0);
 	}
 	
 	public Vector negate() {
@@ -49,11 +53,11 @@ public class Vector {
 	
 	//getters
 	public int getX() {
-		return (int) (x + 0.5);
+		return (int) Math.round(x);
 	}
 	
 	public int getY() {
-		return (int) (y + 0.5);
+		return (int) Math.round(y);
 	}
 	
 }
