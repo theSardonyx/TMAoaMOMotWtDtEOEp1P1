@@ -12,9 +12,9 @@ public class Sprite extends AnimatedDrawable {
 		setStateRate(1);
 		
 		this.state = 0;
-		animation = new BufferedImage[ stateCount ];
+		this.animation = new BufferedImage[ stateCount ];
 		for(int i = 0; i < stateCount; i++) {
- 			animation[i] = Sprite.integrateSprites(base[i], part[i], c);
+ 			this.animation[i] = Sprite.integrateSprites(base[i], part[i], c);
 		}
 	}
 	
