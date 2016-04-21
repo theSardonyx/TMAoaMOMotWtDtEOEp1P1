@@ -9,6 +9,7 @@ public class Runner {
 	public static int SPLASH_STATE;
 	public static int MENU_STATE;
 	public static int GAME_STATE;
+	public static int OPTION_STATE;
 	
 	public static void main(String[] args) {
 		RenderWindow w = new RenderWindow(TITLE, RES_WIDTH, RES_HEIGHT);
@@ -18,7 +19,8 @@ public class Runner {
 		SPLASH_STATE = sm.addState(new SplashState());
 		MENU_STATE = sm.addState(new MenuState());
 		GAME_STATE = sm.addState(new GameState());
-		sm.push(GAME_STATE, null);
+		OPTION_STATE = sm.addState(new OptionState());
+		sm.push(MENU_STATE, null);
 		
 		double lag = 0;
 		double past = toSecond(System.nanoTime());
