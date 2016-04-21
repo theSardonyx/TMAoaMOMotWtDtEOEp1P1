@@ -13,8 +13,8 @@ public class BulletStage {
 	
 	private ArrayList<Entity> entities;
 	private Queue<Request> requestQueue;
-	SpriteSheet ss;
-	Sprite test;
+	
+	private Player player;
 	
 	public BulletStage() {
 		position = new Vector( 0, 0 );
@@ -25,19 +25,14 @@ public class BulletStage {
 		
 		entities = new ArrayList<Entity>();
 		requestQueue = new ArrayDeque<Request>();
-		ss = new SpriteSheet(ImageLoader.getInstance().getFile("res/img/64x64-sheet.png"), 64, 64);
-		test = new Sprite(dimension.scalarMult( 0.5 ), new Vector(64, 64), new BufferedImage[] { 
-				ss.get(0, 0),
-				ss.get(2, 0)
-		}, new BufferedImage[] {
-				ss.get(1, 0),
-				ss.get(3, 0)
-		}, Color.BLUE);
+
+		player = new Player(new Vector(200, 200), new Vector(64, 64), this);
+		player.queueMoveBehavior(new PlayerMoveBehavior(player, 300));
+		addEntity(player);
 	}
 	
 	public void handleInput(InputCollector input) {
-		if(input.isKeyPressed()) {
-			
+		/*if(input.isKeyPressed()) {
 			int particleCount = 1 + (int) (Math.random()*4); 
 			for(int i=0; i<particleCount; i++) {
 				
@@ -55,8 +50,9 @@ public class BulletStage {
 				p.setGrowRate(growRate);
 				p.adjustDuration(duration);
 				addEntity(p);
-			}			
-		}
+			}
+		}*/
+		player.handleInput(input);
 	}
 	
 	public void update(double delta) {
@@ -68,8 +64,6 @@ public class BulletStage {
 			Request curr = requestQueue.poll();
 			curr.execute();
 		}
-		
-		test.update(delta);
 	}
 	
 	public void render(RenderWindow rw) {
@@ -78,8 +72,6 @@ public class BulletStage {
 		for(Entity e: entities ) {
 			e.draw(graphics);
 		}
-		
-		test.draw(graphics);
 		
 		rw.draw( visual );
 	}
