@@ -1,4 +1,10 @@
-
+/**
+* This abstract class represents the mocing behavior or pattern for a certain Entity
+* 
+* 
+* @author	Aemielvin Loremia
+* @author	Ivan Martinez
+*/
 public abstract class MoveBehavior {
 	protected Entity subject;
 	protected Vector velocity;
@@ -13,7 +19,7 @@ public abstract class MoveBehavior {
 	}
 	/*
 	Abstract method for a specific MoveBehavior
-	@param delta: value used for an objects MoveBehavior
+	@param delta: used to update objects based from time passed
 	*/
 	public abstract void move(double delta);
 }

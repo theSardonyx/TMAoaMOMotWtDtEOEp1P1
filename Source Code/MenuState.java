@@ -1,3 +1,10 @@
+/**
+* This class represents the Menu screen of the game
+* 
+* 
+* @author	Aemielvin Loremia
+* @author	Ivan Martinez
+*/
 import java.awt.*;
 import java.awt.geom.*;
 import java.io.*;
@@ -9,6 +16,8 @@ public class MenuState extends State {
 	
 	/*
 	Constructor for a MenuState object
+	Essentially initializes the position and state of the different buttons of the screen
+	The menu contains the play, options and exit buttons
 	*/
 	public MenuState() {
 		Font font = FontLoader.getInstance().getFont("Press Start 2P", Font.PLAIN, 20);
@@ -27,9 +36,9 @@ public class MenuState extends State {
 	}
 
 	/*
-	Override method for handleInput method
-	This method is used to update the buttons depending on the position of the mouse and the keyboard button presses
-	@param input: the InputCollector object used to update the buttons' state
+	Overriden method from the State handleInput
+	Handles all inputs from an InputCollector object, responds with the appropiate method
+	@param input: the InputCollector object to check for mouse and keyboard movement
 	*/
 	@Override
 	public void handleInput(InputCollector input) {
@@ -48,16 +57,18 @@ public class MenuState extends State {
 	}
 	
 	/*
-	Overriden method for the State class' update
-	@ param delta: the value used to update different objects in the game
+	Overriden method from the State update
+	Updates the current objects given a value, and adjusts positions/states accordingly
+	@param delta: used to update objects based from time passed
 	*/
 	@Override
 	public void update(double delta) {
 		
 	}
 	/*
-	Overriden method for the State class' render
-	@param rw: RenderWindow object where objects will be drawn
+	Overriden method from the State render
+	Renders all compatible objects into this window
+	@param rw: the RenderWindow object where objects will be rendered/drawn
 	*/
 	@Override
 	public void render(RenderWindow rw) {

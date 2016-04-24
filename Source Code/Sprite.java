@@ -1,3 +1,10 @@
+/**
+* The class used for the sprites
+* 
+* 
+* @author	Aemielvin Loremia
+* @author	Ivan Martinez
+*/
 import java.awt.*;
 import java.awt.image.*;
 
@@ -6,6 +13,15 @@ public class Sprite extends AnimatedDrawable {
 	private double stateRate, secPerState, ticCounter, ticCap;
 	private BufferedImage[] animation;
 	
+	/*
+	Constructor for a Sprite object
+	Creates a new Sprite object, based from a spritesheet
+	@param position: Base position of the sprite 
+	@param dimension: Size of the sprite
+	@param base: BufferedImage object for the body of the sprite
+	@param part: BufferedImage object for the additional parts of the sprite
+	@param c: Color of the sprite
+	*/
 	public Sprite(Vector position, Vector dimension, BufferedImage[] base, BufferedImage[] part, Color c) {
 		super(position, dimension);
 		this.stateCount = base.length;
@@ -17,7 +33,10 @@ public class Sprite extends AnimatedDrawable {
  			this.animation[i] = Sprite.integrateSprites(base[i], part[i], c);
 		}
 	}
-	
+	/*
+	Method for updating the sprite position/state
+	@param delta: used to update objects based from time passed
+	*/
 	@Override
 	public void update(double delta) {
 		ticCounter += delta;
@@ -26,12 +45,21 @@ public class Sprite extends AnimatedDrawable {
 		state = (int) (ticCounter / secPerState);
 	}
 	
+	/*
+	Method for drawing the sprite
+	@param g: Graphics2D object for the base of the sprite
+	*/
 	@Override
 	public void draw(Graphics2D g) {
 		g.drawImage(animation[state], topLeftPosition.getX(), topLeftPosition.getY(), 
 				dimension.getX(), dimension.getY(), null);
 	}
-	
+	/*
+	Integrates the two parts of the sprite: main and additional/animated
+	@param base: BufferedImage object for the body of the sprite
+	@param part: BufferedImage object for the additional parts of the sprite
+	@param tint: color/tint of the sprite
+	*/
 	public static BufferedImage integrateSprites(BufferedImage base, BufferedImage part, Color tint) {
 		if(	base == null || part == null ||
 			base.getHeight() != part.getHeight() || 
@@ -62,11 +90,17 @@ public class Sprite extends AnimatedDrawable {
 		
 		return finished;
 	}
-
+	
+	/*
+	Method for getting the rate of changing states
+	*/
 	public double getStateRate() {
 		return stateRate;
 	}
-
+	/*
+	Method for setting the rate of changing states
+	@param stateRate: the new rate of state change
+	*/
 	public void setStateRate(double stateRate) {
 		this.stateRate = stateRate;
 		this.secPerState = 1.0/this.stateRate;

@@ -1,3 +1,10 @@
+/**
+* This Entity represent the special effects/other particles or ambience for the game
+* 
+* 
+* @author	Aemielvin Loremia
+* @author	Ivan Martinez
+*/
 import java.awt.*;
 
 public class Particle extends Entity {
@@ -10,6 +17,7 @@ public class Particle extends Entity {
 	
 	/*
 	Contructor for a Particle object
+	Creates a particle based from position, diameter and color, and is added to the BulletStage object
 	@param position: starting position of object
 	@param diameter: diameter of a particle
 	@param color: color of the particle
@@ -72,6 +80,10 @@ public class Particle extends Entity {
 		((AccelerateMoveBehavior)move.peek()).setAcceleration(acceleration);
 	}
 
+	/*
+	Hook method for updating the particle based on time elapsed and its lifetime
+	@param delta: used to update objects based from time passed
+	*/
 	@Override
 	public void updateHook(double delta) {
 		timeLeft -= delta;

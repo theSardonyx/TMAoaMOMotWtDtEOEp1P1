@@ -1,3 +1,11 @@
+/**
+* This class collects all mouse and keyboard inputs,
+* and puts them in a single queue
+* After processing all inputs, it re-initializes all contents back to its default state
+* @author	Aemielvin Loremia
+* @author	Ivan Martinez
+*/
+
 import java.awt.Component;
 import java.awt.event.*;
 import java.util.*;

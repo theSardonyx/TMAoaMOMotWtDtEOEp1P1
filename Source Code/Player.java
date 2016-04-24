@@ -1,3 +1,10 @@
+/**
+* This Entity represents the avatar of the player
+* 
+* 
+* @author	Aemielvin Loremia
+* @author	Ivan Martinez
+*/
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -7,7 +14,7 @@ public class Player extends Entity {
 	HashMap<Integer, Vector> moveVectors;
 
 	/*
-	Contructor for a PLayer object
+	Contructor for a Player object
 	@param position: Vector object that will determine the player's starting position
 	@param dimension: Vector object that determines the size of the player
 	@param stage: BulletStage object where the player will spawn
@@ -48,7 +55,7 @@ public class Player extends Entity {
 	}
 	/*
 	Hook method for updating the corresponding player sprite
-	@param delta: value used to update the sprite
+	@param delta: time elapsed
 	*/
 	@Override
 	public void updateHook(double delta) {
