@@ -7,6 +7,9 @@ public class MenuState extends State {
 	DrawableButton playButton, optionsButton, exitButton;
 	DrawableString firstLine, protag, lastLine, epPart;
 	
+	/*
+	Constructor for a MenuState object
+	*/
 	public MenuState() {
 		Font font = FontLoader.getInstance().getFont("Press Start 2P", Font.PLAIN, 20);
 		Vector padding = new Vector(10, 10);
@@ -23,6 +26,11 @@ public class MenuState extends State {
 		
 	}
 
+	/*
+	Override method for handleInput method
+	This method is used to update the buttons depending on the position of the mouse and the keyboard button presses
+	@param input: the InputCollector object used to update the buttons' state
+	*/
 	@Override
 	public void handleInput(InputCollector input) {
 		playButton.update(input.getMousePosition());
@@ -38,12 +46,19 @@ public class MenuState extends State {
 				System.exit(0);
 		}
 	}
-
+	
+	/*
+	Overriden method for the State class' update
+	@ param delta: the value used to update different objects in the game
+	*/
 	@Override
 	public void update(double delta) {
 		
 	}
-
+	/*
+	Overriden method for the State class' render
+	@param rw: RenderWindow object where objects will be drawn
+	*/
 	@Override
 	public void render(RenderWindow rw) {
 		rw.draw(playButton);

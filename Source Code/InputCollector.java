@@ -33,6 +33,12 @@ public class InputCollector implements MouseInputListener, KeyListener{
 	public static final int KEY_PRESSED = KeyEvent.KEY_PRESSED;
 	public static final int KEY_RELEASED = KeyEvent.KEY_RELEASED;
 	
+	/*
+	Contructor for an InputCollector object, given a Component instance
+	Initilization of all instantiated arrays, hashsets and dequeues
+	@param component: Component object used to gather the input types 
+	*/
+	
 	public InputCollector(Component component) {
 		mousePosition = new Vector(0, 0);
 		
@@ -57,6 +63,11 @@ public class InputCollector implements MouseInputListener, KeyListener{
 		component.addKeyListener(this);
 	}
 	
+	/*
+	Basically, this function takes in all of the inputs of both mouse and keyboard. 
+	All of them are put into an event queue, and the queue is polled, 
+	and the corresponding input is used to determine the aciton taken
+	*/
 	public void preProcess() {
 		processing = true;
 		
@@ -122,7 +133,9 @@ public class InputCollector implements MouseInputListener, KeyListener{
 			}
 		}
 	}
-	
+	/*
+	Reverts everything back to initialization
+	*/
 	public void postProcess() {
 		eventPoll.clear();
 		keyReleased.clear();
@@ -141,133 +154,209 @@ public class InputCollector implements MouseInputListener, KeyListener{
 		altEventPoll = temp;
 		processing = false;
 	}
-	
+	/*
+	Method for determining if mouse was clicked, given which button
+	@param button the id of the button that was clicked
+	*/
 	public boolean getMouseClicked(int button) {
 		return mouseClicked[button];
 	}
-
+	/*
+	Method for determining if mouse was dragged, given which button
+	@param button the id of the button that was dragged
+	*/
 	public boolean getMouseDragged(int button) {
 		return mouseDragged[button];
 	}
-
+	/*
+	Method for determining if mouse was released, given which button
+	@param button the id of the button that was released
+	*/
 	public boolean getMouseReleased(int button) {
 		return mouseReleased[button];
 	}
-
+	/*
+	Method for determining if mouse was pressed, given which button
+	@param button the id of the button that was pressed
+	*/
 	public boolean getMousePressed(int button) {
 		return mousePressed[button];
 	}
-
+	/*
+	Method used for returning a boolean value when the mouse is moved
+	*/
 	public boolean isMouseMoved() {
 		return mouseMoved;
 	}
-
+	/*
+	Method used for returning a boolean value when the mouse is entered
+	*/
 	public boolean isMouseEntered() {
 		return mouseEntered;
 	}
-
+	/*
+	Method used for returning a boolean value when the mouse is exited
+	*/
 	public boolean isMouseExited() {
 		return mouseExited;
 	}
-	
+	/*
+	Method for determining the mouse position
+	*/
 	public Vector getMousePosition() {
 		return mousePosition;
 	}
-
+	/*
+	Method for determining which is key was typed
+	Limited to only characters
+	*/
 	public boolean isKeyTyped(char key) {
 		return keyTyped.contains(key);
 	}
-
+	/*
+	Method for determining which key was pressed
+	All keys in the keyboard included
+	*/
 	public boolean isKeyPressed(int keycode) {
 		return keyPressed.contains(keycode);
 	}
-
+	/*
+	Method for determining which key was released
+	All keys in the keyboard included
+	*/
 	public boolean isKeyReleased(int keycode) {
 		return keyReleased.contains(keycode);
 	}
-
+	/*
+	Method used to determine whether the player has typed
+	*/
 	public boolean hasTyped() {
 		return hasTyped;
 	}
-	
+	/*
+	Method for determining if the uses uses Backspace
+	*/
 	public int getBackspaces() {
 		System.out.println(backspaced);
 		return backspaced;
 	}
-
+	/*
+	Method for getting the typed text
+	*/
 	public String getTypedContent() {
 		return typedContent;
 	}
-	
+	/*
+	Method for clearing out the typed content
+	*/
 	public void clearTypedContent() {
 		typedContent = "";
 	}
-	
+	/*
+	Overrided method for the default mouseClicked
+	@param e: MouseEvent object to be put on queue
+	*/
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		offer(e);
 	}
-
+	/*
+	Overrided method for the default mousePressed
+	@param e: MouseEvent object to be put on queue
+	*/
 	@Override
 	public void mousePressed(MouseEvent e) {
 		offer(e);
 	}
-
+	/*
+	Overrided method for the default mouseReleased
+	@param e: MouseEvent object to be put on queue
+	*/
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		offer(e);
 	}
-
+	/*
+	Overrided method for the default mouseEntered
+	@param e: MouseEvent object to be put on queue
+	*/
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		offer(e);
 	}
-
+	/*
+	Overrided method for the default mouseExited
+	@param e: MouseEvent object to be put on queue
+	*/
 	@Override
 	public void mouseExited(MouseEvent e) {
 		offer(e);
 	}
-
+	/*
+	Overrided method for the default mouseDragged
+	@param e: MouseEvent object to be put on queue
+	*/
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		offer(e);
 	}
-
+	/*
+	Overrided method for the default mouseMoved
+	@param e: MouseEvent object to be put on queue
+	*/
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		offer(e);
 	}
-
+	/*
+	Overrided method for the default keyTyped
+	@param e: KeyEvent object to be put on queue
+	*/
 	@Override
 	public void keyTyped(KeyEvent e) {
 		offer(e);
 	}
-
+	/*
+	Overrided method for the default keyPressed
+	@param e: KeyEvent object to be put on queue
+	*/
 	@Override
 	public void keyPressed(KeyEvent e) {
 		offer(e);	
 	}
-
+	/*
+	Overrided method for the default keyReleased
+	@param e: KeyEvent object to be put on queue
+	*/
 	@Override
 	public void keyReleased(KeyEvent e) {
 		offer(e);
 	}
-	
+	/*
+	Method used to add an event in the event queue
+	@param e: InputEvent object to be put on queue
+	*/
 	private void offer(InputEvent e) {
 		if(processing)
 			altEventPoll.add(e);
 		else
 			eventPoll.add(e);
 	}
-	
+	/*
+	Method for returning a true value if a key was pressed
+	*/
 	public boolean isKeyPressed() {
 		return !keyPressed.isEmpty();
 	}
-	
+	/*
+	Method for returning a true value if a key was typed or pressed once
+	*/
 	public boolean isKeyTyped() {
 		return !keyTyped.isEmpty();
 	}
-	
+	/*
+	Method for returning a true value if a key was released
+	*/
 	public boolean isKeyReleased() {
 		return !keyReleased.isEmpty();
 	}
