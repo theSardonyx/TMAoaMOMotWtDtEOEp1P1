@@ -8,7 +8,13 @@ public class Particle extends Entity {
 	private int alpha;
 	private Color color;
 	
-
+	/*
+	Contructor for a Particle object
+	@param position: starting position of object
+	@param diameter: diameter of a particle
+	@param color: color of the particle
+	@oaram stage: stage where the particle will be rendered and appear
+	*/
 	public Particle(Vector position, double diameter, Color color, BulletStage stage) {
 		super(position, new Vector(diameter, diameter), stage);
 		visual = new DrawableOval(position, this.dimension, color);
@@ -22,13 +28,19 @@ public class Particle extends Entity {
 		growRate = new Vector(0, 0);
 	}
 	
-
+	/*
+	Method used to increase/decrease the lifetime of a particle
+	@param newDuration: the new duration of the particle
+	*/
 	public void adjustDuration(double newDuration) {
 		double changeRate = newDuration/duration;
 		timeLeft *= changeRate;
 		duration = newDuration;
 	}
-	
+	/*
+	Method used to increase/decrease the grow rate of a particle
+	@param growRate: the new grow rate of a particle
+	*/
 	public void setGrowRate(Vector growRate) {
 		this.growRate = growRate;
 	}
@@ -36,17 +48,26 @@ public class Particle extends Entity {
 	public void setFilled(boolean filled) {
 		((DrawableShape) visual).setFilled(filled);
 	}
-	
+	/*
+	Method used to detect collision
+	@param e: Entity object used for collision checking
+	*/
 	@Override
 	public boolean isCollidingWith(Entity e) {
 		return false;
 	}
 	
-	
+	/*
+	Method to set a new velocity
+	@param velocity: Vector object for setting the velocity
+	*/
 	public void setVelocity(Vector velocity) {
 		((AccelerateMoveBehavior)move.peek()).setVelocity(velocity);
 	}
-	
+	/*
+	Method to set a new acceleration
+	@param velocity: Vector object for setting the acceleration
+	*/
 	public void setAcceleration(Vector acceleration) {
 		((AccelerateMoveBehavior)move.peek()).setAcceleration(acceleration);
 	}
