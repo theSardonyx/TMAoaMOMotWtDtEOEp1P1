@@ -31,7 +31,7 @@ public class DrawableButton extends Drawable {
 	}
 	
 	public boolean isCollidingWith(Vector p) {
-		return cr.isCollidingWith(new CollideOval(p, new Vector(0, 0)));
+		return cr.isCollidingWith(new CollideCircle(p, 0));
 	}
 	
 	public void setUnhovered() {
