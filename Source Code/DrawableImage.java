@@ -30,7 +30,7 @@ public class DrawableImage extends Drawable {
 	}
 
 	/*
-	* Draws this instance of Drawable
+	* Draws this instance of DrawableImage
 	*
 	* @param	g	The graphics to be drawn
 	*

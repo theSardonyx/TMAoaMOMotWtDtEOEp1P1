@@ -21,7 +21,7 @@ public class Config {
 	*
 	* @return	#frameRate
 	*/
-	publid int getFrameRate() {
+	public int getFrameRate() {
 		return frameRate;
 	}
 	
