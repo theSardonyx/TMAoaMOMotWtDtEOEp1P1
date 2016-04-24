@@ -11,6 +11,14 @@ public class Runner {
 	public static int GAME_STATE;
 	public static int OPTION_STATE;
 	
+	/*
+	Function for the main game loop
+	Essentially sets up the objects needed for the game
+	Within the game loop are three major processes
+	Handle Input --> gets all the inputs
+	Update --> Calculate physics, from position to collission, and adjust accordingly
+	Render --> Draw objects according to calculations
+	*/
 	public static void main(String[] args) {
 		RenderWindow w = new RenderWindow(TITLE, RES_WIDTH, RES_HEIGHT);
 		InputCollector ic = new InputCollector(w);
@@ -59,10 +67,17 @@ public class Runner {
 		}
 	}
 	
+	/*
+	Method used to convert nanoseconds to seconds
+	Used for timestep
+	*/
 	public static double toSecond(long nanoSecond) {
 		return  (nanoSecond/1e9);
 	}
-
+	/*
+	Method used to convert seconds to milliseconds
+	Used for timestep
+	*/
 	public static long toMilliSecond(double second) {
 		return (long) ((1e3)*second); 
 	}

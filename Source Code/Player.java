@@ -6,6 +6,12 @@ import java.util.HashMap;
 public class Player extends Entity {
 	HashMap<Integer, Vector> moveVectors;
 
+	/*
+	Contructor for a PLayer object
+	@param position: Vector object that will determine the player's starting position
+	@param dimension: Vector object that determines the size of the player
+	@param stage: BulletStage object where the player will spawn
+	*/
 	public Player(Vector position, Vector dimension, BulletStage stage) {
 		super(position, dimension, stage);
 		SpriteSheet ss = new SpriteSheet(ImageLoader.getInstance().getFile("res/img/64x64-sheet.png"), 64, 64);
@@ -17,6 +23,10 @@ public class Player extends Entity {
 		((Sprite) visual).setStateRate(5);
 	}
 	
+	/*
+	Used to handle different input events and respond accordingly, based from an InputCollector object
+	@param input: InputCollector object where the different inputs will be gotten from
+	*/
 	public void handleInput(InputCollector input) {
 		if(move.peek() instanceof PlayerMoveBehavior) {
 			PlayerMoveBehavior pmb = (PlayerMoveBehavior) move.peek();
@@ -36,7 +46,10 @@ public class Player extends Entity {
 			}
 		}
 	}
-
+	/*
+	Hook method for updating the corresponding player sprite
+	@param delta: value used to update the sprite
+	*/
 	@Override
 	public void updateHook(double delta) {
 		((Sprite) visual).update(delta);
