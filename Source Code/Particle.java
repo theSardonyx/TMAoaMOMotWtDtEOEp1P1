@@ -14,7 +14,7 @@ public class Particle extends Entity {
 		((DrawableShape) visual).setFilled(true);
 		
 		hitbox = new CollideCircle(position, diameter);
-		move = new AccelerateMoveBehavior(this, new Vector(100, 0), new Vector(0, 0));
+		move.offer(new AccelerateMoveBehavior(this, new Vector(100, 0), new Vector(0, 0)));
 		
 		this.color = color;
 		duration = timeLeft = 1;
