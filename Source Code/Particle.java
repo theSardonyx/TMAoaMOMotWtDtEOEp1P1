@@ -8,6 +8,7 @@ public class Particle extends Entity {
 	private int alpha;
 	private Color color;
 	
+
 	public Particle(Vector position, double diameter, Color color, BulletStage stage) {
 		super(position, new Vector(diameter, diameter), stage);
 		visual = new DrawableOval(position, this.dimension, color);
@@ -21,6 +22,7 @@ public class Particle extends Entity {
 		growRate = new Vector(0, 0);
 	}
 	
+
 	public void adjustDuration(double newDuration) {
 		double changeRate = newDuration/duration;
 		timeLeft *= changeRate;
@@ -39,7 +41,8 @@ public class Particle extends Entity {
 	public boolean isCollidingWith(Entity e) {
 		return false;
 	}
-
+	
+	
 	public void setVelocity(Vector velocity) {
 		((AccelerateMoveBehavior)move.peek()).setVelocity(velocity);
 	}
