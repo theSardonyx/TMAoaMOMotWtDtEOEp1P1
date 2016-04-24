@@ -8,9 +8,9 @@ public class SpriteSheetLoader {
 		hash = new HashMap<String, SpriteSheet>();
 	}
 	
-	public SpriteSheetLoader getInstance() {
-		if(this.spriteSheetLoader == null) {
-			this.spriteSheetLoader = new SpriteSheetLoader();
+	public static SpriteSheetLoader getInstance() {
+		if(spriteSheetLoader == null) {
+			spriteSheetLoader = new SpriteSheetLoader();
 		}
 		return spriteSheetLoader;
 	}
