@@ -61,9 +61,11 @@ public class Sprite extends AnimatedDrawable {
 	@param tint: color/tint of the sprite
 	*/
 	public static BufferedImage integrateSprites(BufferedImage base, BufferedImage part, Color tint) {
-		if(	base == null || part == null ||
+		if(	base == null ||
 			base.getHeight() != part.getHeight() || 
 			base.getWidth() != part.getWidth()) return null;
+		if(part == null)
+			return base;
 		
 		BufferedImage finished = new BufferedImage(base.getWidth(), base.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
 		
