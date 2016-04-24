@@ -1,17 +1,21 @@
-public class Pause extends State {
-	
-	/*
-	
-	*/
-	protected void handleInput (InputHandler input) {
-		// stuff
+public class PauseState extends State {
+
+
+	@Override
+	public void render(RenderWindow rw) {
+		// TODO Auto-generated method stub
+		
 	}
-	
-	protected void update (float delta) {
-		// stuff
+
+	@Override
+	public void handleInput(InputCollector input) {
+		// TODO Auto-generated method stub
+		
 	}
-	
-	protected void render (Graphics g) {
-		// stuff
+
+	@Override
+	public void update(double delta) {
+		// TODO Auto-generated method stub
+		
 	}
 }
