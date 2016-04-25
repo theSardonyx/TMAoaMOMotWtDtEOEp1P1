@@ -7,6 +7,7 @@ import java.util.*;
 * used again
 *
 * @author	Ivan Martinez
+* @author	Kryzl Pascual
 */
 public class FontLoader {
 	/**
