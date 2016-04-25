@@ -67,7 +67,8 @@ public class BulletStage {
 	}
 	
 	public void render(RenderWindow rw) {
-		graphics.clearRect( 0, 0, dimension.getX(), dimension.getY());
+		graphics.setColor(new Color(0x777777));
+		graphics.fillRect( 0, 0, dimension.getX(), dimension.getY());
 		
 		for(Entity e: entities ) {
 			e.draw(graphics);
