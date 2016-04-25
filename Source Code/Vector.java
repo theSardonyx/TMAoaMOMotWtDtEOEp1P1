@@ -43,6 +43,20 @@ public class Vector {
 		return new Vector(this.x * factor, this.y * factor);
 	}
 	/*
+	Method used for getting the dot product between two vectors.
+	@param that: dot product is derived in relation to this other vector  
+	*/
+	public double dot(Vector that) {
+		return (this.x*that.x) + (this.y*that.y);
+	}
+	/*
+	Method used for getting the cross product between two vectors.
+	@param that: cross product is derived in relation to this other vector  
+	*/
+	public double cross(Vector that) {
+		return (this.x*that.y) - (this.y*that.x);
+	}
+	/*
 	Method used for vector rotation
 	vector rotation = rotating the vector in such a way it corresponds to a certain angle
 	Used to change an object's position/angle in a circular motion
