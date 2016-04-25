@@ -21,7 +21,7 @@ public class Player extends Entity {
 	*/
 	public Player(Vector position, Vector dimension, BulletStage stage) {
 		super(position, dimension, stage);
-		SpriteSheet ss = new SpriteSheet(ImageLoader.getInstance().getFile("res/img/64x64-sheet.png"), 64, 64);
+		SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/64x64-sheet.png", 64, 64);
 		visual = new Sprite(position, dimension, new BufferedImage[] {
 													ss.get(0, 0), ss.get(2, 0)
 													}, new BufferedImage[] {
