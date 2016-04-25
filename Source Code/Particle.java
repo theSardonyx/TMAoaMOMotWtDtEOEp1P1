@@ -29,7 +29,7 @@ public class Particle extends Entity {
 		((DrawableShape) visual).setFilled(true);
 		
 		hitbox = new CollideCircle(position, diameter);
-		move.offer(new AccelerateMoveBehavior(this, new Vector(100, 0), new Vector(0, 0)));
+		move = new AccelerateMoveBehavior(this, new Vector(100, 0), new Vector(0, 0));
 		
 		this.color = color;
 		duration = timeLeft = 1;
@@ -70,14 +70,14 @@ public class Particle extends Entity {
 	@param velocity: Vector object for setting the velocity
 	*/
 	public void setVelocity(Vector velocity) {
-		((AccelerateMoveBehavior)move.peek()).setVelocity(velocity);
+		((AccelerateMoveBehavior)move).setVelocity(velocity);
 	}
 	/*
 	Method to set a new acceleration
 	@param velocity: Vector object for setting the acceleration
 	*/
 	public void setAcceleration(Vector acceleration) {
-		((AccelerateMoveBehavior)move.peek()).setAcceleration(acceleration);
+		((AccelerateMoveBehavior)move).setAcceleration(acceleration);
 	}
 
 	/*
