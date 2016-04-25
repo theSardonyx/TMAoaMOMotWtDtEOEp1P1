@@ -27,7 +27,6 @@ public class Player extends Entity {
 													}, new BufferedImage[] {
 													ss.get(1, 0), ss.get(3, 0)
 													}, Color.GREEN);
-		((Sprite) visual).setStateRate(5);
 	}
 	
 	/*

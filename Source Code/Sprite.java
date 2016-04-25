@@ -25,7 +25,7 @@ public class Sprite extends AnimatedDrawable {
 	public Sprite(Vector position, Vector dimension, BufferedImage[] base, BufferedImage[] part, Color c) {
 		super(position, dimension);
 		this.stateCount = base.length;
-		setStateRate(1);
+		setStateRate(5);
 		
 		this.state = 0;
 		this.animation = new BufferedImage[ stateCount ];
