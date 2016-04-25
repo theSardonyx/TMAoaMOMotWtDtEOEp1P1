@@ -38,14 +38,14 @@ public class SpriteSheet{
 	}
 	/*
 	Splice a specfic sprite from the spritesheet, given the coordinates
-	@param i: constant to adjust the width for splicing
-	@param j: constant to adjust the height for splicing
+	@param col: constant to adjust the width for splicing
+	@param row: constant to adjust the height for splicing
 	*/
-	public BufferedImage get(int i, int j) {
-		if(sprites[i][j] == null)
-			sprites[i][j] = sheet.getSubimage(i*cellWidth, j*cellHeight, cellWidth, cellHeight);
+	public BufferedImage get(int col, int row) {
+		if(sprites[col][row] == null)
+			sprites[col][row] = sheet.getSubimage(col*cellWidth, row*cellHeight, cellWidth, cellHeight);
 		
-		return sprites[i][j];
+		return sprites[col][row];
 	}
 	/*
 	Method used to get the number of available columns of the spritesheet 
