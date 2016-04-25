@@ -7,6 +7,7 @@
 */
 public abstract class ShootBehavior {
 	protected Entity subject;
+	protected BulletStage bulletStage;
 	protected double fireRate;
 	
 	/*
@@ -15,8 +16,9 @@ public abstract class ShootBehavior {
 	@param subject: Entity in which the instance of this class is given
 	@param fireRate: value to set the fire rate for a given ShootBehavior
 	*/
-	public ShootBehavior(Entity subject, double fireRate) {
+	public ShootBehavior(Entity subject, double fireRate, BulletStage bulletStage) {
 		this.subject = subject;
+		this.bulletStage = bulletStage;
 	}
 	/*
 	Abstract method to execute the ShootBehavior of a given Entity
