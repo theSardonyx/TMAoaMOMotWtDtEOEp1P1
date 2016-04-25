@@ -55,7 +55,7 @@ public class FontLoader {
 	public Font getFont(String fontName, int fontStyle, int fontSize) {
 		if(!hash.containsKey(fontName)) {
 			int index = Arrays.binarySearch(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames(), fontName);
-			if(index == -1) {
+			if(index < 0) {
 				try {
 					GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/font/" + fontName + ".ttf")));
 				} catch (FontFormatException|IOException e) {
