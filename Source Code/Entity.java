@@ -3,7 +3,7 @@ import java.util.LinkedList;
 
 public abstract class Entity extends Drawable {
 	
-	protected LinkedList<MoveBehavior> move;
+	protected MoveBehavior move;
 	protected ShootBehavior shoot;
 	protected CollideReaction collideReaction;
 	
@@ -15,12 +15,11 @@ public abstract class Entity extends Drawable {
 	public Entity(Vector position, Vector dimension, BulletStage stage) {
 		super(position, dimension);
 		this.stage = stage;
-		move = new LinkedList<MoveBehavior>();
 	}
 	
 	public final void update( double delta ) {
-		if(!move.isEmpty())
-			move.peek().move(delta);
+		if(move != null)
+			move.move(delta);
 		if(shoot != null)
 			shoot.shoot(delta);
 		updateHook(delta);
@@ -84,25 +83,12 @@ public abstract class Entity extends Drawable {
 		// EMPTY
 	}
 	
-	public void queueMoveBehavior(MoveBehavior mb) {
-		move.offer(mb);
-	}
-	
-	public MoveBehavior pollMoveBehavior() {
-		return move.poll();
-	}
-	
-	public void stackMoveBehavior(MoveBehavior mb) {
-		move.push(mb);
-	}
-	
 	public void setMoveBehavior(MoveBehavior mb) {
-		move.clear();
-		move.offer(mb);
+		move = mb;
 	}
 	
-	public void clearMoveBehavior() {
-		move.clear();
+	public void setShootBehavior(ShootBehavior sb) {
+		shoot = sb;
 	}
 	
 	public void setDrawable(Drawable d) {

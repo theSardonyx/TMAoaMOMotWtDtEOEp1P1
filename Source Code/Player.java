@@ -34,8 +34,8 @@ public class Player extends Entity {
 	@param input: InputCollector object where the different inputs will be gotten from
 	*/
 	public void handleInput(InputCollector input) {
-		if(move.peek() instanceof PlayerMoveBehavior) {
-			PlayerMoveBehavior pmb = (PlayerMoveBehavior) move.peek();
+		if(move instanceof PlayerMoveBehavior) {
+			PlayerMoveBehavior pmb = (PlayerMoveBehavior) move;
 			pmb.setUp(input.isKeyPressed(KeyEvent.VK_UP));
 			pmb.setDown(input.isKeyPressed(KeyEvent.VK_DOWN));
 			pmb.setLeft(input.isKeyPressed(KeyEvent.VK_LEFT));
