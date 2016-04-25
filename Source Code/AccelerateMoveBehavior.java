@@ -8,6 +8,9 @@
 * @author	Ivan Martinez
 */
 public class AccelerateMoveBehavior extends MoveBehavior {
+	private Vector velocity;
+	private Vector acceleration;
+	
 	/**
 	* Creates an AccelerateMoveBehavior object for the specified
 	* Entity with the specified initial velocity and acceleration

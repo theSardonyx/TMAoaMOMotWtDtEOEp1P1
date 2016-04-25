@@ -7,8 +7,6 @@
 */
 public abstract class MoveBehavior {
 	protected Entity subject;
-	protected Vector velocity;
-	protected Vector acceleration;
 	
 	/*
 	Constructor for MoveBehavior
