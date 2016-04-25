@@ -1,1 +1,0 @@
-public abstract class Ambient extends BenevolentEntity {}

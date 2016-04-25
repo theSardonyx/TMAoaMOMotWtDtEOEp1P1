@@ -1,1 +1,0 @@
-public abstract class PowerUp extends BenevolentEntity {}

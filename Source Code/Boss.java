@@ -1,1 +1,0 @@
-public abstract class Boss extends Enemy {}
