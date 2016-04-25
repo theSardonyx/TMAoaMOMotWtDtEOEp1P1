@@ -43,12 +43,15 @@ public class Player extends Entity {
 			pmb.setFocus(input.isKeyPressed(KeyEvent.VK_SHIFT));
 			
 			if(input.isKeyPressed(KeyEvent.VK_Z)) {
+				
+				/*
 				Particle p = new Particle(position, 20, new Color((int) (Math.random() * (256 * 256 * 256))), stage);
 				p.setAcceleration(new Vector(0, 20));
 				p.setVelocity(new Vector(0, -200));
 				p.setGrowRate(new Vector(0, 0));
 				p.adjustDuration(2);
 				this.spawnEntity(p);
+				*/
 			}
 		}
 	}
