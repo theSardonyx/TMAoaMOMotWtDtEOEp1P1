@@ -28,7 +28,7 @@ public class Runner {
 		MENU_STATE = sm.addState(new MenuState());
 		GAME_STATE = sm.addState(new GameState());
 		OPTION_STATE = sm.addState(new OptionState());
-		sm.push(MENU_STATE, null);
+		sm.push(SPLASH_STATE, null);
 		
 		double lag = 0;
 		double past = toSecond(System.nanoTime());
