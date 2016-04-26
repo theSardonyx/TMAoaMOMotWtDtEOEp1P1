@@ -19,6 +19,7 @@ public abstract class ShootBehavior {
 	public ShootBehavior(Entity subject, double fireRate, BulletStage bulletStage) {
 		this.subject = subject;
 		this.bulletStage = bulletStage;
+		this.fireRate = fireRate;
 	}
 	/*
 	Abstract method to execute the ShootBehavior of a given Entity
