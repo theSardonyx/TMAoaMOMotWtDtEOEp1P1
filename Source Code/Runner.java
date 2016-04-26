@@ -1,6 +1,6 @@
 
 public class Runner {
-	public final static double FPS = 30.0;
+	public final static double FPS = 60.0;
 	public final static double SPF = 1.0/FPS;
 	public final static int RES_WIDTH = 960;
 	public final static int RES_HEIGHT = 720;
