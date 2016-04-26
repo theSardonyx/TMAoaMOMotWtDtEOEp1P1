@@ -26,8 +26,9 @@ public class BulletStage {
 		entities = new ArrayList<Entity>();
 		requestQueue = new ArrayDeque<Request>();
 
-		player = new Player(visual.getPosition(), new Vector(64, 64), this);
-		player.queueMoveBehavior(new PlayerMoveBehavior(player, 300));
+		player = new Player(new Vector(200, 200), new Vector(64, 64), this);
+		player.setMoveBehavior(new PlayerMoveBehavior(player, 300));
+		player.setShootBehavior(new BatShootBehavior1(player, this, 1, Color.RED));
 		addEntity(player);
 	}
 	
