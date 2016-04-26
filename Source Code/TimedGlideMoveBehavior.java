@@ -7,7 +7,6 @@ public class TimedGlideMoveBehavior extends MoveBehavior{
 	public TimedGlideMoveBehavior(Entity subject, Vector targetPos, double timeCap) {
 		super(subject);
 		this.timeLeft = timeCap;
-		System.out.println(timeLeft);
 		
 		Vector init = subject.getPosition();
 		Vector fin = targetPos;
