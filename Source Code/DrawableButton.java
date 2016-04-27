@@ -53,6 +53,13 @@ public class DrawableButton extends Drawable {
 	private CollideRectangle cr;
 	
 	/**
+	* The font this button uses to display text
+	*
+	* @see	Font
+	*/
+	private Font font;
+	
+	/**
 	* Creates a new DrawableButton instance with the specified
 	* position, text, font, padding, and color
 	*
@@ -74,6 +81,8 @@ public class DrawableButton extends Drawable {
 	*/
 	public DrawableButton(Vector position, String text, Font font, Vector padding, Color color){
 		super(position, new Vector(FontLoader.getInstance().getWidth(font, text) + (padding.x * 2), FontLoader.getInstance().getHeight(font, text) + (padding.y * 2)));
+		
+		this.font = font;
 		
 		this.padding = padding;
 		
@@ -285,6 +294,9 @@ public class DrawableButton extends Drawable {
 	* @see	DrawableString#setText
 	*/
 	public void setText(String s) {
+		this.setDimension (new Vector (FontLoader.getInstance().getWidth (font, s) + (padding.x * 2), FontLoader.getInstance().getHeight (font, s) + (padding.y * 2)));
+		this.cr = new CollideRectangle(position, dimension);
+		this.dr = new DrawableRectangle(position, dimension, rectUnhovered);
 		this.ds.setText(s);
 	}
 }
