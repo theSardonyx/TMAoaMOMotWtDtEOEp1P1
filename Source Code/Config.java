@@ -1,3 +1,5 @@
+import java.awt.event.*;
+
 /**
 * This class represents the configuration settings of the game.
 *
@@ -5,9 +7,9 @@
 */
 public class Config {
 	/**
-	* Holds the String representation of keys for player control
+	* Holds the key codes of the keys for player control
 	*/
-	String[] keys;
+	int[] keys;
 	
 	/**
 	* Holds how many times per second the frame updates
@@ -25,7 +27,7 @@ public class Config {
 	public Config() {
 		frameRate = 60;
 		particles = true;
-		keys = new String[] {"UP", "DOWN", "LEFT", "RIGHT", "SHIFT", "Z"};
+		keys = new int[] {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SHIFT, KeyEvent.VK_Z, KeyEvent.VK_P};
 	}
 	
 	/**
@@ -72,109 +74,127 @@ public class Config {
 	/**
 	* Gets the key used to move the Player up
 	*
-	* @return	String	The String representation of the key
+	* @return	int		The key code of the key
 	*/
-	public String getUpKey() {
+	public int getUpKey() {
 		return keys[0];
 	}
 	
 	/**
 	* Gets the key used to move the Player down
 	*
-	* @return	String	The String representation of the key
+	* @return	int		The key code of the key
 	*/
-	public String getDownKey() {
+	public int getDownKey() {
 		return keys[1];
 	}
 	
 	/**
 	* Gets the key used to move the Player left
 	*
-	* @return	String	The String representation of the key
+	* @return	int		The key code of the key
 	*/
-	public String getLeftKey() {
+	public int getLeftKey() {
 		return keys[2];
 	}
 	
 	/**
 	* Gets the key used to move the Player right
 	*
-	* @return	String	The String representation of the key
+	* @return	int		The key code of the key
 	*/
-	public String getRightKey() {
+	public int getRightKey() {
 		return keys[3];
 	}
 	
 	/**
 	* Gets the key used to move the Player slower
 	*
-	* @return	String	The String representation of the key
+	* @return	int		The key code of the key
 	*/
-	public String getFocusKey() {
+	public int getFocusKey() {
 		return keys[4];
 	}
 	
 	/**
 	* Gets the key used to make the Player shoot bullets
 	*
-	* @return	String	The String representation of the key
+	* @return	int		The key code of the key
 	*/
-	public String getShootKey() {
+	public int getShootKey() {
 		return keys[5];
+	}
+	
+	/**
+	* Gets the key used to make the game pause
+	*
+	* @return	int		The key code of the key
+	*/
+	public int getPauseKey() {
+		return keys[6];
 	}
 	
 	/**
 	* Sets the key used to move the Player up
 	*
-	* @param	up	The String representation of the new key
+	* @param	up	The key code of the new key
 	*/
-	public void setUpKey (String up) {
+	public void setUpKey (int up) {
 		keys[0] = up;
 	}
 	
 	/**
 	* Sets the key used to move the Player down
 	*
-	* @param	down	The String representation of the new key
+	* @param	down	The key code of the new key
 	*/
-	public void setDownKey (String down) {
+	public void setDownKey (int down) {
 		keys[1] = down;
 	}
 	
 	/**
 	* Sets the key used to move the Player left
 	*
-	* @param	left	The String representation of the new key
+	* @param	left	The key code of the new key
 	*/
-	public void setLeftKey (String left) {
+	public void setLeftKey (int left) {
 		keys[2] = left;
 	}
 	
 	/**
 	* Sets the key used to move the Player right
 	*
-	* @param	right	The String representation of the new key
+	* @param	right	The key code of the new key
 	*/
-	public void setRightKey (String right) {
+	public void setRightKey (int right) {
 		keys[3] = right;
 	}
 	
 	/**
 	* Sets the key used to move the Player slower
 	*
-	* @param	focus	The String representation of the new key
+	* @param	focus	The key code of the new key
 	*/
-	public void setFocusKey (String focus) {
+	public void setFocusKey (int focus) {
 		keys[4] = focus;
 	}
 	
 	/**
 	* Sets the key used to make the Player shoot bullets
 	*
-	* @param	shoot	The String representation of the new key
+	* @param	shoot	The key code of the new key
 	*/
-	public void setShootKey (String shoot) {
+	public void setShootKey (int shoot) {
 		keys[5] = shoot;
+	}
+	
+	/**
+	* Sets the key used to make the Player shoot bullets
+	*
+	* @param	pause	The key code of the new key
+	*/
+	public void setPauseKey (int pause) {
+		keys[6] = pause;
 	}
 	
 	/**
@@ -186,7 +206,7 @@ public class Config {
 	*/
 	public String getSettings() {
 		String ret = "" + frameRate + "|" + particles + "|";
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 7; i++) {
 			ret += keys[i] + "|";
 		}
 		return ret;

@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.geom.*;
+import java.awt.event.*;
 import java.io.*;
 
 /**
@@ -15,7 +16,7 @@ public class OptionState extends State {
 	*
 	* @see	DrawableButton
 	*/
-	DrawableButton btnUp, btnDown, btnLeft, btnRight, btnFocus, btnShoot, btnFrameRate, btnParticles;
+	DrawableButton btnUp, btnDown, btnLeft, btnRight, btnFocus, btnShoot, btnPause, btnFrameRate, btnParticles;
 	
 	/**
 	* The button that will exit the Options screen
@@ -29,7 +30,7 @@ public class OptionState extends State {
 	*
 	* @see	DrawableString
 	*/
-	DrawableString label, lblKeys, lblMisc, lblUp, lblDown, lblLeft, lblRight, lblFocus, lblShoot, lblFrameRate, lblParticles;
+	DrawableString label, lblKeys, lblMisc, lblUp, lblDown, lblLeft, lblRight, lblFocus, lblShoot, lblPause, lblFrameRate, lblParticles;
 	
 	/**
 	* The Config object that contains all settings
@@ -39,12 +40,24 @@ public class OptionState extends State {
 	Config curr;
 	
 	/**
+	* Check if a button was pressed and is waiting for a key event
+	*/
+	boolean pressed = false;
+	
+	/**
+	* The String representation of the button waiting for a key event
+	*/
+	String text = "";
+	
+	/**
 	* Creates a new Config class to save settings in or reads from
 	* an existing config file and defines the displayed values for
 	* each setting
 	*
 	* @see	Config
 	* @see	FontLoader
+	* @see	DrawableString
+	* @see	DrawableButton
 	*/
 	public OptionState() {
 		curr = new Config();
@@ -59,13 +72,15 @@ public class OptionState extends State {
 		lblRight = new DrawableString (new Vector(150, 400), "Right", font, Color.WHITE);
 		lblFocus = new DrawableString (new Vector(150, 450), "Focus", font, Color.WHITE);
 		lblShoot = new DrawableString (new Vector(150, 500), "Shoot", font, Color.WHITE);
+		lblPause = new DrawableString (new Vector(150, 550), "Pause", font, Color.WHITE);
 		
-		btnUp = new DrawableButton (new Vector (350, 250), curr.getUpKey(), font, padding, Color.WHITE);
-		btnDown = new DrawableButton (new Vector (350, 300), curr.getDownKey(), font, padding, Color.WHITE);
-		btnLeft = new DrawableButton (new Vector (350, 350), curr.getLeftKey(), font, padding, Color.WHITE);
-		btnRight = new DrawableButton (new Vector (350, 400), curr.getRightKey(), font, padding, Color.WHITE);
-		btnFocus = new DrawableButton (new Vector (350, 450), curr.getFocusKey(), font, padding, Color.WHITE);
-		btnShoot = new DrawableButton (new Vector (350, 500), curr.getShootKey(), font, padding, Color.WHITE);
+		btnUp = new DrawableButton (new Vector (350, 250), KeyEvent.getKeyText (curr.getUpKey()).toUpperCase(), font, padding, Color.WHITE);
+		btnDown = new DrawableButton (new Vector (350, 300), KeyEvent.getKeyText (curr.getDownKey()).toUpperCase(), font, padding, Color.WHITE);
+		btnLeft = new DrawableButton (new Vector (350, 350), KeyEvent.getKeyText (curr.getLeftKey()).toUpperCase(), font, padding, Color.WHITE);
+		btnRight = new DrawableButton (new Vector (350, 400), KeyEvent.getKeyText (curr.getRightKey()).toUpperCase(), font, padding, Color.WHITE);
+		btnFocus = new DrawableButton (new Vector (350, 450), KeyEvent.getKeyText (curr.getFocusKey()).toUpperCase(), font, padding, Color.WHITE);
+		btnShoot = new DrawableButton (new Vector (350, 500), KeyEvent.getKeyText (curr.getShootKey()).toUpperCase(), font, padding, Color.WHITE);
+		btnPause = new DrawableButton (new Vector (350, 550), KeyEvent.getKeyText (curr.getPauseKey()).toUpperCase(), font, padding, Color.WHITE);
 		
 		lblKeys = new DrawableString (new Vector (Runner.RES_WIDTH / 4, 200), "Controls", font, Color.WHITE);
 		lblMisc = new DrawableString (new Vector (3 * (Runner.RES_WIDTH / 4), 200), "Misc Settings", font, Color.WHITE);
@@ -79,7 +94,7 @@ public class OptionState extends State {
 			btnParticles.setText ("On");
 		else btnParticles.setText ("Off");
 		
-		btnBack = new DrawableButton (new Vector (Runner.RES_WIDTH / 2, 600), "Back", font, padding, Color.WHITE);
+		btnBack = new DrawableButton (new Vector (Runner.RES_WIDTH / 2, 650), "Back", font, padding, Color.WHITE);
 		
 		font = font.deriveFont (Font.PLAIN, 40);
 		label = new DrawableString (new Vector (Runner.RES_WIDTH / 2, 100), "Options", font, Color.WHITE);
@@ -100,26 +115,93 @@ public class OptionState extends State {
 		btnRight.update (input.getMousePosition());
 		btnFocus.update (input.getMousePosition());
 		btnShoot.update (input.getMousePosition());
+		btnPause.update (input.getMousePosition());
 		
 		btnFrameRate.update (input.getMousePosition());
 		btnParticles.update (input.getMousePosition());
 		
 		btnBack.update (input.getMousePosition());
 		
+		if (pressed && input.isKeyPressed()) {
+			int code = input.getKeyCodesPressed()[0];
+			switch (text) {
+				case "Up" :
+					curr.setUpKey (code);
+					btnUp.setText (KeyEvent.getKeyText (code));
+					pressed = false;
+					text = "";
+					break;
+				case "Down" :
+					curr.setDownKey (code);
+					btnDown.setText (KeyEvent.getKeyText (code));
+					pressed = false;
+					text = "";
+					break;
+				case "Left" :
+					curr.setLeftKey (code);
+					btnLeft.setText (KeyEvent.getKeyText (code));
+					pressed = false;
+					text = "";
+					break;
+				case "Right" :
+					curr.setRightKey (code);
+					btnRight.setText (KeyEvent.getKeyText (code));
+					pressed = false;
+					text = "";
+					break;
+				case "Focus" :
+					curr.setFocusKey (code);
+					btnFocus.setText (KeyEvent.getKeyText (code));
+					pressed = false;
+					text = "";
+					break;
+				case "Shoot" :
+					curr.setShootKey (code);
+					btnShoot.setText (KeyEvent.getKeyText (code));
+					pressed = false;
+					text = "";
+					break;
+				case "Pause" :
+					curr.setPauseKey (code);
+					btnPause.setText (KeyEvent.getKeyText (code));
+					pressed = false;
+					text = "";
+					break;
+			}
+		}
+		
 		if (input.getMouseReleased (InputCollector.MOUSE_BUTTON1)) {
-			if (btnUp.isCollidingWith (input.getMousePosition()))
-				btnUp.setText ("Pressed");
-			else if (btnDown.isCollidingWith (input.getMousePosition()))
-				btnDown.setText ("Pressed");
-			else if (btnLeft.isCollidingWith (input.getMousePosition()))
-				btnLeft.setText ("Pressed");
-			else if (btnRight.isCollidingWith (input.getMousePosition()))
-				btnRight.setText ("Pressed");
-			else if (btnFocus.isCollidingWith (input.getMousePosition()))
-				btnFocus.setText ("Pressed");
-			else if (btnShoot.isCollidingWith (input.getMousePosition()))
-				btnShoot.setText ("Pressed");
-			else if (btnFrameRate.isCollidingWith (input.getMousePosition())) {
+			pressed = !pressed;
+			if (btnUp.isCollidingWith (input.getMousePosition())) {
+				if (pressed) {
+					text = "Up";
+				} else text = "";
+				System.out.println (pressed + " " + text);
+			} else if (btnDown.isCollidingWith (input.getMousePosition())) {
+				if (pressed) {
+					text = "Down";
+				} else text = "";
+			} else if (btnLeft.isCollidingWith (input.getMousePosition())) {
+				if (pressed) {
+					text = "Left";
+				} else text = "";
+			} else if (btnRight.isCollidingWith (input.getMousePosition())) {
+				if (pressed) {
+					text = "Right";
+				} else text = "";
+			} else if (btnFocus.isCollidingWith (input.getMousePosition())) {
+				if (pressed) {
+					text = "Focus";
+				} else text = "";
+			} else if (btnShoot.isCollidingWith (input.getMousePosition())) {
+				if (pressed) {
+					text = "Shoot";
+				} else text = "";
+			} else if (btnPause.isCollidingWith (input.getMousePosition())) {
+				if (pressed) {
+					text = "Pause";
+				} else text = "";
+			} else if (btnFrameRate.isCollidingWith (input.getMousePosition())) {
 				curr.toggleFrameRate();
 				btnFrameRate.setText ("" + curr.getFrameRate());
 			} else if (btnParticles.isCollidingWith (input.getMousePosition())) {
@@ -161,6 +243,7 @@ public class OptionState extends State {
 		rw.draw (lblRight);
 		rw.draw (lblFocus);
 		rw.draw (lblShoot);
+		rw.draw (lblPause);
 		
 		rw.draw (btnUp);
 		rw.draw (btnDown);
@@ -168,6 +251,7 @@ public class OptionState extends State {
 		rw.draw (btnRight);
 		rw.draw (btnFocus);
 		rw.draw (btnShoot);
+		rw.draw (btnPause);
 		
 		rw.draw (lblFrameRate);
 		rw.draw (lblParticles);
@@ -175,5 +259,4 @@ public class OptionState extends State {
 		rw.draw (btnFrameRate);
 		rw.draw (btnParticles);
 	}
-
 }
