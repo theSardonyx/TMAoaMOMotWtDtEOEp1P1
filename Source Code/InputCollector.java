@@ -1,9 +1,10 @@
 /**
-* This class collects all mouse and keyboard inputs,
-* and puts them in a single queue
-* After processing all inputs, it re-initializes all contents back to its default state
+* This class collects all mouse and keyboard inputs, and puts them
+* in a single queue. After processing all inputs, it re-initializes
+* all contents back to its default state
+*
 * @author	Aemielvin Loremia
-* @author	Ivan Martinez
+* @author	Kryzl Pascual
 */
 
 import java.awt.Component;
@@ -369,4 +370,14 @@ public class InputCollector implements MouseInputListener, KeyListener{
 		return !keyReleased.isEmpty();
 	}
 	
+	/**
+	* Gets the keys pressed
+	*
+	* @return	int[]	The array containing the elements of
+	*					#keyPressed
+	*/
+	public Integer[] getKeyCodesPressed() {
+		Integer[] ret = keyPressed.toArray(new Integer[keyPressed.size()]);
+		return ret;
+	}
 }
