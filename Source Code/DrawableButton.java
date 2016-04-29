@@ -297,6 +297,6 @@ public class DrawableButton extends Drawable {
 		this.setDimension (new Vector (FontLoader.getInstance().getWidth (font, s) + (padding.x * 2), FontLoader.getInstance().getHeight (font, s) + (padding.y * 2)));
 		this.cr = new CollideRectangle(position, dimension);
 		this.dr = new DrawableRectangle(position, dimension, rectUnhovered);
-		this.ds.setText(s);
+		this.ds = new DrawableString(position, s, font, fontUnhovered);
 	}
 }
