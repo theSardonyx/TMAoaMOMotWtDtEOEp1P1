@@ -12,12 +12,13 @@ public class GameState extends State {
 	* @see BulletStage
 	*/
 	BulletStage bulletStage;
-	
+	SideScreen sideScreen;
 	/**
 	* Instantiates a GameState with a new BulletStage object
 	*/
 	public GameState() {
 		bulletStage = new BulletStage();
+                sideScreen = new SideScreen();
 	}
 	
 	/**
@@ -45,6 +46,7 @@ public class GameState extends State {
 	@Override
 	public void update(double delta) {
 		bulletStage.update(delta);
+		sideScreen.update(delta);
 	}
 
 	/**
@@ -58,5 +60,6 @@ public class GameState extends State {
 	@Override
 	public void render(RenderWindow rw) {
 		bulletStage.render(rw);
+        sideScreen.render(rw);
 	}
 }
