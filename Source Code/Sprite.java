@@ -1,6 +1,6 @@
 /**
 * The class used for the sprites
-* 
+* Basically sprites are images with extra animation, normally this animation is fullfilled by a set of BufferedImages
 * 
 * @author	Aemielvin Loremia
 * @author	Ivan Martinez
@@ -18,8 +18,8 @@ public class Sprite extends AnimatedDrawable {
 	Creates a new Sprite object, based from a spritesheet
 	@param position: Base position of the sprite 
 	@param dimension: Size of the sprite
-	@param base: BufferedImage object for the body of the sprite
-	@param part: BufferedImage object for the additional parts of the sprite
+	@param base: BufferedImage array object for the body of the sprite
+	@param part: BufferedImage array object for the additional parts of the sprite
 	@param c: Color of the sprite
 	*/
 	public Sprite(Vector position, Vector dimension, BufferedImage[] base, BufferedImage[] part, Color c) {

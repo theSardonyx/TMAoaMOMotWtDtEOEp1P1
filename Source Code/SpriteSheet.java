@@ -37,7 +37,7 @@ public class SpriteSheet{
 		sprites = new BufferedImage[column][row];
 	}
 	/*
-	Splice a specfic sprite from the spritesheet, given the coordinates
+	Splice a specfic sprite in the form of a BufferedImage from the spritesheet, given the coordinates
 	@param col: constant to adjust the width for splicing
 	@param row: constant to adjust the height for splicing
 	*/
