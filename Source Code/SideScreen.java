@@ -121,18 +121,18 @@ public class SideScreen
 		
 		public void heartRender(RenderWindow rw)
 		{
-			for(int i = 1; i < 11; i++)
+			for(int i = 1; i < 9; i++)
 			{
 				int adjust = 0;
 				Vector pos;
-				if(i <= 5)
+				if(i <= 4)
 				{
 					adjust = 30 * i;
 					pos = new Vector(linerLabel - 30 + (adjust), linerHeartRow1);
 				}					
 				else 
 				{
-					adjust = 30 * (i - 5);
+					adjust = 30 * (i - 4);
 					pos = new Vector(linerLabel - 30 + (adjust), linerHeartRow2);
 				}
 				Vector dim = new Vector(30, 30);
