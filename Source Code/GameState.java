@@ -6,6 +6,8 @@ import java.awt.event.*;
 * @see	State
 *
 * @author	Aemielvin Loremia
+* @author	Jino Basilio
+* @author	Kryzl Pascual
 */
 public class GameState extends State {
 	/**
@@ -14,9 +16,19 @@ public class GameState extends State {
 	* @see BulletStage
 	*/
 	BulletStage bulletStage;
-	SideScreen sideScreen;
+	
 	/**
-	* Instantiates a GameState with a new BulletStage object
+	 * The SideScreen object being used
+	 * 
+	 * @see	SideScreen
+	 */
+	SideScreen sideScreen;
+	
+	/**
+	* Instantiates a GameState with a new BulletStage object and SideScreen object
+	* 
+	* @see	BulletStage
+	* @see	SideScreen
 	*/
 	public GameState() {
 		bulletStage = new BulletStage();
@@ -49,6 +61,7 @@ public class GameState extends State {
 	* @param	delta	The time passed in seconds
 	*
 	* @see	BulletStage#update
+	* @see	SideScreen#update
 	*/
 	@Override
 	public void update(double delta) {
@@ -63,6 +76,7 @@ public class GameState extends State {
 	*
 	* @see	RenderWindow
 	* @see	BulletStage#render
+	* @see	SideScreen#render
 	*/
 	@Override
 	public void render(RenderWindow rw) {
