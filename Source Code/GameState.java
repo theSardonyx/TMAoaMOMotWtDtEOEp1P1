@@ -1,3 +1,5 @@
+import java.awt.event.*;
+
 /**
 * This class represents a State of the game
 * 
@@ -33,6 +35,11 @@ public class GameState extends State {
 	@Override
 	public void handleInput(InputCollector input) {
 		bulletStage.handleInput(input);
+		
+		//Tentative
+		if (input.isKeyPressed (KeyEvent.VK_P)) {
+			sm.push (Runner.PAUSE_STATE, null);
+		}
 	}
 
 	/**

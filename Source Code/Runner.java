@@ -10,6 +10,7 @@ public class Runner {
 	public static int MENU_STATE;
 	public static int GAME_STATE;
 	public static int OPTION_STATE;
+	public static int PAUSE_STATE;
 	
 	/*
 	Function for the main game loop
@@ -28,6 +29,7 @@ public class Runner {
 		MENU_STATE = sm.addState(new MenuState());
 		GAME_STATE = sm.addState(new GameState());
 		OPTION_STATE = sm.addState(new OptionState());
+		PAUSE_STATE = sm.addState(new PauseState());
 		sm.push(SPLASH_STATE, null);
 		
 		double lag = 0;
