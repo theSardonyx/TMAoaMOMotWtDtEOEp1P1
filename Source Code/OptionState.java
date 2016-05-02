@@ -1,7 +1,5 @@
 import java.awt.*;
-import java.awt.geom.*;
 import java.awt.event.*;
-import java.io.*;
 
 /**
 * This class represents the Option screen of the game
@@ -91,8 +89,8 @@ public class OptionState extends State {
 		btnFrameRate = new DrawableButton (new Vector (Runner.RES_WIDTH - 100, 250), "" + curr.getFrameRate(), font, padding, Color.WHITE);
 		btnParticles = new DrawableButton (new Vector (Runner.RES_WIDTH - 100, 300), "", font, padding, Color.WHITE);
 		if (curr.getParticles())
-			btnParticles.setText ("On");
-		else btnParticles.setText ("Off");
+			btnParticles.setText ("ON");
+		else btnParticles.setText ("OFF");
 		
 		btnBack = new DrawableButton (new Vector (Runner.RES_WIDTH / 2, 650), "Back", font, padding, Color.WHITE);
 		
@@ -102,10 +100,17 @@ public class OptionState extends State {
 
 	/**
 	* Handles all inputs from an InputCollector object, responds
-	* with the appropiate method
+	* with the appropriate method
 	*
 	* @param	input	The InputCollector object to check for mouse
 	* 					and keyboard movement
+	* 
+	* @see	InputCollector
+	* @see	Config
+	* @see	DrawableButton#isCollidingWith
+	* @see	State#popSelf
+	* @see	#pressed
+	* @see	#text
 	*/
 	@Override
 	public void handleInput(InputCollector input) {
@@ -127,43 +132,43 @@ public class OptionState extends State {
 			switch (text) {
 				case "Up" :
 					curr.setUpKey (code);
-					btnUp.setText (KeyEvent.getKeyText (code));
+					btnUp.setText (KeyEvent.getKeyText (code).toUpperCase());
 					pressed = false;
 					text = "";
 					break;
 				case "Down" :
 					curr.setDownKey (code);
-					btnDown.setText (KeyEvent.getKeyText (code));
+					btnDown.setText (KeyEvent.getKeyText (code).toUpperCase());
 					pressed = false;
 					text = "";
 					break;
 				case "Left" :
 					curr.setLeftKey (code);
-					btnLeft.setText (KeyEvent.getKeyText (code));
+					btnLeft.setText (KeyEvent.getKeyText (code).toUpperCase());
 					pressed = false;
 					text = "";
 					break;
 				case "Right" :
 					curr.setRightKey (code);
-					btnRight.setText (KeyEvent.getKeyText (code));
+					btnRight.setText (KeyEvent.getKeyText (code).toUpperCase());
 					pressed = false;
 					text = "";
 					break;
 				case "Focus" :
 					curr.setFocusKey (code);
-					btnFocus.setText (KeyEvent.getKeyText (code));
+					btnFocus.setText (KeyEvent.getKeyText (code).toUpperCase());
 					pressed = false;
 					text = "";
 					break;
 				case "Shoot" :
 					curr.setShootKey (code);
-					btnShoot.setText (KeyEvent.getKeyText (code));
+					btnShoot.setText (KeyEvent.getKeyText (code).toUpperCase());
 					pressed = false;
 					text = "";
 					break;
 				case "Pause" :
 					curr.setPauseKey (code);
-					btnPause.setText (KeyEvent.getKeyText (code));
+					btnPause.setText (KeyEvent.getKeyText (code).toUpperCase());
 					pressed = false;
 					text = "";
 					break;
@@ -172,34 +177,50 @@ public class OptionState extends State {
 		
 		if (input.getMouseReleased (InputCollector.MOUSE_BUTTON1)) {
 			pressed = !pressed;
+			if (!pressed) {
+				btnUp.setText (KeyEvent.getKeyText (curr.getUpKey()).toUpperCase());
+				btnDown.setText (KeyEvent.getKeyText (curr.getDownKey()).toUpperCase());
+				btnLeft.setText (KeyEvent.getKeyText (curr.getLeftKey()).toUpperCase());
+				btnRight.setText (KeyEvent.getKeyText (curr.getRightKey()).toUpperCase());
+				btnFocus.setText (KeyEvent.getKeyText (curr.getFocusKey()).toUpperCase());
+				btnShoot.setText (KeyEvent.getKeyText (curr.getShootKey()).toUpperCase());
+				btnPause.setText (KeyEvent.getKeyText (curr.getPauseKey()).toUpperCase());
+			}
+				
 			if (btnUp.isCollidingWith (input.getMousePosition())) {
 				if (pressed) {
 					text = "Up";
+					btnUp.setText ("Press Any Key");
 				} else text = "";
-				System.out.println (pressed + " " + text);
 			} else if (btnDown.isCollidingWith (input.getMousePosition())) {
 				if (pressed) {
 					text = "Down";
+					btnDown.setText ("Press Any Key");
 				} else text = "";
 			} else if (btnLeft.isCollidingWith (input.getMousePosition())) {
 				if (pressed) {
 					text = "Left";
+					btnLeft.setText ("Press Any Key");
 				} else text = "";
 			} else if (btnRight.isCollidingWith (input.getMousePosition())) {
 				if (pressed) {
 					text = "Right";
+					btnRight.setText ("Press Any Key");
 				} else text = "";
 			} else if (btnFocus.isCollidingWith (input.getMousePosition())) {
 				if (pressed) {
 					text = "Focus";
+					btnFocus.setText ("Press Any Key");
 				} else text = "";
 			} else if (btnShoot.isCollidingWith (input.getMousePosition())) {
 				if (pressed) {
 					text = "Shoot";
+					btnShoot.setText ("Press Any Key");
 				} else text = "";
 			} else if (btnPause.isCollidingWith (input.getMousePosition())) {
 				if (pressed) {
 					text = "Pause";
+					btnPause.setText ("Press Any Key");
 				} else text = "";
 			} else if (btnFrameRate.isCollidingWith (input.getMousePosition())) {
 				curr.toggleFrameRate();
@@ -207,28 +228,32 @@ public class OptionState extends State {
 			} else if (btnParticles.isCollidingWith (input.getMousePosition())) {
 				curr.toggleParticles();
 				if (curr.getParticles())
-					btnParticles.setText ("On");
-				else btnParticles.setText ("Off");
+					btnParticles.setText ("ON");
+				else btnParticles.setText ("OFF");
 			} else if (btnBack.isCollidingWith (input.getMousePosition())) {
 				//TODO Save Config object into external file
 				popSelf(1, curr.getSettings());
 			}
 		}
 	}
-	/*
-	Overriden method from the State update
-	Updates the current objects given a value, and adjusts positions/states accordingly
-	@param delta: used to update objects based from time passed
+	
+	/**
+	* Updates the current objects given a value, and adjusts positions/states accordingly
+	* 
+	* @param	delta	The time passed
 	*/
 	@Override
 	public void update(double delta) {
 		// TODO Auto-generated method stub
 
 	}
-	/*
-	Overriden method from the State render
-	Renders all compatible objects into this window
-	@param rw: the RenderWindow object where objects will be rendered/drawn
+	
+	/**
+	* Renders all compatible objects into this window
+	* 
+	* @param	rw	The RenderWindow object where objects will be rendered/drawn
+	* 
+	* @see	RenderWindow
 	*/
 	@Override
 	public void render(RenderWindow rw) {

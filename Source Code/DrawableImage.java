@@ -9,12 +9,12 @@ import java.awt.image.BufferedImage;
 * @author	Aemielvin Loremia
 */
 public class DrawableImage extends Drawable {
-	/*
+	/**
 	* The BufferedImage to be "converted" to Drawable
 	*/
 	public BufferedImage image;
 	
-	/*
+	/**
 	* Converts the specified image into a Drawable with the specified
 	* position and dimensions
 	*
@@ -29,7 +29,7 @@ public class DrawableImage extends Drawable {
 		this.image = image;
 	}
 
-	/*
+	/**
 	* Draws this instance of DrawableImage
 	*
 	* @param	g	The graphics to be drawn
