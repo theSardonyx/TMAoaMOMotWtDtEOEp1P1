@@ -37,11 +37,12 @@ public class Player extends Entity {
 	public void handleInput(InputCollector input) {
 		if(move instanceof PlayerMoveBehavior) {
 			PlayerMoveBehavior pmb = (PlayerMoveBehavior) move;
-			pmb.setUp(input.isKeyPressed(KeyEvent.VK_UP));
-			pmb.setDown(input.isKeyPressed(KeyEvent.VK_DOWN));
-			pmb.setLeft(input.isKeyPressed(KeyEvent.VK_LEFT));
-			pmb.setRight(input.isKeyPressed(KeyEvent.VK_RIGHT));
-			pmb.setFocus(input.isKeyPressed(KeyEvent.VK_SHIFT));
+			Config curr = Config.getInstance();
+			pmb.setUp(input.isKeyPressed(curr.getUpKey()));
+			pmb.setDown(input.isKeyPressed(curr.getDownKey()));
+			pmb.setLeft(input.isKeyPressed(curr.getLeftKey()));
+			pmb.setRight(input.isKeyPressed(curr.getRightKey()));
+			pmb.setFocus(input.isKeyPressed(curr.getFocusKey()));
 		}
 	}
 	/*

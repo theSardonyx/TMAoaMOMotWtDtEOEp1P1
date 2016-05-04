@@ -49,7 +49,7 @@ public class GameState extends State {
 		bulletStage.handleInput(input);
 		
 		//Tentative
-		if (input.isKeyPressed (KeyEvent.VK_P)) {
+		if (input.isKeyPressed (Config.getInstance().getPauseKey())) {
 			sm.push (Runner.PAUSE_STATE, null);
 		}
 	}
