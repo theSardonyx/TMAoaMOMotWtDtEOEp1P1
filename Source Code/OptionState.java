@@ -58,7 +58,7 @@ public class OptionState extends State {
 	* @see	DrawableButton
 	*/
 	public OptionState() {
-		curr = new Config();
+		curr = Config.getInstance();
 		//TODO Read from existing settings file
 		
 		Font font = FontLoader.getInstance().getFont ("Press Start 2P", Font.PLAIN, 20);
@@ -232,7 +232,7 @@ public class OptionState extends State {
 				else btnParticles.setText ("OFF");
 			} else if (btnBack.isCollidingWith (input.getMousePosition())) {
 				//TODO Save Config object into external file
-				popSelf(1, curr.getSettings());
+				popSelf(1, null);
 			}
 		}
 	}

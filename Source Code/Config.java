@@ -7,6 +7,11 @@ import java.awt.event.*;
 */
 public class Config {
 	/**
+	 * A saved instance of a Config object
+	 */
+	private static Config instance;
+	
+	/**
 	* Holds the key codes of the keys for player control
 	*/
 	int[] keys;
@@ -24,10 +29,22 @@ public class Config {
 	/**
 	* Creates a new Config object to set this game's default settings
 	*/
-	public Config() {
+	private Config() {
 		frameRate = 60;
 		particles = true;
 		keys = new int[] {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SHIFT, KeyEvent.VK_Z, KeyEvent.VK_P};
+	}
+	
+	/**
+	 * Gets a new or existing instance of the Config class and makes sure only one instance
+	 * is used throughout the entire game session
+	 * 
+	 * @return	#instance
+	 */
+	public static Config getInstance() {
+		if (instance == null)
+			instance = new Config();
+		return instance;
 	}
 	
 	/**
@@ -195,20 +212,5 @@ public class Config {
 	*/
 	public void setPauseKey (int pause) {
 		keys[6] = pause;
-	}
-	
-	/**
-	* Gets all the settings contained within this Config class
-	*
-	* @return	String	All settings in this Config class in
-	* 					order - #frameRate, #particles, #keys -
-	*					and separated with |
-	*/
-	public String getSettings() {
-		String ret = "" + frameRate + "|" + particles + "|";
-		for (int i = 0; i < 7; i++) {
-			ret += keys[i] + "|";
-		}
-		return ret;
 	}
 }
