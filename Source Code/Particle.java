@@ -25,15 +25,17 @@ public class Particle extends Entity {
 	*/
 	public Particle(Vector position, double diameter, Color color, BulletStage stage) {
 		super(position, new Vector(diameter, diameter), stage);
-		visual = new DrawableOval(position, this.dimension, color);
-		((DrawableShape) visual).setFilled(true);
+		this.visual = new DrawableOval(position, this.dimension, color);
+		((DrawableShape) this.visual).setFilled(true);
 		
-		hitbox = new CollideCircle(position, diameter);
-		move = new AccelerateMoveBehavior(this, new Vector(100, 0), new Vector(0, 0));
+		this.hitbox = new CollideCircle(position, diameter);
+		this.move = new AccelerateMoveBehavior(this, new Vector(100, 0), new Vector(0, 0));
 		
 		this.color = color;
-		duration = timeLeft = 1;
-		growRate = new Vector(0, 0);
+		this.duration = this.timeLeft = 1;
+		this.growRate = new Vector(0, 0);
+		
+		this.type = Entity.AMBIENT_TYPE;
 	}
 	
 	/*

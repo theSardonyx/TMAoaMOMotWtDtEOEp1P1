@@ -20,4 +20,8 @@ public abstract class MoveBehavior {
 	@param delta: used to update objects based from time passed
 	*/
 	public abstract void move(double delta);
+	
+	public MoveBehavior getMoveBehavior() {
+		return this;
+	}
 }

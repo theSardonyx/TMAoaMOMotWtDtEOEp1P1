@@ -4,7 +4,13 @@ public class PierceBullet extends Entity {
 	public PierceBullet(Vector position, BulletStage stage) {
 		super(position, new Vector(32, 32), stage);
 		SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/runeBulletMSheet.png", 32, 32);
-		visual = new DrawableImage(position, dimension, ss.get(0, 1));
+		this.visual = new DrawableImage(position, dimension, ss.get(0, 1));
+		
+		//TODO damage pls
+		this.damage = 1;
+		
+		this.type = Entity.ALLY_BULLET_TYPE;
+		this.canCollideEnemy = true;
 	}
 
 	@Override
@@ -13,4 +19,8 @@ public class PierceBullet extends Entity {
 
 	}
 
+	@Override
+	public void collideEnemy(Entity e) {
+		this.despawn();
+	}
 }

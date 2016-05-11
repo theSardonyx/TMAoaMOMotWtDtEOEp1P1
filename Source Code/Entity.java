@@ -3,18 +3,48 @@ import java.util.LinkedList;
 
 public abstract class Entity extends Drawable {
 	
+	protected static final int AMBIENT_TYPE = 0;
+	protected static final int ALLY_TYPE = 1;
+	protected static final int ALLY_BULLET_TYPE = 2;
+	protected static final int ENEMY_TYPE = 3;
+	protected static final int ENEMY_BULLET_TYPE = 4;
+	
+	private static int ID = 0;
+	
+	protected int id;
 	protected MoveBehavior move;
 	protected ShootBehavior shoot;
 	protected CollideReaction collideReaction;
 	
 	protected Drawable visual;
 	protected CollideShape hitbox;
-	protected int health;
+	protected int health, damage;
 	protected BulletStage stage;
+	
+	protected int type;
+	protected boolean canCollideAmbient, canCollideAlly, canCollideAllyBullet, canCollideEnemy, canCollideEnemyBullet;
 
 	public Entity(Vector position, Vector dimension, BulletStage stage) {
 		super(position, dimension);
+		
+		this.id = ID++;
+		this.move = null;
+		this.shoot = null;
+		this.collideReaction = null;
+		
+		this.visual = null;
+		this.hitbox = null;
+		
+		this.health = 1;
+		this.damage = 0;
 		this.stage = stage;
+		
+		this.type = Entity.AMBIENT_TYPE;
+		this.canCollideAmbient = false;
+		this.canCollideAlly = false;
+		this.canCollideAllyBullet = false;
+		this.canCollideEnemy = false;
+		this.canCollideEnemyBullet = false;
 	}
 	
 	public final void update( double delta ) {
@@ -52,6 +82,8 @@ public abstract class Entity extends Drawable {
 	
 	public void getDamaged( int damage ) {
 		health -= damage;
+		if(health <= 0)
+			this.despawn();
 	}
 	
 	public CollideShape getHitbox() {
@@ -102,4 +134,18 @@ public abstract class Entity extends Drawable {
 	public void handleInput(InputCollector ic) {
 		
 	}
+	
+	public void setType(int type) {
+		this.type = type;
+	}
+	
+	public int getType() {
+		return this.type;
+	}
+	
+	public void collideAmbient(Entity e) {}
+	public void collideAlly(Entity e) {}
+	public void collideAllyBullet(Entity e) {}
+	public void collideEnemy(Entity e) {}
+	public void collideEnemyBullet(Entity e) {}
 }

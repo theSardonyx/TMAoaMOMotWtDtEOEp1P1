@@ -4,7 +4,12 @@ public class SentinelBullet extends Entity {
 	public SentinelBullet(Vector position, BulletStage stage) {
 		super(position, new Vector(64, 64), stage);
 		SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/runeBulletLSheet.png", 64, 64);
-		visual = new DrawableImage(position, dimension, ss.get(0, 1));
+		this.visual = new DrawableImage(position, dimension, ss.get(0, 1));
+		
+		//TODO damage pls
+		this.damage = 1;
+		
+		this.type = Entity.ALLY_BULLET_TYPE;
 	}
 
 	@Override
@@ -12,5 +17,4 @@ public class SentinelBullet extends Entity {
 		// TODO Auto-generated method stub
 		
 	}
-
 }

@@ -23,11 +23,19 @@ public class Player extends Entity {
 	public Player(Vector position, Vector dimension, BulletStage stage) {
 		super(position, dimension, stage);
 		SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/64x64-sheet.png", 64, 64);
-		visual = new Sprite(position, dimension, new BufferedImage[] {
+		this.visual = new Sprite(position, dimension, new BufferedImage[] {
 													ss.get(0, 0), ss.get(2, 0)
 													}, new BufferedImage[] {
 													ss.get(1, 0), ss.get(3, 0)
 													}, Color.GREEN);
+		
+		//TODO damage & health pls
+		this.health = 1;
+		this.damage = 1;
+		
+		this.type = Entity.ALLY_TYPE;
+		this.canCollideEnemy = true;
+		this.canCollideEnemyBullet = true;
 	}
 	
 	/*
@@ -35,8 +43,8 @@ public class Player extends Entity {
 	@param input: InputCollector object where the different inputs will be gotten from
 	*/
 	public void handleInput(InputCollector input) {
-		if(move instanceof PlayerMoveBehavior) {
-			PlayerMoveBehavior pmb = (PlayerMoveBehavior) move;
+		if(move.getMoveBehavior() instanceof PlayerMoveBehavior) {
+			PlayerMoveBehavior pmb = (PlayerMoveBehavior) move.getMoveBehavior();
 			Config curr = Config.getInstance();
 			pmb.setUp(input.isKeyPressed(curr.getUpKey()));
 			pmb.setDown(input.isKeyPressed(curr.getDownKey()));
@@ -52,5 +60,15 @@ public class Player extends Entity {
 	@Override
 	public void updateHook(double delta) {
 		((Sprite) visual).update(delta);
+	}
+	
+	@Override
+	public void collideEnemy(Entity e) {
+		this.getDamaged(e.damage);
+	}
+	
+	@Override
+	public void collideEnemyBullet(Entity e) {
+		this.getDamaged(e.damage);
 	}
 }

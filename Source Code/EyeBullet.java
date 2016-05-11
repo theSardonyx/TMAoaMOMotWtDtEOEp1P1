@@ -5,7 +5,13 @@ public class EyeBullet extends Entity {
 	public EyeBullet(Vector position, Vector dimension, BulletStage stage) {
 		super(position, dimension, stage);
 		SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/enemyBulletSheet.png", 32, 32);
-		visual = new DrawableImage(position, dimension, Sprite.integrateSprites(ss.get(0, 1), ss.get(1, 1), Color.GREEN));
+		this.visual = new DrawableImage(position, dimension, Sprite.integrateSprites(ss.get(0, 1), ss.get(1, 1), Color.GREEN));
+		
+		//TODO damage pls
+		this.damage = 1;
+		
+		this.type = Entity.ENEMY_BULLET_TYPE;
+		this.canCollideAlly = true;
 	}
 
 	@Override
@@ -13,5 +19,9 @@ public class EyeBullet extends Entity {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	@Override
+	public void collideAlly(Entity e) {
+		this.despawn();
+	}
 }
