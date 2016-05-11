@@ -28,7 +28,7 @@ public class BulletStage {
 
 		player = new Player(new Vector(200, 200), new Vector(64, 64), this);
 		player.setMoveBehavior(new PlayerMoveBehavior(player, 300));
-		player.setShootBehavior(new BatShootBehavior1(player, this, 1, Color.RED));
+		player.setShootBehavior(new BatShootBehaviorEasy(player, this, 1, Color.RED));
 		addEntity(player);
 	}
 	
@@ -68,7 +68,7 @@ public class BulletStage {
 	}
 	
 	public void render(RenderWindow rw) {
-		graphics.setColor(new Color(0x777777));
+		graphics.setColor(new Color(0x101010));
 		graphics.fillRect( 0, 0, dimension.getX(), dimension.getY());
 		
 		for(Entity e: entities ) {
