@@ -1,5 +1,11 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
 * This class represents the Option screen of the game
@@ -15,6 +21,13 @@ public class OptionState extends State {
 	* @see	DrawableButton
 	*/
 	DrawableButton btnUp, btnDown, btnLeft, btnRight, btnFocus, btnShoot, btnPause, btnFrameRate, btnParticles;
+	
+	/**
+	 * Button that will revert settings to default
+	 * 
+	 * @see	DrawableButton
+	 */
+	DrawableButton btnRestore;
 	
 	/**
 	* The button that will exit the Options screen
@@ -59,7 +72,6 @@ public class OptionState extends State {
 	*/
 	public OptionState() {
 		curr = Config.getInstance();
-		//TODO Read from existing settings file
 		
 		Font font = FontLoader.getInstance().getFont ("Press Start 2P", Font.PLAIN, 20);
 		Vector padding = new Vector (10, 10);
@@ -91,6 +103,8 @@ public class OptionState extends State {
 		if (curr.getParticles())
 			btnParticles.setText ("ON");
 		else btnParticles.setText ("OFF");
+		
+		btnRestore = new DrawableButton (new Vector (3 * (Runner.RES_WIDTH / 4), 550), "Restore Defaults", font, padding, Color.WHITE);
 		
 		btnBack = new DrawableButton (new Vector (Runner.RES_WIDTH / 2, 650), "Back", font, padding, Color.WHITE);
 		
@@ -124,6 +138,8 @@ public class OptionState extends State {
 		
 		btnFrameRate.update (input.getMousePosition());
 		btnParticles.update (input.getMousePosition());
+		
+		btnRestore.update (input.getMousePosition());
 		
 		btnBack.update (input.getMousePosition());
 		
@@ -177,15 +193,8 @@ public class OptionState extends State {
 		
 		if (input.getMouseReleased (InputCollector.MOUSE_BUTTON1)) {
 			pressed = !pressed;
-			if (!pressed) {
-				btnUp.setText (KeyEvent.getKeyText (curr.getUpKey()).toUpperCase());
-				btnDown.setText (KeyEvent.getKeyText (curr.getDownKey()).toUpperCase());
-				btnLeft.setText (KeyEvent.getKeyText (curr.getLeftKey()).toUpperCase());
-				btnRight.setText (KeyEvent.getKeyText (curr.getRightKey()).toUpperCase());
-				btnFocus.setText (KeyEvent.getKeyText (curr.getFocusKey()).toUpperCase());
-				btnShoot.setText (KeyEvent.getKeyText (curr.getShootKey()).toUpperCase());
-				btnPause.setText (KeyEvent.getKeyText (curr.getPauseKey()).toUpperCase());
-			}
+			if (!pressed)
+				updateText();
 				
 			if (btnUp.isCollidingWith (input.getMousePosition())) {
 				if (pressed) {
@@ -230,11 +239,56 @@ public class OptionState extends State {
 				if (curr.getParticles())
 					btnParticles.setText ("ON");
 				else btnParticles.setText ("OFF");
+			} else if (btnRestore.isCollidingWith (input.getMousePosition())) {
+				if (curr.getFrameRate() != 60) {
+					if (curr.getFrameRate() == 120)
+						curr.toggleFrameRate();
+					curr.toggleFrameRate();
+				}
+				btnFrameRate.setText ("" + curr.getFrameRate());
+				
+				if (!curr.getParticles())
+					curr.toggleParticles();
+				btnParticles.setText ("ON");
+				
+				curr.setUpKey (KeyEvent.VK_UP);
+				curr.setDownKey (KeyEvent.VK_DOWN);
+				curr.setLeftKey (KeyEvent.VK_LEFT);
+				curr.setRightKey (KeyEvent.VK_RIGHT);
+				curr.setFocusKey (KeyEvent.VK_SHIFT);
+				curr.setShootKey (KeyEvent.VK_Z);
+				curr.setPauseKey (KeyEvent.VK_P);
+				
+				updateText();
 			} else if (btnBack.isCollidingWith (input.getMousePosition())) {
-				//TODO Save Config object into external file
+				ObjectMapper mapper = new ObjectMapper();
+				
+				try {
+					mapper.writeValue (new File ("config.json"), curr);
+				} catch (JsonGenerationException e) {
+					e.printStackTrace();
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
 				popSelf(1, null);
 			}
 		}
+	}
+	
+	/**
+	 * Updates the text on relevant buttons to mirror any changes made to the Config class
+	 */
+	public void updateText() {
+		btnUp.setText (KeyEvent.getKeyText (curr.getUpKey()).toUpperCase());
+		btnDown.setText (KeyEvent.getKeyText (curr.getDownKey()).toUpperCase());
+		btnLeft.setText (KeyEvent.getKeyText (curr.getLeftKey()).toUpperCase());
+		btnRight.setText (KeyEvent.getKeyText (curr.getRightKey()).toUpperCase());
+		btnFocus.setText (KeyEvent.getKeyText (curr.getFocusKey()).toUpperCase());
+		btnShoot.setText (KeyEvent.getKeyText (curr.getShootKey()).toUpperCase());
+		btnPause.setText (KeyEvent.getKeyText (curr.getPauseKey()).toUpperCase());
 	}
 	
 	/**
@@ -283,5 +337,7 @@ public class OptionState extends State {
 		
 		rw.draw (btnFrameRate);
 		rw.draw (btnParticles);
+		
+		rw.draw (btnRestore);
 	}
 }
