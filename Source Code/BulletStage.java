@@ -34,7 +34,9 @@ public class BulletStage {
 	}
 	
 	public void handleInput(InputCollector input) {
-		player.handleInput(input);
+		for(Entity e: entities) {
+			e.handleInput(input);
+		}
 	}
 	
 	public void update(double delta) {
