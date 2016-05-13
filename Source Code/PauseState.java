@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Font;
-import java.util.Arrays;
 
 /**
 * This class represents the pause screen of the game
@@ -34,7 +33,7 @@ public class PauseState extends State {
 	/**
 	 * The list of runes currently being used by the Player
 	 */
-	String[] runes;
+	RuneList runes;
 	
 	/**
 	 * The new rune gotten by the player
@@ -71,11 +70,7 @@ public class PauseState extends State {
 	 * Creates a Pause Screen containing the player's saved Runes in an arranged order
 	 */
 	public PauseState() {
-		runes = new String[10];
-		Arrays.fill (runes, "");
-		//test instances
-		runes[4] = "homing";
-		runes[5] = "spread";
+		runes = RuneList.getInstance();
 		latest = "antibullet";
 		
 		overlay = new DrawableRectangle (new Vector (Runner.RES_WIDTH / 2, Runner.RES_HEIGHT / 2), new Vector (500, 400), Color.BLUE);
@@ -279,20 +274,20 @@ public class PauseState extends State {
 	 * Swaps the positions of the two specified runes
 	 */
 	public void swap (int x, int y) {
-		if (x == runes.length || y == runes.length) {
-			if (x == runes.length) {
+		if (x == runes.getRuneNum() || y == runes.getRuneNum()) {
+			if (x == runes.getRuneNum()) {
 				String temp = latest;
-				latest = runes[y];
-				runes[y] = temp;
+				latest = runes.getRune (y);
+				runes.setRune (temp, y);
 			} else {
 				String temp = latest;
-				latest = runes[x];
-				runes[x] = temp;
+				latest = runes.getRune (x);
+				runes.setRune (temp, x);
 			}
 		} else {
-			String temp = runes[x];
-			runes[x] = runes[y];
-			runes[y] = temp;
+			String temp = runes.getRune (x);
+			runes.setRune (runes.getRune (y), x);
+			runes.setRune (temp, y);
 		}
 	}
 	
@@ -315,11 +310,11 @@ public class PauseState extends State {
 	 */
 	public void runeRender(RenderWindow rw) {
 			//draw the runes based on the list
-			for(int i = 0; i < runes.length + 1; i++)
+			for(int i = 0; i < runes.getRuneNum() + 1; i++)
 			{
 				String curr;
 				Vector pos;
-				if (i < runes.length) {
+				if (i < runes.getRuneNum()) {
 					int adjust = 0;
 					if(i < 5)
 					{
@@ -331,7 +326,7 @@ public class PauseState extends State {
 						adjust = 64 * (i - 5);
 						pos = new Vector((Runner.RES_WIDTH / 2) + (adjust - 192), (Runner.RES_HEIGHT / 2) + 35);
 					}
-					curr = runes[i];
+					curr = runes.getRune (i);
 				} else {
 					pos = new Vector ((Runner.RES_WIDTH / 2) + 192, (Runner.RES_HEIGHT / 2) + 35);
 					curr = latest;

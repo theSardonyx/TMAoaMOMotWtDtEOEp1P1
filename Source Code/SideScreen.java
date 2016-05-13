@@ -1,6 +1,4 @@
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.*;
 
 public class SideScreen
 {
@@ -16,17 +14,13 @@ public class SideScreen
 		private final double linerRuneRow1 = 300;
 		private final double linerRuneRow2 = 350;
 		private SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/runeSheet.png", 64, 64);
-		String[] runes;
+		RuneList runes;
 		
 		boolean fall = false;
 		
         public SideScreen()
         {
-			runes = new String[10];
-			Arrays.fill(runes, "");
-			//test instance
-			runes[3] = "pierce";
-			runes[6] = "sentinel";
+			runes = RuneList.getInstance();
 			
             font = FontLoader.getInstance().getFont("Press Start 2P", Font.PLAIN, 10);
             highScoreLabel = new DrawableString(new Vector(linerLabel + 25, 22), "High Score:", font, Color.WHITE);
@@ -151,7 +145,7 @@ public class SideScreen
 		public void runeRender(RenderWindow rw)
 		{
 				//draw the runes based on the list
-				for(int i = 1; i < runes.length + 1; i++)
+				for(int i = 1; i < runes.getRuneNum() + 1; i++)
 				{
 					int adjust = 0;
 					Vector pos;
@@ -167,7 +161,7 @@ public class SideScreen
 					}
 					Vector dim = new Vector(32, 32);
 					
-					switch (runes[i - 1]) {
+					switch (runes.getRune (i - 1)) {
 						case "pierce" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 2)));
 						break;
 						case "homing" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 3)));
@@ -191,9 +185,5 @@ public class SideScreen
 						default : rw.draw(new DrawableImage(pos, dim, ss.get(1, 0)));
 					}
 				}
-		}
-		
-		public String[] getRuneList() {
-			return runes;
 		}
 }
