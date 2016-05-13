@@ -1,8 +1,11 @@
 
 public class HomingBullet extends Entity {
+	
+	private Entity target;
 
-	public HomingBullet(Vector position, BulletStage stage) {
+	public HomingBullet(Vector position, BulletStage stage, Entity target) {
 		super(position, new Vector(32, 32), stage);
+		this.target = target;
 		SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/runeBulletMSheet.png", 32, 32);
 		this.visual = new DrawableImage(position, dimension, ss.get(0, 2));
 		
