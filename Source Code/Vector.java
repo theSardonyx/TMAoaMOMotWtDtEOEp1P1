@@ -27,6 +27,10 @@ public class Vector {
 	public Vector add (Vector that) {
 		return new Vector(this.x + that.x, this.y + that.y);
 	}
+	
+	public Vector add (double x, double y) {
+		return new Vector(this.x + x, this.y + y);
+	}
 	/*
 	Method used to subtract this Vector from another given Vector and put the results in this Vector
 	@param that: Vector object to be subtracted on this Vector
@@ -119,4 +123,15 @@ public class Vector {
 		return (int) Math.round(y);
 	}
 	
+	public Vector clone() {
+		return new Vector(this.x, this.y);
+	}
+	
+	public static Vector zero() {
+		return new Vector(0, 0);
+	}
+	
+	public String toString() {
+		return this.x + " " + this.y;
+	}
 }
