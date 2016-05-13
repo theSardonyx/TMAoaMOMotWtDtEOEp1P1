@@ -119,8 +119,16 @@ public abstract class Entity extends Drawable {
 		move = mb;
 	}
 	
+	public MoveBehavior getMoveBehavior() {
+		return this.move;
+	}
+	
 	public void setShootBehavior(ShootBehavior sb) {
 		shoot = sb;
+	}
+	
+	public ShootBehavior getShootBehavior() {
+		return this.shoot;
 	}
 	
 	public void setDrawable(Drawable d) {
