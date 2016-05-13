@@ -1,5 +1,7 @@
 
 public class SplitBullet extends Entity {
+	
+	private int numFragments;
 
 	public SplitBullet(Vector position, BulletStage stage) {
 		super(position, new Vector(32, 32), stage);
@@ -11,6 +13,8 @@ public class SplitBullet extends Entity {
 		
 		this.type = Entity.ALLY_BULLET_TYPE;
 		this.canCollideEnemy = true;
+		
+		this.numFragments = 2;
 	}
 
 	@Override
@@ -23,5 +27,13 @@ public class SplitBullet extends Entity {
 	public void collideEnemy(Entity e) {
 		this.despawn();
 		//Spawn FragmentBullets
+	}
+	
+	public void setNumFragments(int numFragments) {
+		this.numFragments = numFragments;
+	}
+	
+	public int getNumFragments() {
+		return this.numFragments;
 	}
 }
