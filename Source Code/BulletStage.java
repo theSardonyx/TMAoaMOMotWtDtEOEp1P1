@@ -26,10 +26,13 @@ public class BulletStage {
 		entities = new ArrayList<Entity>();
 		requestQueue = new ArrayDeque<Request>();
 
-		player = new Player(new Vector(0, 200), new Vector(64, 64), this);
-		player.setMoveBehavior(new QueueMoveBehavior(player, new MoveBehavior[] {
-				new AccelerateMoveBehavior(player, new Vector(200, 0), new Vector(0, 0), 1),
-		}));
+		player = new Player(new Vector(200, 200), new Vector(64, 64), this);
+		player.setMoveBehavior(new PlayerMoveBehavior(player, 300));
+		
+		BasicBulletShootBehavior sb = new BasicBulletShootBehavior(player, this);
+		sb.setLevel(10);
+		
+		player.setShootBehavior(sb);
 		addEntity(player);
 	}
 	
