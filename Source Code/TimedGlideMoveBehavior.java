@@ -2,28 +2,29 @@
 public class TimedGlideMoveBehavior extends MoveBehavior{
 	
 	private double timeLeft;
-	private Vector velocity;
+	private Vector velocity, targetPos;
 	
 	public TimedGlideMoveBehavior(Entity subject, Vector targetPos, double timeCap) {
 		super(subject);
 		this.timeLeft = timeCap;
-		
-		Vector init = subject.getPosition();
-		Vector fin = targetPos;
-		Vector totalDisp = fin.subtract(init);
-		
-		double distance = totalDisp.magnitude();
-		
-		if(distance<=0 || timeLeft<=0)
-			velocity = new Vector(0, 0);
-		else
-			velocity = totalDisp.scalarMult( 1.0/timeLeft );
+		this.targetPos = targetPos;
+	}
+
+	public TimedGlideMoveBehavior(Entity subject, Vector targetPos, double timeCap, double expireTime) {
+		super(subject, expireTime);
+		this.timeLeft = timeCap;
+		this.targetPos = targetPos;
 	}
 
 	@Override
-	public void move(double delta) {
-		if(timeLeft>0) {
+	protected void moveHook(double delta) {
+		if(timeLeft > 0) {
 			double timeMove = Math.min(delta, timeLeft);
+			
+			Vector totalDisp = this.targetPos.subtract(subject.getPosition());
+			double distance = totalDisp.magnitude();
+			
+			this.velocity = totalDisp.scalarMult(1.0 / this.timeLeft);
 			
 			Vector currentPos = subject.getPosition();
 			Vector newPosition = currentPos.add( velocity.scalarMult( timeMove ) );
@@ -32,5 +33,4 @@ public class TimedGlideMoveBehavior extends MoveBehavior{
 			timeLeft -= delta;
 		}
 	}
-
 }

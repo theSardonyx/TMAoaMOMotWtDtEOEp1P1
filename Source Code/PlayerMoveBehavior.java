@@ -18,7 +18,7 @@ public class PlayerMoveBehavior extends MoveBehavior {
 	@param delta: value used in coordination with the calculations
 	*/
 	@Override
-	public void move(double delta) {
+	protected void moveHook(double delta) {
 		Vector base = new Vector(0, 0);
 		double distance = speed*delta;
 		if(up) {

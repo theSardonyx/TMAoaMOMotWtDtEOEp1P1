@@ -31,6 +31,12 @@ public class AccelerateMoveBehavior extends MoveBehavior {
 		this.velocity = initVelocity;
 		this.acceleration = acceleration;
 	}
+	
+	public AccelerateMoveBehavior(Entity subject, Vector initVelocity, Vector acceleration, double expireTime) {
+		super(subject, expireTime);
+		this.velocity = initVelocity;
+		this.acceleration = acceleration;
+	}
 
 	/**
 	* Sets the position of #subject based on changed values after
@@ -42,7 +48,7 @@ public class AccelerateMoveBehavior extends MoveBehavior {
 	* @see	Entity#setPosition
 	*/
 	@Override
-	public void move(double delta) {
+	protected void moveHook(double delta) {
 		Vector currentPos = subject.getPosition();
 		Vector newPosition = currentPos.add( velocity.scalarMult( delta ) );
 		velocity = velocity.add( acceleration.scalarMult( delta ) );

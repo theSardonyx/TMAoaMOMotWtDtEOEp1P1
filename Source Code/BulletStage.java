@@ -26,33 +26,16 @@ public class BulletStage {
 		entities = new ArrayList<Entity>();
 		requestQueue = new ArrayDeque<Request>();
 
-		player = new Player(new Vector(200, 200), new Vector(64, 64), this);
-		player.setMoveBehavior(new PlayerMoveBehavior(player, 300));
-		player.setShootBehavior(new BatShootBehaviorEasy(player, this, 1, Color.RED));
+		player = new Player(new Vector(0, 200), new Vector(64, 64), this);
+		player.setMoveBehavior(new QueueMoveBehavior(player, new MoveBehavior[] {
+				new AccelerateMoveBehavior(player, new Vector(200, 0), new Vector(0, 0), 1),
+				new EllipseMoveBehavior(player, new Vector(150, 200), 100, 100, 1, 1),
+				new AccelerateMoveBehavior(player, new Vector(200, 0), new Vector(0, 0), 1)
+		}));
 		addEntity(player);
 	}
 	
 	public void handleInput(InputCollector input) {
-		/*if(input.isKeyPressed()) {
-			int particleCount = 1 + (int) (Math.random()*4); 
-			for(int i=0; i<particleCount; i++) {
-				
-				double diameter = 5 + Math.random()*5;
-				double speed = 50 + Math.random()*50;
-				double direction = Math.random() * 2 * Math.PI;
-				Vector velocity = new Vector(speed, 0).rotate(direction);
-				Vector acceleration = new Vector(00, 00);
-				Vector growRate = new Vector(10, 10);
-				double duration = 1;
-				
-				Particle p = new Particle(input.getMousePosition(), diameter, Color.YELLOW, this);
-				p.setVelocity(velocity);
-				p.setAcceleration(acceleration);
-				p.setGrowRate(growRate);
-				p.adjustDuration(duration);
-				addEntity(p);
-			}
-		}*/
 		player.handleInput(input);
 	}
 	
