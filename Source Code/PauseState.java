@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Arrays;
 
 /**
 * This class represents the pause screen of the game
@@ -10,11 +11,18 @@ import java.awt.Font;
 */
 public class PauseState extends State {
 	/**
+	 * The DrawableRectangle that serves as the overlay
+	 * 
+	 * @see	DrawableRectangle
+	 */
+	DrawableRectangle overlay;
+	
+	/**
 	 * The DrawableString that shows the title of the screen
 	 * 
 	 * @see	DrawableString
 	 */
-	DrawableString label;
+	DrawableString label, instructions, lblNewRune;
 	
 	/**
 	 * The button that will exit the Pause screen
@@ -24,17 +32,109 @@ public class PauseState extends State {
 	DrawableButton btnResume, btnExit;
 	
 	/**
+	 * The list of runes currently being used by the Player
+	 */
+	String[] runes;
+	
+	/**
+	 * The new rune gotten by the player
+	 */
+	String latest;
+	
+	/**
+	 * CollideRectangles that represent a "compartment" or places where runes appear
+	 * 
+	 * @see	CollideRectangle
+	 */
+	CollideRectangle rune0, rune1, rune2, rune3, rune4, rune5, rune6, rune7, rune8, rune9, newRune;
+	
+	/**
+	 * The instance of the SpriteSheet where the rune sprites will be loaded from
+	 * 
+	 * @see	SpriteSheet
+	 * @see	SpriteSheetLoader#getInstance
+	 * @see	SpriteSheetLoader#getSpriteSheet
+	 */
+	private SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/runeSheet.png", 64, 64);
+	
+	/**
+	 * Check is a rune has been selected
+	 */
+	boolean pressed;
+	
+	/**
+	 * The index of the currently selected rune
+	 */
+	int index = 12;
+	
+	/**
 	 * Creates a Pause Screen containing the player's saved Runes in an arranged order
 	 */
 	public PauseState() {
+		runes = new String[10];
+		Arrays.fill (runes, "");
+		//test instances
+		runes[4] = "homing";
+		runes[5] = "spread";
+		latest = "antibullet";
+		
+		overlay = new DrawableRectangle (new Vector (Runner.RES_WIDTH / 2, Runner.RES_HEIGHT / 2), new Vector (500, 400), Color.BLUE);
+		
 		Font font = FontLoader.getInstance().getFont ("Press Start 2P", Font.PLAIN, 20);
 		Vector padding = new Vector (10, 10);
 		
-		btnResume = new DrawableButton (new Vector (Runner.RES_WIDTH / 2, 600), "Resume", font, padding, Color.WHITE);
-		btnExit = new DrawableButton (new Vector (Runner.RES_WIDTH / 2, 650), "Back to Main Menu", font, padding, Color.WHITE);
+		lblNewRune = new DrawableString (new Vector ((Runner.RES_WIDTH / 2) + 192, (Runner.RES_HEIGHT / 2) - 35), "New", font, Color.WHITE);
+		
+		btnResume = new DrawableButton (new Vector (Runner.RES_WIDTH / 2, (Runner.RES_HEIGHT / 2) + 120), "Resume", font, padding, Color.WHITE);
+		btnExit = new DrawableButton (new Vector (Runner.RES_WIDTH / 2, (Runner.RES_HEIGHT / 2) + 170), "Back to Main Menu", font, padding, Color.WHITE);
 		
 		font = font.deriveFont (Font.PLAIN, 40);
-		label = new DrawableString (new Vector (Runner.RES_WIDTH / 2, 100), "Pause", font, Color.WHITE);
+		label = new DrawableString (new Vector (Runner.RES_WIDTH / 2, (Runner.RES_HEIGHT / 2) - 160), "Pause", font, Color.WHITE);
+		
+		font = font.deriveFont (Font.PLAIN, 15);
+		instructions = new DrawableString (new Vector (Runner.RES_WIDTH / 2, (Runner.RES_HEIGHT / 2) - 90), "Click any two runes to swap them", font, Color.WHITE);
+		
+		for(int i = 0; i < 10; i++)
+		{
+			int adjust = 0;
+			Vector pos;
+			if(i < 5)
+			{
+				adjust = 64 * i;
+				pos = new Vector((Runner.RES_WIDTH / 2) + (adjust - 192), (Runner.RES_HEIGHT / 2) - 35);
+			}					
+			else 
+			{
+				adjust = 64 * (i - 5);
+				pos = new Vector((Runner.RES_WIDTH / 2) + (adjust - 192), (Runner.RES_HEIGHT / 2) + 35);
+			}
+			Vector dim = new Vector(64, 64);
+			
+			switch (i) {
+				case 0 : rune0 = new CollideRectangle (pos, dim);
+				break;
+				case 1 : rune1 = new CollideRectangle (pos, dim);
+				break;
+				case 2 : rune2 = new CollideRectangle (pos, dim);
+				break;
+				case 3 : rune3 = new CollideRectangle (pos, dim);
+				break;
+				case 4 : rune4 = new CollideRectangle (pos, dim);
+				break;
+				case 5 : rune5 = new CollideRectangle (pos, dim);
+				break;
+				case 6 : rune6 = new CollideRectangle (pos, dim);
+				break;
+				case 7 : rune7 = new CollideRectangle (pos, dim);
+				break;
+				case 8 : rune8 = new CollideRectangle (pos, dim);
+				break;
+				case 9 : rune9 = new CollideRectangle (pos, dim);
+				break;
+			}
+		}
+		
+		newRune = new CollideRectangle (new Vector ((Runner.RES_WIDTH / 2) + 192, (Runner.RES_HEIGHT / 2) + 35), new Vector (64, 64));
 	}
 
 	/**
@@ -44,10 +144,16 @@ public class PauseState extends State {
 	*/
 	@Override
 	public void render(RenderWindow rw) {
+		rw.draw (overlay);
+		
 		rw.draw (label);
+		rw.draw (instructions);
+		rw.draw (lblNewRune);
 		
 		rw.draw (btnResume);
 		rw.draw (btnExit);
+		
+		runeRender (rw);
 	}
 	
 	/**
@@ -69,6 +175,15 @@ public class PauseState extends State {
 	}
 	
 	/**
+	 * Swaps the positions of the two specified runes
+	 */
+	public void swap (int x, int y) {
+		String temp = runes[x];
+		runes[x] = runes[y];
+		runes[y] = temp;
+	}
+	
+	/**
 	* Updates the current objects given a value, and adjusts positions/states accordingly
 	* 
 	* @param	delta	The time passed
@@ -77,5 +192,62 @@ public class PauseState extends State {
 	public void update(double delta) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	/**
+	 * Draws runes is their respective "compartments"
+	 * 
+	 * @see	#runes
+	 * @see RenderWindow
+	 */
+	public void runeRender(RenderWindow rw) {
+			//draw the runes based on the list
+			for(int i = 0; i < runes.length + 1; i++)
+			{
+				String curr;
+				Vector pos;
+				if (i < runes.length) {
+					int adjust = 0;
+					if(i < 5)
+					{
+						adjust = 64 * i;
+						pos = new Vector((Runner.RES_WIDTH / 2) + (adjust - 192), (Runner.RES_HEIGHT / 2) - 35);
+					}					
+					else 
+					{
+						adjust = 64 * (i - 5);
+						pos = new Vector((Runner.RES_WIDTH / 2) + (adjust - 192), (Runner.RES_HEIGHT / 2) + 35);
+					}
+					curr = runes[i];
+				} else {
+					pos = new Vector ((Runner.RES_WIDTH / 2) + 192, (Runner.RES_HEIGHT / 2) + 35);
+					curr = latest;
+				}
+				Vector dim = new Vector(64, 64);
+				
+				switch (curr) {
+					case "pierce" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 2)));
+					break;
+					case "homing" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 3)));
+					break;
+					case "explosion" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 4)));
+					break;
+					case "burst" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 5)));
+					break;
+					case "snipe" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 6)));
+					break;
+					case "split" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 7)));
+					break;
+					case "spread" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 8)));
+					break;
+					case "sentinel" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 9)));
+					break;
+					case "antibullet" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 10)));
+					break;
+					case "summon" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 11)));
+					break;
+					default : rw.draw(new DrawableImage(pos, dim, ss.get(1, 0)));
+				}
+			}
 	}
 }
