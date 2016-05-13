@@ -167,10 +167,111 @@ public class PauseState extends State {
 		btnExit.update (input.getMousePosition());
 		
 		if (input.getMouseReleased (InputCollector.MOUSE_BUTTON1)) {
+			CollideCircle mouse = new CollideCircle (input.getMousePosition(), 0);
 			if (btnResume.isCollidingWith (input.getMousePosition()))
 				popSelf (1, null);
 			else if (btnExit.isCollidingWith (input.getMousePosition()))
 				popSelf (2, null);
+			else if (rune0.isCollidingWith (mouse)) {
+				if (!pressed) {
+					pressed = true;
+					index = 0;
+				} else {
+					swap (0, index);
+					pressed = false;
+					index = 12;
+				}
+			} else if (rune1.isCollidingWith (mouse)) {
+				if (!pressed) {
+					pressed = true;
+					index = 1;
+				} else {
+					swap (1, index);
+					pressed = false;
+					index = 12;
+				}
+			} else if (rune2.isCollidingWith (mouse)) {
+				if (!pressed) {
+					pressed = true;
+					index = 2;
+				} else {
+					swap (2, index);
+					pressed = false;
+					index = 12;
+				}
+			} else if (rune3.isCollidingWith (mouse)) {
+				if (!pressed) {
+					pressed = true;
+					index = 3;
+				} else {
+					swap (3, index);
+					pressed = false;
+					index = 12;
+				}
+			} else if (rune4.isCollidingWith (mouse)) {
+				if (!pressed) {
+					pressed = true;
+					index = 4;
+				} else {
+					swap (4, index);
+					pressed = false;
+					index = 12;
+				}
+			} else if (rune5.isCollidingWith (mouse)) {
+				if (!pressed) {
+					pressed = true;
+					index = 5;
+				} else {
+					swap (5, index);
+					pressed = false;
+					index = 12;
+				}
+			} else if (rune6.isCollidingWith (mouse)) {
+				if (!pressed) {
+					pressed = true;
+					index = 6;
+				} else {
+					swap (6, index);
+					pressed = false;
+					index = 12;
+				}
+			} else if (rune7.isCollidingWith (mouse)) {
+				if (!pressed) {
+					pressed = true;
+					index = 7;
+				} else {
+					swap (7, index);
+					pressed = false;
+					index = 12;
+				}
+			} else if (rune8.isCollidingWith (mouse)) {
+				if (!pressed) {
+					pressed = true;
+					index = 8;
+				} else {
+					swap (8, index);
+					pressed = false;
+					index = 12;
+				}
+			} else if (rune9.isCollidingWith (mouse)) {
+				if (!pressed) {
+					pressed = true;
+					index = 9;
+				} else {
+					swap (9, index);
+					pressed = false;
+					index = 12;
+				}
+			} else if (newRune.isCollidingWith (mouse)) {
+				if (!pressed) {
+					pressed = true;
+					index = 10;
+				} else {
+					swap (10, index);
+					pressed = false;
+					index = 12;
+				}
+			}
 		}
 	}
 	
@@ -178,9 +279,21 @@ public class PauseState extends State {
 	 * Swaps the positions of the two specified runes
 	 */
 	public void swap (int x, int y) {
-		String temp = runes[x];
-		runes[x] = runes[y];
-		runes[y] = temp;
+		if (x == runes.length || y == runes.length) {
+			if (x == runes.length) {
+				String temp = latest;
+				latest = runes[y];
+				runes[y] = temp;
+			} else {
+				String temp = latest;
+				latest = runes[x];
+				runes[x] = temp;
+			}
+		} else {
+			String temp = runes[x];
+			runes[x] = runes[y];
+			runes[y] = temp;
+		}
 	}
 	
 	/**
