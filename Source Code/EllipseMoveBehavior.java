@@ -1,0 +1,71 @@
+
+public class EllipseMoveBehavior extends MoveBehavior {
+	
+	Vector center;
+	double height, width, rotationDelta, rotation;
+
+	public EllipseMoveBehavior(Entity subject, Vector center, double height, double width, double period) {
+		super(subject);
+		this.center = center;
+		this.height = height;
+		this.width = width;
+		this.rotation = 0;
+		this.rotationDelta = (2 * Math.PI) / period;
+	}
+
+	@Override
+	public void move(double delta) {
+		rotation += (rotationDelta * delta) % (Math.PI * 2);
+		double rPart1 = Math.pow(height, 2) * Math.pow(Math.cos(rotation), 2);
+		double rPart2 = Math.pow(width,  2) * Math.pow(Math.sin(rotation), 2);
+		double r = (width * height) / (2 * Math.sqrt(rPart1 + rPart2));
+		Vector newPosition = new Vector(r * Math.cos(rotation), r * Math.sin(rotation));
+		subject.setPosition(newPosition.add(center));
+	}
+
+	@Override
+	public void update() {
+		// setRotation based on current position of Entity vs origin... cross product?
+	}
+	
+	public void setHeight(double height) {
+		this.height = height;
+	}
+	
+	public double getHeight() {
+		return this.height;
+	}
+	
+	public void setWidth(double width) {
+		this.width = width;
+	}
+	
+	public double getWidth() {
+		return this.width;
+	}
+	
+	public void setCenter(Vector center) {
+		this.center = center;
+	}
+	
+	public Vector getCenter() {
+		return this.center;
+	}
+	
+	public void setRotation(double radians) {
+		this.rotation = radians;
+	}
+	
+	public double getRotation() {
+		return this.rotation;
+	}
+	
+	public void setPeriod(double period) {
+		this.rotationDelta = (2 * Math.PI) / period;
+	}
+	
+	public double getPeriod() {
+		return this.rotationDelta * (2 * Math.PI);
+	}
+
+}
