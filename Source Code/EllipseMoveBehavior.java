@@ -1,6 +1,7 @@
 
 public class EllipseMoveBehavior extends MoveBehavior {
 	
+	private Entity anchor;
 	Vector center;
 	double height, width, rotationDelta, rotation;
 
@@ -11,21 +12,20 @@ public class EllipseMoveBehavior extends MoveBehavior {
 		this.width = width;
 		this.rotation = 0;
 		this.rotationDelta = (2 * Math.PI) / period;
+		this.anchor = null;
 	}
 
 	@Override
 	public void move(double delta) {
-		rotation += (rotationDelta * delta) % (Math.PI * 2);
+		if(anchor != null)
+			this.center = anchor.position;
+		rotation += (rotationDelta * delta);
+		rotation %= (Math.PI * 2);
 		double rPart1 = Math.pow(height, 2) * Math.pow(Math.cos(rotation), 2);
 		double rPart2 = Math.pow(width,  2) * Math.pow(Math.sin(rotation), 2);
 		double r = (width * height) / (2 * Math.sqrt(rPart1 + rPart2));
 		Vector newPosition = new Vector(r * Math.cos(rotation), r * Math.sin(rotation));
 		subject.setPosition(newPosition.add(center));
-	}
-
-	@Override
-	public void update() {
-		// setRotation based on current position of Entity vs origin... cross product?
 	}
 	
 	public void setHeight(double height) {
@@ -67,5 +67,12 @@ public class EllipseMoveBehavior extends MoveBehavior {
 	public double getPeriod() {
 		return this.rotationDelta * (2 * Math.PI);
 	}
+	
+	public void setAnchor(Entity anchor) {
+		this.anchor = anchor;
+	}
 
+	public Entity getAnchor() {
+		return this.anchor;
+	}
 }
