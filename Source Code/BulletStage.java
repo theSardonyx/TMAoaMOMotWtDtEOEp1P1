@@ -29,8 +29,6 @@ public class BulletStage {
 		player = new Player(new Vector(0, 200), new Vector(64, 64), this);
 		player.setMoveBehavior(new QueueMoveBehavior(player, new MoveBehavior[] {
 				new AccelerateMoveBehavior(player, new Vector(200, 0), new Vector(0, 0), 1),
-				new EllipseMoveBehavior(player, new Vector(150, 200), 100, 100, 1, 1),
-				new AccelerateMoveBehavior(player, new Vector(200, 0), new Vector(0, 0), 1)
 		}));
 		addEntity(player);
 	}
