@@ -8,7 +8,6 @@ public class SideScreen
                 highScoreCount, currentScoreCount, killsCount, expCount, grazeCount;
         private int hScore, cScore, kills, exp, graze = 0;
 		private int health = 3;
-		private int level = 1;
         private Font font;
         private final double linerLabel = Runner.RES_WIDTH - 200;
 		private final double linerCount = Runner.RES_WIDTH - 150;
@@ -16,17 +15,19 @@ public class SideScreen
 		private final double linerHeartRow2 = 200;
 		private final double linerRuneRow1 = 300;
 		private final double linerRuneRow2 = 350;
-		private SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/rune-sheet.png", 64, 64);
-		//array below is for placeholder
-		//use whatever you intend
+		private SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/runeSheet.png", 64, 64);
 		String[] runes;
-		//for testing also
+		
 		boolean fall = false;
 		
         public SideScreen()
         {
 			runes = new String[10];
 			Arrays.fill(runes, "");
+			//test instance
+			runes[3] = "pierce";
+			runes[6] = "sentinel";
+			
             font = FontLoader.getInstance().getFont("Press Start 2P", Font.PLAIN, 10);
             highScoreLabel = new DrawableString(new Vector(linerLabel + 25, 22), "High Score:", font, Color.WHITE);
 			
@@ -127,15 +128,15 @@ public class SideScreen
 				Vector pos;
 				if(i <= 4)
 				{
-					adjust = 30 * i;
-					pos = new Vector(linerLabel - 30 + (adjust), linerHeartRow1);
+					adjust = 32 * i;
+					pos = new Vector(linerLabel - 32 + (adjust), linerHeartRow1);
 				}					
 				else 
 				{
-					adjust = 30 * (i - 4);
-					pos = new Vector(linerLabel - 30 + (adjust), linerHeartRow2);
+					adjust = 32 * (i - 4);
+					pos = new Vector(linerLabel - 32 + (adjust), linerHeartRow2);
 				}
-				Vector dim = new Vector(30, 30);
+				Vector dim = new Vector(32, 32);
 				if(i <= health) 
 				{
 					rw.draw(new DrawableImage(pos, dim, ss.get(0, 1)));
@@ -146,50 +147,53 @@ public class SideScreen
 				}
 			}
 		}
-		public void addRune(String runeType)
-		{
-			/*
-			switch(command):
-			{
-				case "Spread": 
-			}
-			*/
-		}
 		
-		public void removeRune(String runeType)
-		{
-			/*
-			switch(command):
-			{
-				case "Spread": 
-			}
-			*/
-		}
 		public void runeRender(RenderWindow rw)
 		{
 				//draw the runes based on the list
-				//example only
 				for(int i = 1; i < runes.length + 1; i++)
 				{
 					int adjust = 0;
 					Vector pos;
 					if(i <= 5)
 					{
-						adjust = 30 * i;
-						pos = new Vector(linerLabel - 30 + (adjust), linerRuneRow1);
+						adjust = 32 * i;
+						pos = new Vector(linerLabel - 32 + (adjust), linerRuneRow1);
 					}					
 					else 
 					{
-						adjust = 30 * (i - 5);
-						pos = new Vector(linerLabel - 30 + (adjust), linerRuneRow2);
+						adjust = 32 * (i - 5);
+						pos = new Vector(linerLabel - 32 + (adjust), linerRuneRow2);
 					}
-					Vector dim = new Vector(30, 30);
-					//ill put one case for now; default
-					//probably we'll be using switch statement
-					if(runes[i - 1].equals("") || runes[i - 1].equals(null))
-					{
-						rw.draw(new DrawableImage(pos, dim, ss.get(1, 0)));
+					Vector dim = new Vector(32, 32);
+					
+					switch (runes[i - 1]) {
+						case "pierce" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 2)));
+						break;
+						case "homing" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 3)));
+						break;
+						case "explosion" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 4)));
+						break;
+						case "burst" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 5)));
+						break;
+						case "snipe" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 6)));
+						break;
+						case "split" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 7)));
+						break;
+						case "spread" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 8)));
+						break;
+						case "sentinel" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 9)));
+						break;
+						case "antibullet" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 10)));
+						break;
+						case "summon" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 11)));
+						break;
+						default : rw.draw(new DrawableImage(pos, dim, ss.get(1, 0)));
 					}
 				}
+		}
+		
+		public String[] getRuneList() {
+			return runes;
 		}
 }
