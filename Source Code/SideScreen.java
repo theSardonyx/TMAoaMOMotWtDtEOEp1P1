@@ -145,7 +145,7 @@ public class SideScreen
 		public void runeRender(RenderWindow rw)
 		{
 				//draw the runes based on the list
-				for(int i = 1; i < runes.getRuneNum() + 1; i++)
+				for(int i = 1; i < runes.getRuneNum(); i++)
 				{
 					int adjust = 0;
 					Vector pos;

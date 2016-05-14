@@ -20,7 +20,7 @@ public class RuneList {
 	 * Creates a new RuneList that contains nothing
 	 */
 	private RuneList() {
-		runes = new String[10];
+		runes = new String[11];
 		Arrays.fill(runes, "");
 	}
 	
