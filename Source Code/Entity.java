@@ -1,5 +1,4 @@
 import java.awt.Graphics2D;
-import java.util.LinkedList;
 
 public abstract class Entity extends Drawable {
 	
