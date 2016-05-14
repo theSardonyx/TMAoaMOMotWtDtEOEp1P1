@@ -32,13 +32,10 @@ public class PauseState extends State {
 	
 	/**
 	 * The list of runes currently being used by the Player
+	 * 
+	 * @see	RuneList
 	 */
 	RuneList runes;
-	
-	/**
-	 * The new rune gotten by the player
-	 */
-	String latest;
 	
 	/**
 	 * CollideRectangles that represent a "compartment" or places where runes appear
@@ -71,7 +68,9 @@ public class PauseState extends State {
 	 */
 	public PauseState() {
 		runes = RuneList.getInstance();
-		latest = "antibullet";
+		runes.setRune ("spread", 2);
+		runes.setRune ("sentinel", 5);
+		runes.setRune ("antibullet", 10);
 		
 		overlay = new DrawableRectangle (new Vector (Runner.RES_WIDTH / 2, Runner.RES_HEIGHT / 2), new Vector (500, 400), Color.BLUE);
 		
@@ -266,6 +265,9 @@ public class PauseState extends State {
 					pressed = false;
 					index = 12;
 				}
+			} else {
+				pressed = false;
+				index = 12;
 			}
 		}
 	}
@@ -274,21 +276,9 @@ public class PauseState extends State {
 	 * Swaps the positions of the two specified runes
 	 */
 	public void swap (int x, int y) {
-		if (x == runes.getRuneNum() || y == runes.getRuneNum()) {
-			if (x == runes.getRuneNum()) {
-				String temp = latest;
-				latest = runes.getRune (y);
-				runes.setRune (temp, y);
-			} else {
-				String temp = latest;
-				latest = runes.getRune (x);
-				runes.setRune (temp, x);
-			}
-		} else {
-			String temp = runes.getRune (x);
-			runes.setRune (runes.getRune (y), x);
-			runes.setRune (temp, y);
-		}
+		String temp = runes.getRune (x);
+		runes.setRune (runes.getRune (y), x);
+		runes.setRune (temp, y);
 	}
 	
 	/**
@@ -310,11 +300,10 @@ public class PauseState extends State {
 	 */
 	public void runeRender(RenderWindow rw) {
 			//draw the runes based on the list
-			for(int i = 0; i < runes.getRuneNum() + 1; i++)
+			for(int i = 0; i < runes.getRuneNum(); i++)
 			{
-				String curr;
 				Vector pos;
-				if (i < runes.getRuneNum()) {
+				if (i < runes.getRuneNum() - 1) {
 					int adjust = 0;
 					if(i < 5)
 					{
@@ -326,34 +315,63 @@ public class PauseState extends State {
 						adjust = 64 * (i - 5);
 						pos = new Vector((Runner.RES_WIDTH / 2) + (adjust - 192), (Runner.RES_HEIGHT / 2) + 35);
 					}
-					curr = runes.getRune (i);
 				} else {
 					pos = new Vector ((Runner.RES_WIDTH / 2) + 192, (Runner.RES_HEIGHT / 2) + 35);
-					curr = latest;
 				}
 				Vector dim = new Vector(64, 64);
+				String curr = runes.getRune (i);
 				
 				switch (curr) {
-					case "pierce" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 2)));
-					break;
-					case "homing" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 3)));
-					break;
-					case "explosion" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 4)));
-					break;
-					case "burst" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 5)));
-					break;
-					case "snipe" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 6)));
-					break;
-					case "split" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 7)));
-					break;
-					case "spread" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 8)));
-					break;
-					case "sentinel" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 9)));
-					break;
-					case "antibullet" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 10)));
-					break;
-					case "summon" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 11)));
-					break;
+					case "pierce" :
+						if (index < runes.getRuneNum() && runes.getRune (index).equals ("pierce"))
+								rw.draw (new DrawableImage (pos, dim, ss.get (1, 2)));
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 2)));
+						break;
+					case "homing" :
+						if (index < runes.getRuneNum() && runes.getRune (index).equals ("homing"))
+							rw.draw (new DrawableImage (pos, dim, ss.get (1, 3)));
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 3)));
+						break;
+					case "explosion" :
+						if (index < runes.getRuneNum() && runes.getRune (index).equals ("explosion"))
+							rw.draw (new DrawableImage (pos, dim, ss.get (1, 4)));
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 4)));
+						break;
+					case "burst" :
+						if (index < runes.getRuneNum() && runes.getRune (index).equals ("burst"))
+							rw.draw (new DrawableImage (pos, dim, ss.get (1, 5)));
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 5)));
+						break;
+					case "snipe" :
+						if (index < runes.getRuneNum() && runes.getRune (index).equals ("snipe"))
+							rw.draw (new DrawableImage (pos, dim, ss.get (1, 6)));
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 6)));
+						break;
+					case "split" :
+						if (index < runes.getRuneNum() && runes.getRune (index).equals ("split"))
+							rw.draw (new DrawableImage (pos, dim, ss.get (1, 7)));
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 7)));
+						break;
+					case "spread" :
+						if (index < runes.getRuneNum() && runes.getRune (index).equals ("spread"))
+							rw.draw (new DrawableImage (pos, dim, ss.get (1, 8)));
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 8)));
+						break;
+					case "sentinel" :
+						if (index < runes.getRuneNum() && runes.getRune (index).equals ("sentinel"))
+							rw.draw (new DrawableImage (pos, dim, ss.get (1, 9)));
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 9)));
+						break;
+					case "antibullet" :
+						if (index < runes.getRuneNum() && runes.getRune (index).equals ("antibullet"))
+							rw.draw (new DrawableImage (pos, dim, ss.get (1, 10)));
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 10)));
+						break;
+					case "summon" :
+						if (index < runes.getRuneNum() && runes.getRune (index).equals ("summon"))
+							rw.draw (new DrawableImage (pos, dim, ss.get (1, 3)));
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 11)));
+						break;
 					default : rw.draw(new DrawableImage(pos, dim, ss.get(1, 0)));
 				}
 			}
