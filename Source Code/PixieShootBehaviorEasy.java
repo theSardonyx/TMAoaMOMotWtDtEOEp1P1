@@ -39,7 +39,7 @@ public class PixieShootBehaviorEasy extends ShootBehavior {
 			Vector velocity = base.rotate(rotation);
 			projectile.setMoveBehavior(new QueueMoveBehavior(this.subject, new MoveBehavior[] {
 					new InactiveMoveBehavior(projectile, i*this.interval),
-					new TeleportMoveBehavior(projectile, this.subject.getPosition()),
+					new TeleportMoveBehavior(projectile, this.subject),
 					new AccelerateMoveBehavior(projectile, velocity, Vector.zero())
 			}));
 			

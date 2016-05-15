@@ -33,7 +33,7 @@ public class PixieShootBehaviorHard extends ShootBehavior {
 			Vector velocity = base.setAngle(rotation);
 			projectile.setMoveBehavior(new QueueMoveBehavior(this.subject, new MoveBehavior[] {
 					new InactiveMoveBehavior(projectile, i*this.interval),
-					new TeleportMoveBehavior(projectile, this.subject.getPosition()),
+					new TeleportMoveBehavior(projectile, this.subject),
 					new AccelerateMoveBehavior(projectile, velocity, Vector.zero())
 			}));
 			bullets[i] = projectile;
@@ -43,7 +43,7 @@ public class PixieShootBehaviorHard extends ShootBehavior {
 			velocity = base.setAngle(rotation);
 			projectile.setMoveBehavior(new QueueMoveBehavior(this.subject, new MoveBehavior[] {
 					new InactiveMoveBehavior(projectile, i*this.interval),
-					new TeleportMoveBehavior(projectile, this.subject.getPosition()),
+					new TeleportMoveBehavior(projectile, this.subject),
 					new AccelerateMoveBehavior(projectile, velocity, Vector.zero())
 			}));
 			bullets[basis+i] = projectile;
