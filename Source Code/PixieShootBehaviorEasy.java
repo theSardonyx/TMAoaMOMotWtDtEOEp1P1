@@ -15,7 +15,7 @@ public class PixieShootBehaviorEasy extends ShootBehavior {
 		
 		this.target = target;
 		this.speed = 200;
-		this.interval = 0.5;
+		this.interval = 0.2;
 		this.color = color;
 		this.shootCounter = 1;
 		if(startOnRight)
