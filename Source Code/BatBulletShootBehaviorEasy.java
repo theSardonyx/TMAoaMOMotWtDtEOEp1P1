@@ -10,13 +10,13 @@ public class BatBulletShootBehaviorEasy extends ShootBehavior {
 	public BatBulletShootBehaviorEasy(Entity subject, BulletStage bulletStage, Color color) {
 		super(subject, bulletStage);
 		
-		this.fireRate = 1.5;
+		this.fireRate = 1.25;
 		
 		this.color = color;
 		this.genVelocity = new Vector(0, 150);
 		this.height = 50;
 		this.period = 1;
-		this.shootCount = 0;;
+		this.shootCount = 0;
 	}
 
 	@Override
