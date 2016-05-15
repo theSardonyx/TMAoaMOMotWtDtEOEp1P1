@@ -5,6 +5,7 @@ public class WaveMoveBehavior extends MoveBehavior {
 	
 	private double height;
 	private double period;
+	private boolean startOnRight;
 	private Vector genVelocity;
 	
 	private Vector origin;
@@ -16,20 +17,22 @@ public class WaveMoveBehavior extends MoveBehavior {
 	private Vector velToLeft;
 	private Vector velToRight;
 	
-	public WaveMoveBehavior(Entity subject, Vector genVelocity, double height, double period) {
+	public WaveMoveBehavior(Entity subject, Vector genVelocity, double height, double period, boolean startOnRight) {
 		super(subject);
 		this.height = height;
 		this.period = period;
 		this.genVelocity = genVelocity;
+		this.startOnRight = startOnRight;
 		
 		update();
 	}
 
-	public WaveMoveBehavior(Entity subject, Vector genVelocity, double height, double period, double expireTime) {
+	public WaveMoveBehavior(Entity subject, Vector genVelocity, double height, double period, boolean startOnRight, double expireTime) {
 		super(subject, expireTime);
 		this.height = height;
 		this.period = period;
 		this.genVelocity = genVelocity;
+		this.startOnRight = startOnRight;
 		
 		update();
 	}
@@ -57,16 +60,16 @@ public class WaveMoveBehavior extends MoveBehavior {
 		Vector vX = genVelocity;
 		Vector vY = genVelocity.rotate( Math.PI/2 ).normalize();
 		vY = vY.scalarMult( 4.0 * height / period );
-		Vector finalInitialVelocity = vX.add(vY);
-		velToLeft = finalInitialVelocity;
+		
+		velToLeft = vX.add(vY);
 		velToRight = vX.add(vY.scalarMult(-1));
-		
-		Vector acceleration = genVelocity.rotate( -Math.PI/2 ).normalize();
-		acceleration = acceleration.scalarMult( 8 * height / ( period * period ) );
-		
-		accToRight = acceleration;
+		accToRight = genVelocity.rotate( -Math.PI/2 ).normalize().scalarMult( 8 * height / ( period * period ) );
 		accToLeft = accToRight.scalarMult(-1);
-		accelerate = new AccelerateMoveBehavior(subject, finalInitialVelocity, acceleration);
+		
+		if(this.startOnRight)
+			accelerate = new AccelerateMoveBehavior(subject, velToRight, accToLeft);
+		else
+			accelerate = new AccelerateMoveBehavior(subject, velToLeft, accToRight);
 		
 		origin = subject.getPosition();
 		direction = genVelocity;
