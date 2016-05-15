@@ -2,10 +2,10 @@ import java.awt.Color;
 
 public class EyeBullet extends Entity {
 
-	public EyeBullet(Vector position, Vector dimension, BulletStage stage) {
-		super(position, dimension, stage);
+	public EyeBullet(Vector position, BulletStage stage, Color color) {
+		super(position, new Vector(32, 32), stage);
 		SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/enemyBulletSheet.png", 32, 32);
-		this.visual = new DrawableImage(position, dimension, Sprite.integrateSprites(ss.get(0, 1), ss.get(1, 1), Color.GREEN));
+		this.visual = new DrawableImage(position, dimension, Sprite.integrateSprites(ss.get(0, 1), ss.get(1, 1), color));
 		
 		//TODO damage pls
 		this.damage = 1;
