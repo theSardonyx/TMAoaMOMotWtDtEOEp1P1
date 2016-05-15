@@ -103,11 +103,11 @@ public class Vector {
 	Method for setting the current angle of a Vector
 	@param targetRadians: target angle(in radians) for a Vector
 	*/
-	public void setAngle(double targetRadians) {
+	public Vector setAngle(double targetRadians) {
 		double currentRadians = Math.atan2(y, x);
 		double deltaRadians = targetRadians-currentRadians;
 				
-		this.rotate(deltaRadians);
+		return this.rotate(deltaRadians);
 	}
 	
 	/*
