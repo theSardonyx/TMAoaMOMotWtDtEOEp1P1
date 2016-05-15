@@ -20,6 +20,7 @@ public class BulletStage {
 	private Queue<Request> requestQueue;
 	
 	private Player player;
+	private BatEnemy bat;
 	
 	public BulletStage() {
 		position = new Vector( 0, 0 );
@@ -38,6 +39,11 @@ public class BulletStage {
 
 		player = new Player(new Vector(200, 200), new Vector(64, 64), this);
 		player.setMoveBehavior(new PlayerMoveBehavior(player, 300));
+		
+		bat = new BatEnemy(new Vector(800, 800), new Vector(64, 64), this);
+		bat.setMoveBehavior(new HomingMoveBehavior(bat, player, new Vector(300, 0), Math.PI, 20));
+		bat.setShootBehavior(new BatBulletShootBehaviorEasy(bat, this, Color.RED));
+		addEntity(bat);
 		
 		BasicBulletShootBehavior sb = new BasicBulletShootBehavior(player, this);
 		sb.setLevel(10);
