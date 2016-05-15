@@ -1,11 +1,11 @@
 import java.awt.Color;
 
-public class BatBulletShootBehaviorMedium extends ShootBehavior {
+public class BatShootBehaviorMedium extends ShootBehavior {
 
 	private Color color;
 	private Vector base;
 	
-	public BatBulletShootBehaviorMedium(Entity subject, BulletStage stage, Color color) {
+	public BatShootBehaviorMedium(Entity subject, BulletStage stage, Color color) {
 		super(subject, stage);
 
 		this.fireRate = 1;

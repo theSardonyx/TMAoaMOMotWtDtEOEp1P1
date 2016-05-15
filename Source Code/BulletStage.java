@@ -39,10 +39,10 @@ public class BulletStage {
 		player = new Player(new Vector(200, 200), new Vector(64, 64), this);
 		player.setMoveBehavior(new PlayerMoveBehavior(player, 300));
 		
-		BatEnemy bat = new BatEnemy(new Vector(300, 300), new Vector(64, 64), this);
-		bat.setMoveBehavior(new EllipseMoveBehavior(bat, new Vector(300, 300), 250, 250, 5));
-		bat.setShootBehavior(new BatBulletShootBehaviorHard(bat, this, Color.RED));
-		addEntity(bat);
+		PixieEnemy pixie = new PixieEnemy(new Vector(300, 300), new Vector(64, 64), this);
+		pixie.setMoveBehavior(new EllipseMoveBehavior(pixie, new Vector(300, 300), 250, 250, 5));
+		pixie.setShootBehavior(new BatShootBehaviorHard(pixie, this, Color.RED));
+		addEntity(pixie);
 		
 		BasicBulletShootBehavior sb = new BasicBulletShootBehavior(player, this);
 		sb.setLevel(10);
