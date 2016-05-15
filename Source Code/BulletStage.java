@@ -41,7 +41,7 @@ public class BulletStage {
 		
 		BatEnemy bat = new BatEnemy(new Vector(300, 300), new Vector(64, 64), this);
 		bat.setMoveBehavior(new EllipseMoveBehavior(bat, new Vector(300, 300), 250, 250, 5));
-		bat.setShootBehavior(new BatBulletShootBehaviorMedium(bat, this, Color.RED));
+		bat.setShootBehavior(new BatBulletShootBehaviorHard(bat, this, Color.RED));
 		addEntity(bat);
 		
 		BasicBulletShootBehavior sb = new BasicBulletShootBehavior(player, this);
