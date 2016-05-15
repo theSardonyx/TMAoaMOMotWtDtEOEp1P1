@@ -54,11 +54,11 @@ public class Config {
 			try {
 				instance = mapper.readValue (new File ("config.json"), Config.class);
 			} catch (JsonGenerationException e) {
-				e.printStackTrace();
+				
 			} catch (JsonMappingException e) {
-				e.printStackTrace();
+				
 			} catch (IOException e) {
-				e.printStackTrace();
+				
 			}
 			
 			if (instance == null)
