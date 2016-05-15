@@ -40,8 +40,8 @@ public class BulletStage {
 		player.setMoveBehavior(new PlayerMoveBehavior(player, 300));
 		
 		EyeEnemy eye = new EyeEnemy(new Vector(300, 300), new Vector(64, 64), this);
-		eye.setMoveBehavior(new EllipseMoveBehavior(eye, new Vector(300, 300), 250, 250, 5));
-		eye.setShootBehavior(new EyeShootBehaviorEasy(eye, player, this, Color.RED));
+		//eye.setMoveBehavior(new EllipseMoveBehavior(eye, new Vector(300, 300), 250, 250, 5));
+		eye.setShootBehavior(new EyeShootBehaviorMedium(eye, player, this, Color.RED));
 		addEntity(eye);
 		
 		BasicBulletShootBehavior sb = new BasicBulletShootBehavior(player, this);
