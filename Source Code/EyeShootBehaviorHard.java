@@ -9,13 +9,13 @@ public class EyeShootBehaviorHard extends ShootBehavior {
 	
 	public EyeShootBehaviorHard(Entity subject, Entity target, BulletStage stage, Color color) {
 		super(subject, stage);
-
-		this.fireRate = 3;
 		
+		this.fireRate = 2;
+		
+		this.radius = 100;
+		this.speed = 500;
 		this.target = target;
 		this.color = color;
-		this.speed = 450;
-		this.radius = 100;
 	}
 
 	@Override
@@ -24,22 +24,28 @@ public class EyeShootBehaviorHard extends ShootBehavior {
 		
 		Vector base = this.target.getPosition().subtract( this.subject.getPosition() ).normalize();
 		Vector baseSpawnOffset = base.scalarMult( this.radius );
-		for(int i=0; i<7; i++)
-		{
+		for(int i = 0; 7 > i; i++) {
 			Vector spawnPoint = this.subject.getPosition().add(baseSpawnOffset.rotate( i * 2 * Math.PI / 7 ));
-			Vector velocityDirection = this.target.getPosition().subtract( spawnPoint ).normalize();
-			Vector velocity = velocityDirection.scalarMult( this.speed / (( Math.random() * 3 ) + 1) );
+			double velocityMagnitude = this.speed / (( Math.random() * 3 ) + 1);
 			
-			EyeBullet projectile = new EyeBullet(this.subject.getPosition(), this.stage, this.color);
-			projectile.setMoveBehavior( new QueueMoveBehavior(projectile, new MoveBehavior[] {
-					new TimedGlideMoveBehavior(projectile, spawnPoint, 0.5, 0.5),
-					new AccelerateMoveBehavior(projectile, Vector.zero(), Vector.zero(), 0.5),
-					new AccelerateMoveBehavior(projectile, velocity, Vector.zero())
-			} ));
+			EyeBullet projectile = new EyeBullet(this.subject.position, this.stage, this.color);
+			QueueMoveBehavior queue = new QueueMoveBehavior(projectile, null);
+			
+			TimedGlideMoveBehavior mb1 = new TimedGlideMoveBehavior(projectile, spawnPoint, 0.5, 0.5);
+			AccelerateMoveBehavior mb2 = new AccelerateMoveBehavior(projectile, Vector.zero(), Vector.zero(), 0.25);
+			AimedMoveBehavior mb3 = new AimedMoveBehavior(projectile, this.target, velocityMagnitude, 0);
+			queue.pushBack(mb1);
+			queue.pushBack(mb2);
+			queue.pushBack(mb3);
+			projectile.setMoveBehavior(queue);
+			
 			bullets[i] = projectile;
 		}
 		
 		return bullets;
 	}
 
+	public void setRadius(double radius) {
+		this.radius = radius;
+	}
 }
