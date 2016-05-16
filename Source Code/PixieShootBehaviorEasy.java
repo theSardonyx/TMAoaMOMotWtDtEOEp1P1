@@ -4,7 +4,7 @@ public class PixieShootBehaviorEasy extends ShootBehavior {
 
 	private Color color;
 	private Vector baseVelocity, baseAcceleration;
-	private double velocityMagnitude, accelerationMagnitude, rotationDelta, bounceBase, bounceCap;
+	private double speed, acceleration, rotationDelta, bounceBase, bounceCap;
 	private Entity target;
 	private boolean isBounce;
 	
@@ -13,8 +13,29 @@ public class PixieShootBehaviorEasy extends ShootBehavior {
 		
 		this.fireRate = 0.2;
 		
-		this.velocityMagnitude = 200;
-		this.accelerationMagnitude = 0;
+		this.speed = 200;
+		this.acceleration = 0;
+		this.rotationDelta = Math.PI / 10;
+		this.target = target;
+		this.color = color;
+		if(orientationToRight)
+			this.rotationDelta = - Math.abs(rotationDelta);
+		else
+			this.rotationDelta = Math.abs(rotationDelta);
+		this.baseVelocity = null;
+		this.baseAcceleration = null;
+		this.isBounce = false;
+		this.bounceBase = 0;
+		this.bounceCap = 2 * Math.PI;
+	}
+	
+	public PixieShootBehaviorEasy(Entity subject, Entity target, BulletStage stage, boolean orientationToRight, Color color, double expireTime) {
+		super(subject, stage, expireTime);
+		
+		this.fireRate = 0.2;
+		
+		this.speed = 200;
+		this.acceleration = 0;
 		this.rotationDelta = Math.PI / 10;
 		this.target = target;
 		this.color = color;
@@ -36,9 +57,9 @@ public class PixieShootBehaviorEasy extends ShootBehavior {
 					.subtract(this.subject.getPosition())
 					.normalize();
 			if(this.baseVelocity == null)
-				this.baseVelocity = diff.scalarMult(this.velocityMagnitude);
+				this.baseVelocity = diff.scalarMult(this.speed);
 			if(this.baseAcceleration == null)
-				this.baseAcceleration = diff.scalarMult(this.accelerationMagnitude);
+				this.baseAcceleration = diff.scalarMult(this.acceleration);
 		}
 		else {
 			this.baseVelocity = this.baseVelocity.rotate(rotationDelta);
@@ -69,8 +90,12 @@ public class PixieShootBehaviorEasy extends ShootBehavior {
 	}
 	
 	public void setRotation(double radians) {
-		this.baseVelocity = new Vector(0, this.velocityMagnitude).setAngle(radians);
-		this.baseAcceleration = new Vector(0, this.accelerationMagnitude).setAngle(radians);
+		this.baseVelocity = new Vector(0, this.speed).setAngle(radians);
+		this.baseAcceleration = new Vector(0, this.acceleration).setAngle(radians);
+	}
+	
+	public void setRotationDelta(double radians) {
+		this.rotationDelta = radians;
 	}
 	
 	public void rotate(double radians) {
@@ -78,5 +103,20 @@ public class PixieShootBehaviorEasy extends ShootBehavior {
 			this.baseVelocity = this.baseVelocity.rotate(radians);
 		if(this.baseAcceleration != null)
 			this.baseAcceleration = this.baseAcceleration.rotate(radians);
+	}
+	
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+	
+	public void setAcceleration(double acceleration) {
+		this.acceleration = acceleration;
+	}
+	
+	public void setOrientationToRight(boolean orientationToRight) {
+		if(orientationToRight)
+			this.rotationDelta = - Math.abs(this.rotationDelta);
+		else
+			this.rotationDelta = Math.abs(this.rotationDelta);
 	}
 }

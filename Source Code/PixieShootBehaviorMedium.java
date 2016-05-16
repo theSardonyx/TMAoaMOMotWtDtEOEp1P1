@@ -5,7 +5,8 @@ public class PixieShootBehaviorMedium extends ShootBehavior {
 	private Color color;
 	private Entity target;
 	private Vector baseVelocity, baseAcceleration;
-	private double velocityMagnitude, accelerationMagnitude, rotationBase, rotationDelta;
+	private double speed, acceleration, rotationBase, rotationDelta, bounceBase, bounceCap;
+	private boolean isBounce;
 	
 	public PixieShootBehaviorMedium(Entity subject, Entity target, BulletStage stage, Color color) {
 		super(subject, stage);
@@ -13,13 +14,36 @@ public class PixieShootBehaviorMedium extends ShootBehavior {
 		this.fireRate = 0.1;
 		
 		this.target = target;
-		this.velocityMagnitude = 200;
-		this.accelerationMagnitude = 0;
+		this.speed = 200;
+		this.acceleration = 0;
 		this.rotationDelta = Math.PI / 10;
 		this.rotationBase = Math.PI / 2;
 		this.color = color;
 		this.baseVelocity = null;
 		this.baseAcceleration = null;
+		
+		this.isBounce = false;
+		this.bounceBase = 0;
+		this.bounceCap = Math.PI * 2;
+	}
+	
+	public PixieShootBehaviorMedium(Entity subject, Entity target, BulletStage stage, Color color, double expireTime) {
+		super(subject, stage, expireTime);
+
+		this.fireRate = 0.1;
+		
+		this.target = target;
+		this.speed = 200;
+		this.acceleration = 0;
+		this.rotationDelta = Math.PI / 10;
+		this.rotationBase = Math.PI / 2;
+		this.color = color;
+		this.baseVelocity = null;
+		this.baseAcceleration = null;
+		
+		this.isBounce = false;
+		this.bounceBase = 0;
+		this.bounceCap = Math.PI * 2;
 	}
 
 	@Override
@@ -29,9 +53,15 @@ public class PixieShootBehaviorMedium extends ShootBehavior {
 					.subtract(this.subject.getPosition())
 					.normalize();
 			if(this.baseVelocity == null)
-				this.baseVelocity = diff.scalarMult(this.velocityMagnitude);
+				this.baseVelocity = diff.scalarMult(this.speed);
 			if(this.baseAcceleration == null)
-				this.baseAcceleration = diff.scalarMult(this.accelerationMagnitude);
+				this.baseAcceleration = diff.scalarMult(this.acceleration);
+		}
+		this.bounceBase += this.rotationDelta;
+		if(Math.abs(this.bounceBase) >= this.bounceCap) {
+			this.bounceBase = 0;
+			if(this.isBounce)
+				this.rotationDelta *= -1;
 		}
 		
 		PixieBullet projectileLeft = new PixieBullet(this.subject.position, this.stage, this.color);
@@ -51,5 +81,25 @@ public class PixieShootBehaviorMedium extends ShootBehavior {
 		bullets[0] = projectileLeft;
 		bullets[1] = projectileRight;
 		return bullets;
+	}
+	
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+	
+	public void setAcceleration(double acceleration) {
+		this.acceleration = acceleration;
+	}
+	
+	public void setRotationDelta(double rotationDelta) {
+		this.rotationDelta = rotationDelta;
+	}
+	
+	public void setIsBounce(boolean isBounce) {
+		this.isBounce = isBounce;
+	}
+	
+	public void setBounceCap(double radians) {
+		this.bounceCap = radians;
 	}
 }
