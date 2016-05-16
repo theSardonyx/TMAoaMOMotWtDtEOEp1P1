@@ -26,7 +26,7 @@ public class BatShootBehaviorHard extends ShootBehavior {
 		{
 			BatBullet projectile = new BatBullet(spawnPoint, this.stage, this.color);
 			Vector targetPosition = spawnPoint.add(base.rotate( i*Math.PI/2 ));
-			boolean orientToRight = (i % 2 == 0);
+			boolean orientToRight = (Math.random() > 0.5);
 			projectile.setMoveBehavior(new QueueMoveBehavior(projectile, new MoveBehavior[] {
 					new TimedGlideMoveBehavior(projectile, targetPosition, 0.5, 0.5),
 					new AccelerateMoveBehavior(projectile, Vector.zero(), Vector.zero(), 0.5),

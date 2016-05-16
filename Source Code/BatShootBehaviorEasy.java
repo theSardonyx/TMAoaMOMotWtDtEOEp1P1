@@ -5,7 +5,7 @@ public class BatShootBehaviorEasy extends ShootBehavior {
 	private Color color;
 	private Vector genVelocity;
 	private double height, period;
-	private int shootCount;
+	private boolean orientationToRight;
 	
 	public BatShootBehaviorEasy(Entity subject, BulletStage bulletStage, Color color) {
 		super(subject, bulletStage);
@@ -16,16 +16,14 @@ public class BatShootBehaviorEasy extends ShootBehavior {
 		this.genVelocity = new Vector(0, 150);
 		this.height = 50;
 		this.period = 1;
-		this.shootCount = 0;
+		this.orientationToRight = false;
 	}
 
 	@Override
 	public Entity[] getBullets() {
-		
 		BatBullet projectile = new BatBullet(subject.getPosition(), stage, color);
-		this.shootCount++;
 		
-		boolean orientationToRight = (this.shootCount % 2 == 0);
+		this.orientationToRight = !this.orientationToRight;
 		projectile.setMoveBehavior(new WaveMoveBehavior(projectile, this.genVelocity.clone(), this.height, this.period, orientationToRight));
 		
 		Entity[] bullets = new Entity[1];
@@ -35,6 +33,10 @@ public class BatShootBehaviorEasy extends ShootBehavior {
 	
 	public void setGenVelocity(Vector genVelocity) {
 		this.genVelocity = genVelocity;
+	}
+	
+	public void rotate(double radians) {
+		this.genVelocity.rotate(radians);
 	}
 	
 	public void setHeight(double height) {
