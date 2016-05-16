@@ -47,8 +47,13 @@ public abstract class Entity extends Drawable {
 	}
 	
 	public final void update( double delta ) {
-		if(move != null)
+		if(move != null) {
+			if(move.getExpireTime() <= 0) {
+				this.despawn();
+				return;
+			}
 			move.move(delta);
+		}
 		if(shoot != null && this.position != null)
 			shoot.shoot(delta);
 		updateHook(delta);
