@@ -49,7 +49,7 @@ public abstract class Entity extends Drawable {
 	public final void update( double delta ) {
 		if(move != null)
 			move.move(delta);
-		if(shoot != null)
+		if(shoot != null && this.position != null)
 			shoot.shoot(delta);
 		updateHook(delta);
 	}
@@ -58,6 +58,8 @@ public abstract class Entity extends Drawable {
 	
 	@Override
 	public void draw(Graphics2D g) {
+		if(this.position == null)
+			return;
 		visual.setPosition( position );
 		visual.setDimension( dimension );
 		visual.draw(g);
