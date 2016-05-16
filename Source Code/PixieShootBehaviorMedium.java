@@ -4,51 +4,52 @@ public class PixieShootBehaviorMedium extends ShootBehavior {
 	
 	private Color color;
 	private Entity target;
-	private double speed;
-	private double interval;
+	private Vector baseVelocity, baseAcceleration;
+	private double velocityMagnitude, accelerationMagnitude, rotationBase, rotationDelta;
 	
 	public PixieShootBehaviorMedium(Entity subject, Entity target, BulletStage stage, Color color) {
 		super(subject, stage);
 
-		this.fireRate = 2;
+		this.fireRate = 0.1;
 		
 		this.target = target;
-		this.speed = 200;
-		this.interval = 0.25;
+		this.velocityMagnitude = 200;
+		this.accelerationMagnitude = 0;
+		this.rotationDelta = Math.PI / 10;
+		this.rotationBase = Math.PI / 2;
 		this.color = color;
+		this.baseVelocity = null;
+		this.baseAcceleration = null;
 	}
 
 	@Override
 	public Entity[] getBullets() {
-		int basis = 3;
-		Entity[] bullets = new Entity[basis*2];
-		
-		Vector base = target.getPosition().subtract( subject.getPosition() ).normalize().scalarMult( this.speed );
-		double baseAngle = base.getAngle() + Math.PI/2;
-		for(int i=0; i<basis; i++)
-		{
-			PixieBullet projectile = new PixieBullet(this.subject.getPosition(), this.stage, this.color);
-			double rotation = baseAngle - (i * Math.PI/(basis*2-1));
-			Vector velocity = base.setAngle(rotation);
-			projectile.setMoveBehavior(new QueueMoveBehavior(this.subject, new MoveBehavior[] {
-					new InactiveMoveBehavior(projectile, i*this.interval),
-					new TeleportMoveBehavior(projectile, this.subject),
-					new AccelerateMoveBehavior(projectile, velocity, Vector.zero())
-			}));
-			bullets[i] = projectile;
-			
-			projectile = new PixieBullet(this.subject.getPosition(), this.stage, this.color);
-			rotation = (baseAngle + Math.PI) + (i * Math.PI/(basis*2-1));
-			velocity = base.setAngle(rotation);
-			projectile.setMoveBehavior(new QueueMoveBehavior(this.subject, new MoveBehavior[] {
-					new InactiveMoveBehavior(projectile, i*this.interval),
-					new TeleportMoveBehavior(projectile, this.subject),
-					new AccelerateMoveBehavior(projectile, velocity, Vector.zero())
-			}));
-			bullets[basis+i] = projectile;
+		if(this.baseVelocity == null || this.baseAcceleration == null) {
+			Vector diff = this.target.getPosition()
+					.subtract(this.subject.getPosition())
+					.normalize();
+			if(this.baseVelocity == null)
+				this.baseVelocity = diff.scalarMult(this.velocityMagnitude);
+			if(this.baseAcceleration == null)
+				this.baseAcceleration = diff.scalarMult(this.accelerationMagnitude);
 		}
 		
+		PixieBullet projectileLeft = new PixieBullet(this.subject.position, this.stage, this.color);
+		AccelerateMoveBehavior mbLeft = new AccelerateMoveBehavior(projectileLeft, 
+				this.baseVelocity.rotate(this.rotationBase), 
+				this.baseAcceleration.rotate(this.rotationBase));
+		projectileLeft.setMoveBehavior(mbLeft);
+		PixieBullet projectileRight = new PixieBullet(this.subject.position, this.stage, this.color);
+		AccelerateMoveBehavior mbRight = new AccelerateMoveBehavior(projectileRight, 
+				this.baseVelocity.rotate(- this.rotationBase), 
+				this.baseAcceleration.rotate(- this.rotationBase));
+		projectileRight.setMoveBehavior(mbRight);
+		
+		this.rotationBase -= this.rotationDelta;
+		
+		Entity[] bullets = new Entity[2];
+		bullets[0] = projectileLeft;
+		bullets[1] = projectileRight;
 		return bullets;
 	}
-
 }
