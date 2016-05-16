@@ -6,6 +6,12 @@ public class SnipeBulletShootBehavior extends UpgradableShootBehavior {
 
 		this.fireRate = 1;
 	}
+	
+	public SnipeBulletShootBehavior(Entity subject, BulletStage stage, double expireTime) {
+		super(subject, stage, expireTime);
+
+		this.fireRate = 1;
+	}
 
 	@Override
 	public void update() {

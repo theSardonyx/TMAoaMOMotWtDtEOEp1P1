@@ -13,6 +13,15 @@ public class SpreadBulletShootBehavior extends UpgradableShootBehavior {
 		this.acceleration = Vector.zero();
 		this.angularInterval = Math.PI / 18;
 	}
+	
+	public SpreadBulletShootBehavior(Entity subject, BulletStage stage, double expireTime) {
+		super(subject, stage, expireTime);
+
+		this.fireRate = 1;
+		
+		this.acceleration = Vector.zero();
+		this.angularInterval = Math.PI / 18;
+	}
 
 	@Override
 	public void update() {

@@ -8,6 +8,12 @@ public class HomingBulletShootBehavior extends UpgradableShootBehavior {
 
 		this.fireRate = 1;
 	}
+	
+	public HomingBulletShootBehavior(Entity subject, BulletStage stage, double expireTime) {
+		super(subject, stage, expireTime);
+
+		this.fireRate = 1;
+	}
 
 	@Override
 	public void update() {

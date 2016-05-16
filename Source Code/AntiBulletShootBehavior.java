@@ -10,6 +10,14 @@ public class AntiBulletShootBehavior extends UpgradableShootBehavior {
 		
 		this.velocity = Vector.zero();
 	}
+	
+	public AntiBulletShootBehavior(Entity subject, BulletStage bulletStage, double expireTime) {
+		super(subject, bulletStage, expireTime);
+		
+		this.fireRate = 1;
+		
+		this.velocity = Vector.zero();
+	}
 
 	@Override
 	public Entity[] getBullets() {

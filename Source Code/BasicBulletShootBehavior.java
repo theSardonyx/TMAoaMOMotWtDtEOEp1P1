@@ -3,8 +3,16 @@ public class BasicBulletShootBehavior extends UpgradableShootBehavior {
 
 	private Vector velocity, acceleration;
 	
-	public BasicBulletShootBehavior(Entity subject, BulletStage bulletStage) {
-		super(subject, bulletStage);
+	public BasicBulletShootBehavior(Entity subject, BulletStage stage) {
+		super(subject, stage);
+		
+		this.fireRate = 1;
+		
+		this.acceleration = Vector.zero();
+	}
+	
+	public BasicBulletShootBehavior(Entity subject, BulletStage stage, double expireTime) {
+		super(subject, stage, expireTime);
 		
 		this.fireRate = 1;
 		

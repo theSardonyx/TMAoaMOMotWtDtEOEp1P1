@@ -10,6 +10,14 @@ public class BurstBulletShootBehavior extends UpgradableShootBehavior {
 		
 		this.acceleration = Vector.zero();
 	}
+	
+	public BurstBulletShootBehavior(Entity subject, BulletStage bulletStage, double expireTime) {
+		super(subject, bulletStage, expireTime);
+		
+		this.fireRate = 1;
+		
+		this.acceleration = Vector.zero();
+	}
 
 	@Override
 	public Entity[] getBullets() {

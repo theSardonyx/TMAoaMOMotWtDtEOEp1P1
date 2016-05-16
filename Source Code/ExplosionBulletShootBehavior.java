@@ -6,6 +6,13 @@ public class ExplosionBulletShootBehavior extends UpgradableShootBehavior {
 	public ExplosionBulletShootBehavior(Entity subject, BulletStage stage) {
 		super(subject, stage);
 		
+		this.fireRate = 3;
+		
+		this.acceleration = Vector.zero();
+	}
+	
+	public ExplosionBulletShootBehavior(Entity subject, BulletStage stage, double expireTime) {
+		super(subject, stage, expireTime);
 		
 		this.fireRate = 3;
 		

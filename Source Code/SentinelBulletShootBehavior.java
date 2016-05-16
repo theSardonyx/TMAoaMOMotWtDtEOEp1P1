@@ -10,6 +10,23 @@ public class SentinelBulletShootBehavior extends UpgradableShootBehavior {
 
 		this.fireRate = 1;
 	}
+	
+	public SentinelBulletShootBehavior(Entity subject, BulletStage stage, double expireTime) {
+		super(subject, stage, expireTime);
+
+		this.fireRate = 0;
+	}
+	
+	@Override
+	public void shoot(double delta) {
+		super.shoot(delta);
+		if(this.expireTime <= 0) {
+			for(Entity sentinel: sentinels) {
+				sentinel.despawn();
+				sentinel = null;
+			}
+		}
+	}
 
 	@Override
 	public void update() {

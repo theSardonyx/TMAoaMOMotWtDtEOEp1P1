@@ -9,6 +9,14 @@ public class PierceBulletShootBehavior extends UpgradableShootBehavior {
 		
 		this.acceleration = new Vector(0, -300);
 	}
+	
+	public PierceBulletShootBehavior(Entity subject, BulletStage stage, double expireTime) {
+		super(subject, stage, expireTime);
+
+		this.fireRate = 3;
+		
+		this.acceleration = new Vector(0, -300);
+	}
 
 	@Override
 	public void update() {

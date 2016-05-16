@@ -9,6 +9,12 @@ public class SplitBulletShootBehavior extends UpgradableShootBehavior {
 
 		this.fireRate = 1;
 	}
+	
+	public SplitBulletShootBehavior(Entity subject, BulletStage stage, double expireTime) {
+		super(subject, stage, expireTime);
+
+		this.fireRate = 1;
+	}
 
 	@Override
 	public void update() {

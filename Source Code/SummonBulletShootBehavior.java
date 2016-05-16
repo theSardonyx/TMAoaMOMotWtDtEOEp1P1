@@ -13,6 +13,16 @@ public class SummonBulletShootBehavior extends UpgradableShootBehavior {
 		this.acceleration = Vector.zero();
 		this.radius = new Vector(0, 50);
 	}
+	
+	public SummonBulletShootBehavior(Entity subject, BulletStage stage, double expireTime) {
+		super(subject, stage, expireTime);
+
+		this.fireRate = 0.1;
+		
+		this.velocity = new Vector(0, -500);
+		this.acceleration = Vector.zero();
+		this.radius = new Vector(0, 50);
+	}
 
 	@Override
 	public void update() {
