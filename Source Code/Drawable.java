@@ -70,6 +70,8 @@ public abstract class Drawable {
 	*/
 	public void setPosition(Vector position) {
 		this.position = position;
+		if(position == null)
+			return;
 		this.topLeftPosition = position.subtract( origin );
 	}
 
