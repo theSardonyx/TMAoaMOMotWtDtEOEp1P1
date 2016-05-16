@@ -5,14 +5,14 @@ public class TeleportMoveBehavior extends MoveBehavior {
 	private Entity anchor;
 	
 	public TeleportMoveBehavior(Entity subject, Vector targetPosition) {
-		super(subject, 0.01);
+		super(subject, 0.005);
 		this.targetPosition = targetPosition;
 		this.anchor = null;
 	}
 	
 	public TeleportMoveBehavior(Entity subject, Entity anchor)
 	{
-		super(subject, 0.01);
+		super(subject, 0.005);
 		this.anchor = anchor;
 		this.targetPosition = this.anchor.getPosition();
 	}
