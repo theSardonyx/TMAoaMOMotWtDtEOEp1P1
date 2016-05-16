@@ -11,6 +11,14 @@ public abstract class UpgradableShootBehavior extends ShootBehavior {
 		this.setLevel(1);
 	}
 	
+	public UpgradableShootBehavior(Entity subject, BulletStage bulletStage, double expireTime) {
+		super(subject, bulletStage, expireTime);
+
+		this.setLevelMax(10);
+		this.setLevelMin(0);
+		this.setLevel(1);
+	}
+	
 	@Override
 	public void shoot(double delta) {
 		if(level > 0) {
