@@ -97,6 +97,11 @@ public class CollideShape {
 		return this;
 	}
 	
+	public CollideShape setOffset(Vector offset) {
+		this.offset = offset;
+		return this;
+	}
+	
 	public CollideShape updatePosition(Vector v) {
 		this.collideRectangle.x = v.x + this.offset.x - (this.dimension.x / 2);
 		this.collideRectangle.y = v.y + this.offset.y - (this.dimension.y / 2);
