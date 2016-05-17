@@ -77,6 +77,10 @@ public abstract class Entity extends Drawable {
 		return this.dimension;
 	}
 	
+	public void setHealth(int health) {
+		this.health = health;
+	}
+	
 	public int getHealth() {
 		return this.health;
 	}
