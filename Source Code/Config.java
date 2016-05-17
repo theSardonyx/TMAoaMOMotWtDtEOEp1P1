@@ -31,12 +31,15 @@ public class Config {
 	* Whether particle effects will be displayed or not
 	*/
 	boolean particles;
+	
+	double spf;
 
 	/**
 	* Creates a new Config object to set this game's default settings
 	*/
 	private Config() {
 		frameRate = 60;
+		this.spf = 1.0 / this.frameRate;
 		particles = true;
 		keys = new int[] {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SHIFT, KeyEvent.VK_Z, KeyEvent.VK_P};
 	}
@@ -89,6 +92,11 @@ public class Config {
 			case 120 : frameRate = 30;
 			break;
 		}
+		this.spf = 1.0 / this.frameRate;
+	}
+	
+	public double getSPF() {
+		return this.spf;
 	}
 	
 	/**
