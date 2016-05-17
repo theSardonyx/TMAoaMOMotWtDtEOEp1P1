@@ -38,6 +38,10 @@ public class Vector {
 	public Vector subtract (Vector that) {
 		return new Vector(this.x - that.x, this.y - that.y);
 	}
+	
+	public Vector subtract(double x, double y) {
+		return new Vector(this.x - x, this.y - y);
+	}
 	/*
 	Multiplication method for calculating an equation involving a scalar and a vector value
 	And stores the results on this Vector
@@ -45,6 +49,10 @@ public class Vector {
 	*/
 	public Vector scalarMult (double factor) {
 		return new Vector(this.x * factor, this.y * factor);
+	}
+	
+	public Vector mult(double x, double y) {
+		return new Vector(this.x * x, this.y * y);
 	}
 	/*
 	Method used for getting the dot product between two vectors.
