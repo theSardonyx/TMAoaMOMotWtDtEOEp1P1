@@ -50,7 +50,7 @@ public class DrawableButton extends Drawable {
 	*
 	* @see	CollideRectangle
 	*/
-	private CollideRectangle cr;
+	private CollideShape cr, pointer;
 	
 	/**
 	* The font this button uses to display text
@@ -91,7 +91,8 @@ public class DrawableButton extends Drawable {
 		this.fontUnhovered = color;
 		this.fontHovered = new Color(0, 0, 0);
 		
-		this.cr = new CollideRectangle(position, dimension);
+		this.cr = new CollideShape(this.position, this.dimension).setCollideRectangle(true);
+		this.pointer = new CollideShape(this.position, new Vector(1, 1)).setCollideEllipse(true);
 		this.dr = new DrawableRectangle(position, dimension, rectUnhovered);
 		this.ds = new DrawableString(position, text, font, fontUnhovered);
 		this.dr.setFilled(false);
@@ -123,7 +124,7 @@ public class DrawableButton extends Drawable {
 	* @see	CollideCircle
 	*/
 	public boolean isCollidingWith(Vector p) {
-		return cr.isCollidingWith(new CollideCircle(p, 0));
+		return cr.isCollidingWith(this.pointer.updatePosition(p));
 	}
 	
 	/**
@@ -295,7 +296,8 @@ public class DrawableButton extends Drawable {
 	*/
 	public void setText(String s) {
 		this.setDimension (new Vector (FontLoader.getInstance().getWidth (font, s) + (padding.x * 2), FontLoader.getInstance().getHeight (font, s) + (padding.y * 2)));
-		this.cr = new CollideRectangle(position, dimension);
+		this.cr = new CollideShape(this.position, dimension)
+				.setCollideRectangle(true);
 		this.dr = new DrawableRectangle(position, dimension, rectUnhovered);
 		this.ds = new DrawableString(position, s, font, fontUnhovered);
 	}
