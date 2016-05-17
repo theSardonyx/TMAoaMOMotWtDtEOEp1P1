@@ -17,7 +17,9 @@ public class PixieEnemy extends Entity {
 		this.damage = 1;
 		
 		this.type = Entity.ENEMY_BULLET_TYPE;
-		this.canCollideAlly = true;
+		this.canCollideAllyBullet = true;
+		
+		this.collideShape = new CollideShape(this.position, this.dimension).setCollideEllipse(true);
 	}
 
 	@Override
@@ -26,7 +28,7 @@ public class PixieEnemy extends Entity {
 	}
 
 	@Override
-	public void collideAlly(Entity e) {
-		this.despawn();
+	public void collideAllyBullet(Entity e) {
+		this.getDamaged(e.damage);
 	}
 }
