@@ -58,14 +58,6 @@ public class Particle extends Entity {
 	public void setFilled(boolean filled) {
 		((DrawableShape) visual).setFilled(filled);
 	}
-	/*
-	Method used to detect collision
-	@param e: Entity object used for collision checking
-	*/
-	@Override
-	public boolean isCollidingWith(Entity e) {
-		return false;
-	}
 	
 	/*
 	Method to set a new velocity
