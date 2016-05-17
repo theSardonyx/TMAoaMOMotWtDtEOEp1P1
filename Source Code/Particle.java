@@ -28,7 +28,6 @@ public class Particle extends Entity {
 		this.visual = new DrawableOval(position, this.dimension, color);
 		((DrawableShape) this.visual).setFilled(true);
 		
-		this.hitbox = new CollideCircle(position, diameter);
 		this.move = new AccelerateMoveBehavior(this, new Vector(100, 0), new Vector(0, 0));
 		
 		this.color = color;
