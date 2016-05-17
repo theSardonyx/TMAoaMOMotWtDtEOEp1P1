@@ -42,7 +42,7 @@ public class PauseState extends State {
 	 * 
 	 * @see	CollideRectangle
 	 */
-	CollideRectangle rune0, rune1, rune2, rune3, rune4, rune5, rune6, rune7, rune8, rune9, newRune;
+	CollideShape rune0, rune1, rune2, rune3, rune4, rune5, rune6, rune7, rune8, rune9, newRune;
 	
 	/**
 	 * The instance of the SpriteSheet where the rune sprites will be loaded from
@@ -105,30 +105,30 @@ public class PauseState extends State {
 			Vector dim = new Vector(64, 64);
 			
 			switch (i) {
-				case 0 : rune0 = new CollideRectangle (pos, dim);
+				case 0 : rune0 = new CollideShape (pos, dim).setCollideRectangle(true);
 				break;
-				case 1 : rune1 = new CollideRectangle (pos, dim);
+				case 1 : rune1 = new CollideShape (pos, dim).setCollideRectangle(true);
 				break;
-				case 2 : rune2 = new CollideRectangle (pos, dim);
+				case 2 : rune2 = new CollideShape (pos, dim).setCollideRectangle(true);
 				break;
-				case 3 : rune3 = new CollideRectangle (pos, dim);
+				case 3 : rune3 = new CollideShape (pos, dim).setCollideRectangle(true);
 				break;
-				case 4 : rune4 = new CollideRectangle (pos, dim);
+				case 4 : rune4 = new CollideShape (pos, dim).setCollideRectangle(true);
 				break;
-				case 5 : rune5 = new CollideRectangle (pos, dim);
+				case 5 : rune5 = new CollideShape (pos, dim).setCollideRectangle(true);
 				break;
-				case 6 : rune6 = new CollideRectangle (pos, dim);
+				case 6 : rune6 = new CollideShape (pos, dim).setCollideRectangle(true);
 				break;
-				case 7 : rune7 = new CollideRectangle (pos, dim);
+				case 7 : rune7 = new CollideShape (pos, dim).setCollideRectangle(true);
 				break;
-				case 8 : rune8 = new CollideRectangle (pos, dim);
+				case 8 : rune8 = new CollideShape (pos, dim).setCollideRectangle(true);
 				break;
-				case 9 : rune9 = new CollideRectangle (pos, dim);
+				case 9 : rune9 = new CollideShape (pos, dim).setCollideRectangle(true);
 				break;
 			}
 		}
 		
-		newRune = new CollideRectangle (new Vector ((Runner.RES_WIDTH / 2) + 192, (Runner.RES_HEIGHT / 2) + 35), new Vector (64, 64));
+		newRune = new CollideShape (new Vector ((Runner.RES_WIDTH / 2) + 192, (Runner.RES_HEIGHT / 2) + 35), new Vector (64, 64)).setCollideRectangle(true);
 	}
 
 	/**
@@ -161,7 +161,7 @@ public class PauseState extends State {
 		btnExit.update (input.getMousePosition());
 		
 		if (input.getMouseReleased (InputCollector.MOUSE_BUTTON1)) {
-			CollideCircle mouse = new CollideCircle (input.getMousePosition(), 0);
+			CollideShape mouse = new CollideShape (input.getMousePosition(), new Vector(1, 1)).setCollideEllipse(true);
 			if (btnResume.isCollidingWith (input.getMousePosition()))
 				popSelf (1, null);
 			else if (btnExit.isCollidingWith (input.getMousePosition()))
@@ -287,10 +287,7 @@ public class PauseState extends State {
 	* @param	delta	The time passed
 	*/
 	@Override
-	public void update(double delta) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void update(double delta) {}
 	
 	/**
 	 * Draws runes is their respective "compartments"
