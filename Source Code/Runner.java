@@ -1,7 +1,5 @@
 
 public class Runner {
-	public final static double FPS = 60.0;
-	public final static double SPF = 1.0/FPS;
 	public final static int RES_WIDTH = 960;
 	public final static int RES_HEIGHT = 720;
 	public final static String TITLE = "Magical Old Man";
@@ -56,10 +54,11 @@ public class Runner {
 			benchmark = toSecond(System.nanoTime()) - past + lag;
 			lag = 0;
 			
-			if(benchmark>=SPF) {
-				lag = benchmark-SPF;
+			double spf = Config.getInstance().getSPF();
+			if(benchmark>=spf) {
+				lag = benchmark-spf;
 			} else {
-				long milli = toMilliSecond(SPF-benchmark);
+				long milli = toMilliSecond(spf-benchmark);
 				try {
 					Thread.sleep(milli);
 				} catch (Exception e) {
