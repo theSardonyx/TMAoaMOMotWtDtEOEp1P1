@@ -70,6 +70,29 @@ public class BulletStage {
 			Request curr = requestQueue.poll();
 			curr.execute();
 		}
+		
+		this.checkCollision(this.ambientEntity);
+		this.checkCollision(this.allyEntity);
+		this.checkCollision(this.allyBulletEntity);
+		this.checkCollision(this.enemyEntity);
+		this.checkCollision(this.enemyBulletEntity);
+	}
+	
+	private void checkCollision(ArrayList<Entity> entities) {
+		for(int i = 0; entities.size() > i; i++) {
+			Entity curr = entities.get(i);
+			if(curr.canCollideAmbient)
+				this.ambientEntity.forEach(e -> curr.collide(e));
+			if(curr.canCollideAlly)
+				this.allyEntity.forEach(e -> curr.collide(e));
+			if(curr.canCollideAllyBullet)
+				this.allyBulletEntity.forEach(e -> curr.collide(e));
+			if(curr.canCollideEnemy)
+				this.enemyEntity.forEach(e -> curr.collide(e));
+			if(curr.canCollideEnemyBullet) {
+				this.enemyBulletEntity.forEach(e -> curr.collide(e));
+			}
+		}
 	}
 	
 	public void render(RenderWindow rw) {
