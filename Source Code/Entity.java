@@ -13,10 +13,9 @@ public abstract class Entity extends Drawable {
 	protected int id;
 	protected MoveBehavior move;
 	protected ShootBehavior shoot;
-	protected CollideReaction collideReaction;
 	
 	protected Drawable visual;
-	protected CollideShape hitbox;
+	protected CollideShape collideShape;
 	protected int health, damage;
 	protected BulletStage stage;
 	
@@ -29,10 +28,9 @@ public abstract class Entity extends Drawable {
 		this.id = ID++;
 		this.move = null;
 		this.shoot = null;
-		this.collideReaction = null;
 		
 		this.visual = null;
-		this.hitbox = null;
+		this.collideShape = null;
 		
 		this.health = 1;
 		this.damage = 0;
@@ -47,16 +45,17 @@ public abstract class Entity extends Drawable {
 	}
 	
 	public final void update( double delta ) {
-		if(move != null) {
-			if(move.getExpireTime() <= 0) {
+		if(this.move != null) {
+			if(this.move.getExpireTime() <= 0) {
 				this.despawn();
 				return;
 			}
-			move.move(delta);
+			this.move.move(delta);
 		}
-		if(shoot != null && this.position != null)
-			shoot.shoot(delta);
-		updateHook(delta);
+		if(this.shoot != null && this.position != null)
+			this.shoot.shoot(delta);
+		this.updateHook(delta);
+		this.getCollideShape().updatePosition(this.position);
 	}
 	
 	public abstract void updateHook(double delta);
@@ -65,64 +64,65 @@ public abstract class Entity extends Drawable {
 	public void draw(Graphics2D g) {
 		if(this.position == null)
 			return;
-		visual.setPosition( position );
-		visual.setDimension( dimension );
-		visual.draw(g);
-	}
-	
-	public boolean isCollidingWith( Entity e ) {
-		return hitbox.isCollidingWith( e.getHitbox() );
+		this.visual.setPosition( this.position );
+		this.visual.setDimension( this.dimension );
+		this.visual.draw(g);
 	}
 	
 	public Vector getPosition() {
-		return position;
+		return this.position;
 	}
 	
 	public Vector getDimension() {
-		return dimension;
+		return this.dimension;
 	}
 	
 	public int getHealth() {
-		return health;
+		return this.health;
 	}
 	
 	public void getDamaged( int damage ) {
-		health -= damage;
-		if(health <= 0)
+		this.health -= damage;
+		if(this.health <= 0)
 			this.despawn();
 	}
 	
-	public CollideShape getHitbox() {
-		return hitbox;
+	public CollideShape getCollideShape() {
+		return this.collideShape;
+	}
+	
+	public void setCollideShape(CollideShape cs) {
+		this.collideShape = cs;
 	}
 	
 	public void spawnEntity( Entity e ) {
-		stage.addRequest( new SpawnRequest( e , stage ) );
+		this.stage.addRequest( new SpawnRequest( e , stage ) );
 	}
 	
 	public void despawn() {
-		deathAction();
-		stage.addRequest( new DespawnRequest( this , stage ) );
-	}
-	
-	public void addCollideReaction(CollideReaction next) {
-		if(this.collideReaction == null)
-			this.collideReaction = next;
-		else
-			this.collideReaction.addNext(next);
+		this.deathAction();
+		this.stage.addRequest( new DespawnRequest( this , stage ) );
 	}
 	
 	public void collide(Entity other) {
-		if(collideReaction!=null)
-			collideReaction.collide(other);
+		if(this.getCollideShape().isCollidingWith(other.getCollideShape())) {
+			if(this.canCollideAmbient && other.getType() == Entity.AMBIENT_TYPE)
+				this.collideAmbient(other);
+			if(this.canCollideAlly && other.getType() == Entity.ALLY_TYPE)
+				this.collideAlly(other);
+			if(this.canCollideAllyBullet && other.getType() == Entity.ALLY_BULLET_TYPE)
+				this.collideAllyBullet(other);
+			if(this.canCollideEnemy && other.getType() == Entity.ENEMY_TYPE)
+				this.collideEnemy(other);
+			if(this.canCollideEnemyBullet && other.getType() == Entity.ENEMY_BULLET_TYPE)
+				this.collideEnemyBullet(other);
+		}
 	}
 	
-	public void deathAction() {
-		// EMPTY
-	}
+	public void deathAction() {}
 	
 	public void setMoveBehavior(MoveBehavior mb) {
-		move = mb;
+		this.move = mb;
 	}
 	
 	public MoveBehavior getMoveBehavior() {
@@ -130,7 +130,7 @@ public abstract class Entity extends Drawable {
 	}
 	
 	public void setShootBehavior(ShootBehavior sb) {
-		shoot = sb;
+		this.shoot = sb;
 	}
 	
 	public ShootBehavior getShootBehavior() {
@@ -138,16 +138,14 @@ public abstract class Entity extends Drawable {
 	}
 	
 	public void setDrawable(Drawable d) {
-		visual = d;
+		this.visual = d;
 	}
 	
 	public Drawable getDrawable() {
-		return visual;
+		return this.visual;
 	}
 	
-	public void handleInput(InputCollector ic) {
-		
-	}
+	public void handleInput(InputCollector ic) {}
 	
 	public void setType(int type) {
 		this.type = type;
