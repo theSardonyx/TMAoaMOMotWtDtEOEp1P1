@@ -35,5 +35,9 @@ public class SplitBulletShootBehavior extends UpgradableShootBehavior {
 		bullets[0] = projectile;
 		return bullets;
 	}
+	
+	public void setNumFragments(int numFragments) {
+		this.numFragments = numFragments;
+	}
 
 }
