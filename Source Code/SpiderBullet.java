@@ -11,7 +11,10 @@ public class SpiderBullet extends Entity {
 		this.damage = 1;
 		
 		this.type = Entity.ENEMY_BULLET_TYPE;
-		this.canCollideEnemy = true;
+		this.canCollideAlly = true;
+		
+		this.collideShape = new CollideShape(this.position, this.dimension)
+				.setCollideRectangle(true);
 	}
 
 	@Override
@@ -21,7 +24,7 @@ public class SpiderBullet extends Entity {
 	}
 
 	@Override
-	public void collideEnemy(Entity e) {
+	public void collideAlly(Entity e) {
 		this.despawn();
 	}
 }

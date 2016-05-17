@@ -11,6 +11,9 @@ public class SpreadBullet extends Entity {
 		
 		this.type = Entity.ALLY_BULLET_TYPE;
 		this.canCollideEnemy = true;
+		
+		this.collideShape = new CollideShape(this.position, this.dimension.scalarMult(0.5))
+				.setCollideEllipse(true);
 	}
 
 	@Override

@@ -12,6 +12,9 @@ public class WitchBullet extends Entity {
 		
 		this.type = Entity.ENEMY_BULLET_TYPE;
 		this.canCollideAlly = true;
+		
+		this.collideShape = new CollideShape(this.position, this.dimension.scalarMult(0.5))
+				.setCollideEllipse(true);
 	}
 
 	@Override

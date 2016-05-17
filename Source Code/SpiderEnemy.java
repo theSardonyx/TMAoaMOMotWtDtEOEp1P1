@@ -18,6 +18,9 @@ public class SpiderEnemy extends Entity {
 		
 		this.type = Entity.ENEMY_TYPE;
 		this.canCollideAllyBullet = true;
+		
+		this.collideShape = new CollideShape(this.position, this.dimension.scalarMult(0.75))
+				.setCollideEllipse(true);
 	}
 
 	@Override

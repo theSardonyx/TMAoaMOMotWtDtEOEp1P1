@@ -36,6 +36,8 @@ public class Player extends Entity {
 		this.type = Entity.ALLY_TYPE;
 		this.canCollideEnemy = true;
 		this.canCollideEnemyBullet = true;
+		
+		this.collideShape = new CollideShape(this.position, this.dimension.scalarMult(.1)).setCollideEllipse(true);
 	}
 	
 	/*

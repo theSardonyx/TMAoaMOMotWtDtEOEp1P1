@@ -18,6 +18,9 @@ public class BatEnemy extends Entity {
 		
 		this.type = Entity.ENEMY_TYPE;
 		this.canCollideAllyBullet = true;
+		
+		this.collideShape = new CollideShape(this.position, this.dimension.mult(1, 0.25))
+				.setCollideRectangle(true);
 	}
 
 	@Override

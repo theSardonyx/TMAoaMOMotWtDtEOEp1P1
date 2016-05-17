@@ -11,6 +11,9 @@ public class SummonBullet extends Entity {
 		
 		this.type = Entity.ALLY_BULLET_TYPE;
 		this.canCollideEnemy = true;
+		
+		this.collideShape = new CollideShape(this.position, this.dimension)
+				.setCollideEllipse(true);
 	}
 
 	@Override

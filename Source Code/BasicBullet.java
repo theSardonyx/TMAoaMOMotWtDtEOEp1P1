@@ -7,10 +7,13 @@ public class BasicBullet extends Entity {
 		this.visual = new DrawableImage(position, dimension, ss.get(0, 0));
 		
 		//TODO damage pls
-		this.damage = 0; 
+		this.damage = 1; 
 		
 		this.type = Entity.ALLY_BULLET_TYPE;
 		this.canCollideEnemy = true;
+		
+		this.collideShape = new CollideShape(this.position, this.dimension.mult(0.5, 1))
+				.setCollideRectangle(true);
 	}
 
 	@Override

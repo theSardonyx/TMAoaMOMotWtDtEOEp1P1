@@ -15,6 +15,9 @@ public class SplitBullet extends Entity {
 		this.canCollideEnemy = true;
 		
 		this.numFragments = 2;
+		
+		this.collideShape = new CollideShape(this.position, this.dimension.scalarMult(0.75))
+				.setCollideRectangle(true);
 	}
 
 	@Override
@@ -26,7 +29,13 @@ public class SplitBullet extends Entity {
 	@Override
 	public void collideEnemy(Entity e) {
 		this.despawn();
-		//Spawn FragmentBullets
+		for(int i = 0; this.numFragments > i; i++) {
+			FragmentBullet projectile = new FragmentBullet(this.position, this.stage);
+			AccelerateMoveBehavior mb = new AccelerateMoveBehavior(projectile, new Vector(0, 300).rotate(Math.random() * 2 * Math.PI), Vector.zero());
+			projectile.setMoveBehavior(mb);
+			
+			this.spawnEntity(projectile);
+		}
 	}
 	
 	public void setNumFragments(int numFragments) {

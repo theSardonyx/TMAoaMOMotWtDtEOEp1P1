@@ -11,6 +11,9 @@ public class PierceBullet extends Entity {
 		
 		this.type = Entity.ALLY_BULLET_TYPE;
 		this.canCollideEnemy = true;
+		
+		this.collideShape = new CollideShape(this.position, this.dimension.mult(0.25, 1))
+				.setCollideRectangle(true);
 	}
 
 	@Override

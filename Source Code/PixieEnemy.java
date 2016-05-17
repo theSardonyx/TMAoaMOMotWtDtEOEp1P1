@@ -16,10 +16,11 @@ public class PixieEnemy extends Entity {
 		this.health = 1;
 		this.damage = 1;
 		
-		this.type = Entity.ENEMY_BULLET_TYPE;
+		this.type = Entity.ENEMY_TYPE;
 		this.canCollideAllyBullet = true;
 		
-		this.collideShape = new CollideShape(this.position, this.dimension).setCollideEllipse(true);
+		this.collideShape = new CollideShape(this.position, new Vector(0, 3), this.dimension.scalarMult(0.5))
+				.setCollideRectangle(true);
 	}
 
 	@Override
