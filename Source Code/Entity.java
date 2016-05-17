@@ -55,7 +55,8 @@ public abstract class Entity extends Drawable {
 		if(this.shoot != null && this.position != null)
 			this.shoot.shoot(delta);
 		this.updateHook(delta);
-		this.getCollideShape().updatePosition(this.position);
+		if(this.getCollideShape() != null)
+			this.getCollideShape().updatePosition(this.position);
 	}
 	
 	public abstract void updateHook(double delta);
@@ -109,6 +110,8 @@ public abstract class Entity extends Drawable {
 	}
 	
 	public void collide(Entity other) {
+		if(this.getCollideShape() == null || other.getCollideShape() == null)
+			return;
 		if(this.getCollideShape().isCollidingWith(other.getCollideShape())) {
 			if(this.canCollideAmbient && other.getType() == Entity.AMBIENT_TYPE)
 				this.collideAmbient(other);
