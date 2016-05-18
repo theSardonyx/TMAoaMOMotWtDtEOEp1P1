@@ -2,8 +2,8 @@ import java.awt.image.BufferedImage;
 
 public class HomingRune extends Entity {
 
-	public HomingRune(Vector position, Vector dimension, BulletStage stage) {
-		super(position, dimension, stage);
+	public HomingRune(Vector position, BulletStage stage) {
+		super(position, new Vector(64, 64), stage);
 		SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/runeSheet.png", 64, 64);
 		this.visual = new Sprite(this.position, this.dimension, new BufferedImage[] {
 																ss.get(0, 3), ss.get(1, 3)}, 

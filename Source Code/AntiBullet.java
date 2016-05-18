@@ -1,4 +1,3 @@
-
 public class AntiBullet extends Entity {
 
 	public AntiBullet(Vector position, BulletStage stage) {

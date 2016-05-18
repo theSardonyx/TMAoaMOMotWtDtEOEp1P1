@@ -1,7 +1,7 @@
 public class ExplosionBullet extends Entity {
 
 	public ExplosionBullet(Vector position, BulletStage stage) {
-		super(position, new Vector(64, 64), stage);
+		super(position, new Vector(48, 48), stage);
 		SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/runeBulletLSheet.png", 64, 64);
 		this.visual = new DrawableImage(position, dimension, ss.get(0, 0));
 		

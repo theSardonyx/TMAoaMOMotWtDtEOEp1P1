@@ -31,7 +31,7 @@ public class BasicBulletShootBehavior extends UpgradableShootBehavior {
 
 	@Override
 	public void update() {
-		this.velocity = new Vector(0, -100);
+		this.velocity = new Vector(0, -500);
 	}
 
 }

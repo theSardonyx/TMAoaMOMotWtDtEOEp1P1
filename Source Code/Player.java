@@ -23,14 +23,14 @@ public class Player extends Entity {
 	@param dimension: Vector object that determines the size of the player
 	@param stage: BulletStage object where the player will spawn
 	*/
-	public Player(Vector position, Vector dimension, BulletStage stage) {
-		super(position, dimension, stage);
+	public Player(Vector position, BulletStage stage, Color color) {
+		super(position, new Vector(48, 48), stage);
 		SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/64x64-sheet.png", 64, 64);
 		this.visual = new Sprite(position, dimension, new BufferedImage[] {
 													ss.get(0, 0), ss.get(2, 0)
 													}, new BufferedImage[] {
 													ss.get(1, 0), ss.get(3, 0)
-													}, Color.GREEN);
+													}, color);
 		this.playerSettings = PlayerSettings.getInstance();
 		//TODO damage & health pls
 		this.health = playerSettings.getHearts();

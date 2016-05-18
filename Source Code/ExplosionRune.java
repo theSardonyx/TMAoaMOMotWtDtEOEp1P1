@@ -2,8 +2,8 @@ import java.awt.image.BufferedImage;
 
 public class ExplosionRune extends Entity {
 
-	public ExplosionRune(Vector position, Vector dimension, BulletStage stage) {
-		super(position, dimension, stage);
+	public ExplosionRune(Vector position, BulletStage stage) {
+		super(position, new Vector(64, 64), stage);
 		SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/runeSheet.png", 64, 64);
 		this.visual = new Sprite(this.position, this.dimension, new BufferedImage[] {
 																ss.get(0, 5), ss.get(1, 5)}, 

@@ -3,13 +3,13 @@ import java.awt.image.BufferedImage;
 
 public class WitchEnemy extends Entity {
 
-	public WitchEnemy(Vector position, Vector dimension, BulletStage stage) {
-		super(position, dimension, stage);
+	public WitchEnemy(Vector position, BulletStage stage, Color color) {
+		super(position, new Vector(48, 48), stage);
 		SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/64x64-sheet.png", 64, 64);
 		this.visual = new Sprite(position, dimension, new BufferedImage[] {
 													ss.get(0, 5), ss.get(2, 5)}, 
 												new BufferedImage[] {
-													ss.get(1, 5), ss.get(3, 5)}, Color.GREEN);
+													ss.get(1, 5), ss.get(3, 5)}, color);
 		((Sprite) this.visual).setStateRate(1);
 		
 		//TODO damage adn helath pls

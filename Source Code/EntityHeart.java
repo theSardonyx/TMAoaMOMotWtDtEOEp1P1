@@ -9,7 +9,7 @@ public class EntityHeart extends Entity {
 		
 		this.host = host;
 		
-		this.heart = new DrawableOval(this.position, this.dimension, Color.BLACK);
+		this.heart = new DrawableOval(this.position, this.dimension, Color.WHITE);
 		this.heart.setFilled(true);
 		this.visual =  null;
 		
@@ -19,7 +19,7 @@ public class EntityHeart extends Entity {
 		this.canCollideEnemy = true;
 		this.canCollideEnemyBullet = true;
 		
-		this.collideShape = new CollideShape(this.position, this.dimension.add(100, 100))
+		this.collideShape = new CollideShape(this.position, this.dimension)
 				.setCollideEllipse(true);
 	}
 
