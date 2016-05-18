@@ -11,7 +11,6 @@ public class PixieBullet extends Entity {
 		this.damage = 1; 
 		
 		this.type = Entity.ENEMY_BULLET_TYPE;
-		this.canCollideAlly = true;
 		
 		this.collideShape = new CollideShape(this.position, this.dimension.scalarMult(.5))
 				.setCollideEllipse(true);
@@ -21,10 +20,5 @@ public class PixieBullet extends Entity {
 	public void updateHook(double delta) {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public void collideAlly(Entity e) {
-		this.despawn();
 	}
 }

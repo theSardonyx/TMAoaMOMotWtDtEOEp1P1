@@ -11,7 +11,6 @@ public class BatBullet extends Entity{
 		this.damage = 1; 
 		
 		this.type = Entity.ENEMY_BULLET_TYPE;
-		this.canCollideAlly = true;
 		
 		this.collideShape = new CollideShape(this.position, this.dimension)
 				.setCollideEllipse(true);
@@ -20,10 +19,5 @@ public class BatBullet extends Entity{
 	@Override
 	public void updateHook(double delta) {
 		
-	}
-
-	@Override
-	public void collideAlly(Entity e) {
-		this.despawn();
 	}
 }
