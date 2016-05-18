@@ -7,6 +7,7 @@ public abstract class Entity extends Drawable {
 	protected static final int ALLY_BULLET_TYPE = 2;
 	protected static final int ENEMY_TYPE = 3;
 	protected static final int ENEMY_BULLET_TYPE = 4;
+	protected static final int DROP_TYPE = 5;
 	
 	private static int ID = 0;
 	
@@ -18,9 +19,10 @@ public abstract class Entity extends Drawable {
 	protected CollideShape collideShape;
 	protected int health, damage;
 	protected BulletStage stage;
+	protected double expireTime;
 	
 	protected int type;
-	protected boolean canCollideAmbient, canCollideAlly, canCollideAllyBullet, canCollideEnemy, canCollideEnemyBullet;
+	protected boolean canCollideAmbient, canCollideAlly, canCollideAllyBullet, canCollideEnemy, canCollideEnemyBullet, canCollideDrop;
 
 	public Entity(Vector position, Vector dimension, BulletStage stage) {
 		super(position, dimension);
@@ -42,6 +44,34 @@ public abstract class Entity extends Drawable {
 		this.canCollideAllyBullet = false;
 		this.canCollideEnemy = false;
 		this.canCollideEnemyBullet = false;
+		this.canCollideDrop = false;
+		
+		this.expireTime = Double.POSITIVE_INFINITY;
+	}
+	
+	public Entity(Vector position, Vector dimension, BulletStage stage, double expireTime) {
+		super(position, dimension);
+		
+		this.id = ID++;
+		this.move = null;
+		this.shoot = null;
+		
+		this.visual = null;
+		this.collideShape = null;
+		
+		this.health = 1;
+		this.damage = 0;
+		this.stage = stage;
+		
+		this.type = Entity.AMBIENT_TYPE;
+		this.canCollideAmbient = false;
+		this.canCollideAlly = false;
+		this.canCollideAllyBullet = false;
+		this.canCollideEnemy = false;
+		this.canCollideEnemyBullet = false;
+		this.canCollideDrop = false;
+		
+		this.expireTime = expireTime;
 	}
 	
 	public final void update( double delta ) {
@@ -64,6 +94,8 @@ public abstract class Entity extends Drawable {
 	@Override
 	public void draw(Graphics2D g) {
 		if(this.position == null)
+			return;
+		if(this.visual == null)
 			return;
 		this.visual.setPosition( this.position );
 		this.visual.setDimension( this.dimension );
@@ -123,6 +155,8 @@ public abstract class Entity extends Drawable {
 				this.collideEnemy(other);
 			if(this.canCollideEnemyBullet && other.getType() == Entity.ENEMY_BULLET_TYPE)
 				this.collideEnemyBullet(other);
+			if(this.canCollideDrop && other.getType() == Entity.DROP_TYPE)
+				this.collideDrop(other);
 		}
 	}
 	
@@ -167,4 +201,5 @@ public abstract class Entity extends Drawable {
 	public void collideAllyBullet(Entity e) {}
 	public void collideEnemy(Entity e) {}
 	public void collideEnemyBullet(Entity e) {}
+	public void collideDrop(Entity e) {}
 }
