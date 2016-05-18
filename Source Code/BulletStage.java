@@ -16,6 +16,7 @@ public class BulletStage {
 	private ArrayList<Entity> allyBulletEntity;
 	private ArrayList<Entity> enemyEntity;
 	private ArrayList<Entity> enemyBulletEntity;
+	private ArrayList<Entity> dropEntity;
 	
 	private Queue<Request> requestQueue;
 	
@@ -33,6 +34,7 @@ public class BulletStage {
 		allyBulletEntity = new ArrayList<Entity>();
 		enemyEntity = new ArrayList<Entity>();
 		enemyBulletEntity = new ArrayList<Entity>();
+		dropEntity = new ArrayList<Entity>();
 		
 		requestQueue = new ArrayDeque<Request>();
 
@@ -57,6 +59,7 @@ public class BulletStage {
 		allyBulletEntity.forEach( e -> e.handleInput(input) );
 		enemyEntity.forEach( e -> e.handleInput(input) );
 		enemyBulletEntity.forEach( e -> e.handleInput(input) );
+		dropEntity.forEach( e -> e.handleInput(input) );
 	}
 	
 	public void update(double delta) {
@@ -65,6 +68,7 @@ public class BulletStage {
 		allyEntity.forEach( e -> e.update(delta) );
 		enemyEntity.forEach( e -> e.update(delta) );
 		enemyBulletEntity.forEach( e -> e.update(delta) );
+		dropEntity.forEach( e -> e.update(delta) );
 		
 		while(!requestQueue.isEmpty()) {
 			Request curr = requestQueue.poll();
@@ -76,6 +80,7 @@ public class BulletStage {
 		this.checkCollision(this.allyBulletEntity);
 		this.checkCollision(this.enemyEntity);
 		this.checkCollision(this.enemyBulletEntity);
+		this.checkCollision(this.dropEntity);
 	}
 	
 	private void checkCollision(ArrayList<Entity> entities) {
@@ -89,9 +94,10 @@ public class BulletStage {
 				this.allyBulletEntity.forEach(e -> curr.collide(e));
 			if(curr.canCollideEnemy)
 				this.enemyEntity.forEach(e -> curr.collide(e));
-			if(curr.canCollideEnemyBullet) {
+			if(curr.canCollideEnemyBullet)
 				this.enemyBulletEntity.forEach(e -> curr.collide(e));
-			}
+			if(curr.canCollideDrop)
+				this.dropEntity.forEach(e -> curr.collide(e));
 		}
 	}
 	
@@ -104,6 +110,7 @@ public class BulletStage {
 		allyEntity.forEach( e -> e.draw(graphics) );
 		enemyEntity.forEach( e -> e.draw(graphics) );
 		enemyBulletEntity.forEach( e -> e.draw(graphics) );
+		dropEntity.forEach( e -> e.draw(graphics) );
 		
 		rw.draw( visual );
 	}
@@ -116,19 +123,22 @@ public class BulletStage {
 		switch(entity.getType())
 		{
 			case Entity.AMBIENT_TYPE:
-				ambientEntity.add(entity);
+				this.ambientEntity.add(entity);
 				break;
 			case Entity.ALLY_TYPE:
-				allyEntity.add(entity);
+				this.allyEntity.add(entity);
 				break;
 			case Entity.ALLY_BULLET_TYPE:
-				allyBulletEntity.add(entity);
+				this.allyBulletEntity.add(entity);
 				break;
 			case Entity.ENEMY_TYPE:
-				enemyEntity.add(entity);
+				this.enemyEntity.add(entity);
 				break;
 			case Entity.ENEMY_BULLET_TYPE:
-				enemyBulletEntity.add(entity);
+				this.enemyBulletEntity.add(entity);
+				break;
+			case Entity.DROP_TYPE:
+				this.dropEntity.add(entity);
 				break;
 		}
 	}
@@ -137,19 +147,22 @@ public class BulletStage {
 		switch(entity.getType())
 		{
 			case Entity.AMBIENT_TYPE:
-				ambientEntity.remove(entity);
+				this.ambientEntity.remove(entity);
 				break;
 			case Entity.ALLY_TYPE:
-				allyEntity.remove(entity);
+				this.allyEntity.remove(entity);
 				break;
 			case Entity.ALLY_BULLET_TYPE:
-				allyBulletEntity.remove(entity);
+				this.allyBulletEntity.remove(entity);
 				break;
 			case Entity.ENEMY_TYPE:
-				enemyEntity.remove(entity);
+				this.enemyEntity.remove(entity);
 				break;
 			case Entity.ENEMY_BULLET_TYPE:
-				enemyBulletEntity.remove(entity);
+				this.enemyBulletEntity.remove(entity);
+				break;
+			case Entity.DROP_TYPE:
+				this.dropEntity.remove(entity);
 				break;
 		}
 	}
