@@ -38,19 +38,13 @@ public class BulletStage {
 		
 		requestQueue = new ArrayDeque<Request>();
 
-		player = new Player(new Vector(200, 200), new Vector(64, 64), this);
+		player = new Player(new Vector(Runner.RES_HEIGHT/2, 200 + Runner.RES_HEIGHT/2), this, Color.BLUE);
 		player.setMoveBehavior(new PlayerMoveBehavior(player, 300));
-		
-		WitchEnemy eye = new WitchEnemy(new Vector(300, 300), new Vector(64, 64), this);
-		//eye.setMoveBehavior(new EllipseMoveBehavior(eye, new Vector(300, 300), 250, 250, 5));
-		eye.setShootBehavior(new WitchShootBehaviorHard(eye, player, this, Color.RED));
-		addEntity(eye);
-		
 		BasicBulletShootBehavior sb = new BasicBulletShootBehavior(player, this);
 		sb.setLevel(10);
-		
 		player.setShootBehavior(sb);
 		addEntity(player);
+		
 	}
 	
 	public void handleInput(InputCollector input) {
@@ -165,5 +159,10 @@ public class BulletStage {
 				this.dropEntity.remove(entity);
 				break;
 		}
+	}
+	
+	public Entity getRandomAlly() {
+		int randomIndex = (int) (Math.random() * this.allyEntity.size());
+		return allyEntity.get(randomIndex);
 	}
 }
