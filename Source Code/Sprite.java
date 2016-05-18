@@ -30,6 +30,14 @@ public class Sprite extends AnimatedDrawable {
 		this.state = 0;
 		this.animation = new BufferedImage[ stateCount ];
 		for(int i = 0; i < stateCount; i++) {
+			if(part == null) {
+				this.animation[i] = base[i];
+				continue;
+			}
+			if(part[i] == null) {
+				this.animation[i] = base[i];
+				continue;
+			}
  			this.animation[i] = Sprite.integrateSprites(base[i], part[i], c);
 		}
 	}
