@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class MobWaveProducer {
@@ -401,7 +402,7 @@ public class MobWaveProducer {
 		return retVal;
 	}
 	
-	private MobWave genMobWave0(int difficulty)
+	public MobWave genMobWave0(int difficulty)
 	{
 		MobWave[] combo = new MobWave[7];
 		
@@ -412,14 +413,14 @@ public class MobWaveProducer {
 		
 		for(int i=0; i<6; i++)
 		{
-			BatEnemy bat = new BatEnemy(new Vector(spawnX[i], -100), new Vector(64, 64), this.stage);
+			BatEnemy bat = new BatEnemy(new Vector(spawnX[i], -100), this.stage, batColor);
 			bat.setMoveBehavior(new QueueMoveBehavior(bat, new MoveBehavior[] {
 					new TimedGlideMoveBehavior(bat, new Vector(spawnX[i], targetY[i]), 1, 1),
 					new AccelerateMoveBehavior(bat, Vector.zero(), Vector.zero(), 4),
 					new AccelerateMoveBehavior(bat, new Vector(speedX[i], 0), Vector.zero(), 1.5)
 			}));
 			ShootBehavior sb = getShootBehavior(bat, batColor, BAT_ENEMY, difficulty);
-			sb.setFireRate(4.5/(1 + difficulty*0.25));
+			sb.setFireRate(3.5);
 			bat.setShootBehavior( sb );
 			combo[i] = new SingleSpawnMobWave(this.stage, 0, bat);
 		}
@@ -428,7 +429,7 @@ public class MobWaveProducer {
 		return new CombinationMobWave(this.stage, 2.40/(difficulty+1), combo);
 	}
 
-	private MobWave genMobWave1(int difficulty)
+	public MobWave genMobWave1(int difficulty)
 	{
 		MobWave[] queue = new MobWave[7];
 		Color spiderColor = getRandomColor(SPIDER_ENEMY, difficulty);
@@ -439,7 +440,7 @@ public class MobWaveProducer {
 		boolean[] startAtRight = {true, false, true, false, true, false};
 		for(int i=0; i<6; i++)
 		{
-			SpiderEnemy spider = new SpiderEnemy(new Vector(spawnX[i], -100), new Vector(64, 64), this.stage);
+			SpiderEnemy spider = new SpiderEnemy(new Vector(spawnX[i], -100), this.stage, spiderColor);
 			spider.setMoveBehavior(new QueueMoveBehavior(spider, new MoveBehavior[] {
 					new TimedGlideMoveBehavior(spider, new Vector(spawnX[i], targetY), 1, 1),
 					new WaveMoveBehavior(spider, new Vector(genVelocityX[i], 0), 40, 1, startAtRight[i], 2),
@@ -447,7 +448,7 @@ public class MobWaveProducer {
 			}));;
 			ShootBehavior sb = getShootBehavior(spider, spiderColor, SPIDER_ENEMY, difficulty);
 			if(sb!=null)
-				sb.setFireRate(0.5 + 0.3/(difficulty+1));
+				sb.setFireRate(1 + (Math.random()*0.5));
 			spider.setShootBehavior(sb);
 			queue[i] = new SingleSpawnMobWave(this.stage, 0.5, spider);
 		}
@@ -456,7 +457,7 @@ public class MobWaveProducer {
 		return new QueueMobWave(this.stage, 0.9/(difficulty+1), queue);
 	}
 
-	private MobWave genMobWave2(int difficulty)
+	public MobWave genMobWave2(int difficulty)
 	{
 		MobWave[] combo = new MobWave[5];
 		Color eyeColor = getRandomColor(EYE_ENEMY, difficulty);
@@ -466,14 +467,14 @@ public class MobWaveProducer {
 		
 		for(int i=0; i<4; i++)
 		{
-			EyeEnemy eye = new EyeEnemy(new Vector(spawnX[i], spawnY[i]), new Vector(64, 64), this.stage);
+			EyeEnemy eye = new EyeEnemy(new Vector(spawnX[i], spawnY[i]), this.stage, eyeColor);
 			eye.setMoveBehavior(new QueueMoveBehavior(eye, new MoveBehavior[] {
 					new TimedGlideMoveBehavior(eye, new Vector(targetX[i], spawnY[i]), 1, 1),
 					new AccelerateMoveBehavior(eye, Vector.zero(), Vector.zero(), 2),
 					new TimedGlideMoveBehavior(eye, new Vector(targetX[i], -100), 2, 2)
 			}));
 			ShootBehavior sb = getShootBehavior(eye, eyeColor, EYE_ENEMY, difficulty);
-			sb.setFireRate( 1 + 1.8/(difficulty+1));
+			sb.setFireRate( 2.8 );
 			eye.setShootBehavior(sb);
 			combo[i] = new SingleSpawnMobWave(this.stage, 0, eye);
 		}
@@ -482,7 +483,7 @@ public class MobWaveProducer {
 		return new CombinationMobWave(this.stage, 0.9/(difficulty+1), combo);
 	}
 
-	private MobWave genMobWave3(int difficulty)
+	public MobWave genMobWave3(int difficulty)
 	{
 		MobWave[] queue = new MobWave[7];
 		Color spiderColor = getRandomColor(SPIDER_ENEMY, difficulty);
@@ -494,13 +495,13 @@ public class MobWaveProducer {
 		
 		for(int i=0; i<6; i++)
 		{
-			SpiderEnemy spider = new SpiderEnemy(new Vector(spawnX[i], spawnY[i]), new Vector(64, 64), this.stage);
-			MoveBehavior mb = new EllipseMoveBehavior(spider, new Vector(centerX[i], centerY), 800, 1200, 12, 3);
+			SpiderEnemy spider = new SpiderEnemy(new Vector(spawnX[i], spawnY[i]), this.stage, spiderColor);
+			MoveBehavior mb = new EllipseMoveBehavior(spider, new Vector(centerX[i], centerY), 800, 1200, 12, 2.8);
 			mb.update();
 			spider.setMoveBehavior(mb);
 			ShootBehavior sb = getShootBehavior(spider, spiderColor, SPIDER_ENEMY, difficulty);
 			if(sb!=null)
-				sb.setFireRate(0.9);
+				sb.setFireRate(0.7 + Math.random()*0.8);
 			spider.setShootBehavior(sb);
 			queue[i] = new SingleSpawnMobWave(this.stage, 0.25, spider);
 		}
@@ -526,16 +527,16 @@ public class MobWaveProducer {
 			Vector target = new Vector(targetX[i], posY[i]);
 			if(i % 2 == 0)
 			{
-				p = new BatEnemy(init, new Vector(64, 64), this.stage);
+				p = new BatEnemy(init, this.stage, batColor);
 				ShootBehavior sb = getShootBehavior(p, batColor, BAT_ENEMY, difficulty);
-				sb.setFireRate(3);
+				sb.setFireRate(2.5);
 				p.setShootBehavior(sb);
 			}
 			else
 			{
-				p = new EyeEnemy(init, new Vector(64, 64), this.stage);
+				p = new EyeEnemy(init, this.stage, eyeColor);
 				ShootBehavior sb = getShootBehavior(p, eyeColor, EYE_ENEMY, difficulty);
-				sb.setFireRate(3/(difficulty+1));
+				sb.setFireRate(2.5);
 				p.setShootBehavior(sb);
 			}
 			p.setMoveBehavior(new TimedGlideMoveBehavior(p, target, 4, 4));
@@ -546,34 +547,241 @@ public class MobWaveProducer {
 		return new QueueMobWave(this.stage, 0.9/(difficulty+1), queue);
 	}
 
-	private MobWave genMobWave5(int difficulty)
+	public MobWave genMobWave5(int difficulty)
 	{
-		return null;
+		MobWave[] combo = new MobWave[4];
+		Color batColor = getRandomColor(BAT_ENEMY, difficulty);
+		Color witchColor = getRandomColor(WITCH_ENEMY, difficulty);
+		
+		WitchEnemy witch = new WitchEnemy(new Vector(360, -100), this.stage, witchColor);
+		witch.setShootBehavior(getShootBehavior(witch, witchColor, WITCH_ENEMY, difficulty) );
+		witch.getShootBehavior().setFireRate( witch.getShootBehavior().getFireRate()*2 );
+		witch.setMoveBehavior(new AccelerateMoveBehavior(witch, new Vector(0, 100), Vector.zero(), 9));
+		combo[0] = new SingleSpawnMobWave(this.stage, 0, witch);
+		
+		int[] spawnX = {-100, 820};
+		int spawnY = 100;
+		int[] targetX = {260, 460};
+		int targetY = 820;
+		for(int i=0; i<2; i++)
+		{
+			BatEnemy bat = new BatEnemy(new Vector(spawnX[i], spawnY), this.stage, batColor);
+			EllipseMoveBehavior emb = new EllipseMoveBehavior(bat, Vector.zero(), 200, 200, 2, 4);
+			emb.setAnchor( witch );
+			bat.setMoveBehavior(new QueueMoveBehavior(bat, new MoveBehavior[] {
+				new TimedGlideMoveBehavior(bat, new Vector(targetX[i], spawnY), 2, 2),
+				emb,
+				new TimedGlideMoveBehavior(bat, new Vector(targetX[i], targetY), 3, 3)
+			}));
+			ShootBehavior sb = getShootBehavior(bat, batColor, BAT_ENEMY, difficulty);
+			if(difficulty==0)
+				((BatShootBehaviorEasy) sb).setOrientationToRight(i%2==0);
+			bat.setShootBehavior( sb );
+			combo[i+1] = new SingleSpawnMobWave(this.stage, 0, bat);
+		}
+		combo[3] = new VacantMobWave(stage, 9);
+		
+		return new CombinationMobWave(this.stage, 0.9/(difficulty+1), combo);
 	}
 
-	private MobWave genMobWave6(int difficulty)
+	public MobWave genMobWave6(int difficulty)
 	{
-		return null;
+		MobWave[] combo = new MobWave[7];
+		Color batColor = getRandomColor(BAT_ENEMY, difficulty);
+		
+		int[] spawnX = {-100, 820, -100, 820, -100, 820};
+		int[] spawnY = {-100, 820, 100, 100, 300, 300};
+		int[] stayX = {100, 620, 300, 420, 100, 620};
+		int[] stayY = {100, 100, 200, 200, 300, 300};
+		int[] exitX = {300, 420, 500, 220, 820, -100};
+		int[] exitY = {-100, -100, -100, -100, 400, 400};
+		
+		for(int i=0; i<6; i++)
+		{
+			BatEnemy bat = new BatEnemy(new Vector(spawnX[i], spawnY[i]), this.stage, batColor);
+			bat.setMoveBehavior(new QueueMoveBehavior(bat, new MoveBehavior[] {
+				new TimedGlideMoveBehavior(bat, new Vector(stayX[i], stayY[i]), 1, 6),
+				new TimedGlideMoveBehavior(bat, new Vector(exitX[i], exitY[i]), 3, 3)
+			}));
+			ShootBehavior sb = getShootBehavior(bat, batColor, BAT_ENEMY, difficulty);
+			if(difficulty==0) 
+			{
+				((BatShootBehaviorEasy) sb).setOrientationToRight(i%2==0);
+				((BatShootBehaviorEasy) sb).setHeight(35);
+				sb.setFireRate( 0.75 );
+			}
+			else if(difficulty == 1) {
+				((BatShootBehaviorMedium) sb).setNumBullets(3);
+				sb.setFireRate( 2 );
+			}
+			else if(difficulty==2)
+			{
+				((BatShootBehaviorHard) sb).setHeight(25);
+				sb.setFireRate( 1.5 );
+			}
+			bat.setShootBehavior( sb );
+			combo[i] = new SingleSpawnMobWave(this.stage, 0, bat);
+		}
+		combo[6] = new VacantMobWave(this.stage, 13);
+		
+		return new CombinationMobWave(this.stage, 0.9/(difficulty+1), combo);
 	}
 
-	private MobWave genMobWave7(int difficulty)
+	public MobWave genMobWave7(int difficulty)
 	{
-		return null;
+		MobWave[] queue = new MobWave[7];
+		Color spiderColor = getRandomColor(SPIDER_ENEMY, difficulty);
+		
+		int[] spawnX = {-100, 820, -100, 820, -100, 820};
+		int spawnY = 50;
+		int[] centerX = {-100, 820, -100, 820, -100, 820};
+		int centerY = 820;
+		
+		for(int i=0; i<6; i++)
+		{
+			SpiderEnemy spider = new SpiderEnemy(new Vector(spawnX[i], spawnY), this.stage, spiderColor);
+			EllipseMoveBehavior mb = new EllipseMoveBehavior(spider, new Vector(centerX[i], centerY), 1500, 1500, 12, 2.8);
+			mb.update();
+			if( i%2!=0 )
+				mb.reverse();
+			spider.setMoveBehavior(mb);
+			ShootBehavior sb = getShootBehavior(spider, spiderColor, SPIDER_ENEMY, difficulty);
+			if(sb!=null)
+				sb.setFireRate(0.2*difficulty + Math.random()*0.5*difficulty);
+			spider.setShootBehavior(sb);
+			queue[i] = new SingleSpawnMobWave(this.stage, 0.25, spider);
+		}
+		queue[6] = new VacantMobWave(this.stage, 3);
+		
+		return new QueueMobWave(this.stage, 0.9/(difficulty+1), queue);
 	}
 
-	private MobWave genMobWave8(int difficulty)
+	public MobWave genMobWave8(int difficulty)
 	{
-		return null;
+		MobWave[] combo = new MobWave[5];
+		Color batColor = getRandomColor(BAT_ENEMY, difficulty);
+		int[] spawnX = {-100, -100, 820, 820};
+		int[] spawnY = {100, 200, 100, 200};
+		int[] targetX = {300, 100, 420, 620};
+		
+		for(int i=0; i<4; i++)
+		{
+			BatEnemy bat = new BatEnemy(new Vector(spawnX[i], spawnY[i]), this.stage, batColor);
+			bat.setMoveBehavior(new QueueMoveBehavior(bat, new MoveBehavior[] {
+					new TimedGlideMoveBehavior(bat, new Vector(targetX[i], spawnY[i]), 1, 3),
+					new AccelerateMoveBehavior(bat, new Vector(0, 200), Vector.zero(), 4.5)
+			}));
+			
+			ShootBehavior sb = getShootBehavior(bat, batColor, BAT_ENEMY, difficulty);
+			sb.setFireRate( 1 );
+			if(difficulty == 0){
+				((BatShootBehaviorEasy) sb).setOrientationToRight(Math.random()<0.5);
+				((BatShootBehaviorEasy) sb).setHeight(35);
+			}
+			else if(difficulty == 1)
+			{
+				((BatShootBehaviorMedium) sb).setNumBullets(3);
+				sb.setFireRate(2);
+			}
+			else if(difficulty == 2)
+			{
+				((BatShootBehaviorHard) sb).setHeight(35);
+				((BatShootBehaviorHard) sb).setFireRate(2.5);
+			}
+			bat.setShootBehavior(sb);
+			
+			combo[i] = new SingleSpawnMobWave(this.stage, 0, bat);
+		}
+		combo[4] = new VacantMobWave(this.stage, 5);
+		
+		return new CombinationMobWave(this.stage, 0.9/(difficulty+1), combo);
 	}
 
-	private MobWave genMobWave9(int difficulty)
+	public MobWave genMobWave9(int difficulty)
 	{
-		return null;
+		MobWave[] queue = new MobWave[7];
+		Color eyeColor = getRandomColor(EYE_ENEMY, difficulty);
+		
+		int[] spawnX = {-100, 820, -100, 820, -100, 820};
+		int spawnY = 50;
+		int[] centerX = {-100, 820, -100, 820, -100, 820};
+		int centerY = 360;
+		
+		for(int i=0; i<6; i++)
+		{
+			EyeEnemy eye = new EyeEnemy(new Vector(spawnX[i], spawnY), this.stage, eyeColor);
+			EllipseMoveBehavior mb = new EllipseMoveBehavior(eye, new Vector(centerX[i], centerY), 620, 1500, 15, 7.5);
+			mb.update();
+			if( i%2!=0 )
+				mb.reverse();
+			eye.setMoveBehavior(mb);
+			ShootBehavior sb = getShootBehavior(eye, eyeColor, EYE_ENEMY, difficulty);
+			if(difficulty == 1) {
+				((EyeShootBehaviorMedium) sb).setHeight(20);
+				((EyeShootBehaviorMedium) sb).setWithStraight(true);
+			}
+			sb.setFireRate(2.6);
+			eye.setShootBehavior(sb);
+			queue[i] = new SingleSpawnMobWave(this.stage, 2, eye);
+		}
+		queue[6] = new VacantMobWave(this.stage, 7.5);
+		
+		return new QueueMobWave(this.stage, 0.9/(difficulty+1), queue);
 	}
 
-	private MobWave genMobWave10(int difficulty)
+	public MobWave genMobWave10(int difficulty)
 	{
-		return null;
+		MobWave[] combo = new MobWave[6];
+		
+		Color witchColor = getRandomColor(WITCH_ENEMY, difficulty);
+		WitchEnemy witch = new WitchEnemy(new Vector(360, -100), this.stage, witchColor);
+		witch.setMoveBehavior(new QueueMoveBehavior(witch, new MoveBehavior[] {
+				new TimedGlideMoveBehavior(witch, new Vector(360, 100), 1, 3),
+				new AccelerateMoveBehavior(witch, new Vector(0, -150), Vector.zero(), 1)
+		}));
+		ShootBehavior sb = getShootBehavior(witch, witchColor, WITCH_ENEMY, difficulty);
+		witch.setShootBehavior(sb);
+		combo[0] = new SingleSpawnMobWave(this.stage, 0, witch);
+		
+		int[] spawnX = {260, 460};
+		int spawnY = -100;
+		int targetY = 150;
+		int[] exitX = {-100, 820};
+		Color batColor = getRandomColor(BAT_ENEMY, difficulty);
+		for(int i=0; i<2; i++)
+		{
+			BatEnemy bat = new BatEnemy(new Vector(spawnX[i], spawnY), this.stage, batColor);
+			bat.setMoveBehavior(new QueueMoveBehavior(bat, new MoveBehavior[]{
+					new TimedGlideMoveBehavior(bat, new Vector(spawnX[i], targetY), 1, 3),
+					new TimedGlideMoveBehavior(bat, new Vector(exitX[i], targetY), 1, 1)
+			}));
+
+			ShootBehavior batShoot = getShootBehavior(bat, batColor, BAT_ENEMY, difficulty);
+			sb.setFireRate( 0.75 );
+			bat.setShootBehavior(batShoot);
+			
+			combo[i+1] = new SingleSpawnMobWave(this.stage, 0, bat);
+		}
+		
+		spawnX = new int[] {100, 620};
+		targetY = 50;
+		Color eyeColor = getRandomColor(EYE_ENEMY, difficulty);
+		for(int i=0; i<2; i++)
+		{
+			EyeEnemy eye = new EyeEnemy(new Vector(spawnX[i], spawnY), this.stage, eyeColor);
+			eye.setMoveBehavior(new QueueMoveBehavior(eye, new MoveBehavior[]{
+					new TimedGlideMoveBehavior(eye, new Vector(spawnX[i], targetY), 1, 3),
+					new TimedGlideMoveBehavior(eye, new Vector(exitX[i], targetY), 1, 1)
+			}));
+			ShootBehavior eyeShoot = getShootBehavior(eye, eyeColor, EYE_ENEMY, difficulty);
+			eyeShoot.setFireRate(1);
+			eye.setShootBehavior(eyeShoot);
+			
+			combo[i+3] = new SingleSpawnMobWave(this.stage, 0, eye);
+		}
+		combo[5] = new VacantMobWave(this.stage, 7.2);
+		
+		return new CombinationMobWave(this.stage, 1, combo);
 	}
 
 	private MobWave genMobWave11(int difficulty)
