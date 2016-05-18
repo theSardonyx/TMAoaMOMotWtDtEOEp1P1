@@ -92,4 +92,8 @@ public class EllipseMoveBehavior extends MoveBehavior {
 			this.center = this.anchor.getPosition();
 		this.rotation = subject.getPosition().subtract( this.center ).getAngle();
 	}
+	
+	public void reverse() {
+		this.rotationDelta = -this.rotationDelta;
+	}
 }
