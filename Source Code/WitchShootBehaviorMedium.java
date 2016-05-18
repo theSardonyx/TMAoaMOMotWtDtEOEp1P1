@@ -9,7 +9,7 @@ public class WitchShootBehaviorMedium extends ShootBehavior {
 	public WitchShootBehaviorMedium(Entity subject, Entity target, BulletStage stage, Color color) {
 		super(subject, stage);
 		
-		this.fireRate = 1;
+		this.fireRate = 1.5;
 		
 		this.target = target;
 		this.color = color;
@@ -20,7 +20,7 @@ public class WitchShootBehaviorMedium extends ShootBehavior {
 	public WitchShootBehaviorMedium(Entity subject, Entity target, BulletStage stage, Color color, double expireTime) {
 		super(subject, stage, expireTime);
 		
-		this.fireRate = 1;
+		this.fireRate = 1.5;
 		
 		this.target = target;
 		this.color = color;

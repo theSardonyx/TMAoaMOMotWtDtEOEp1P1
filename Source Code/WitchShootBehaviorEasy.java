@@ -9,7 +9,7 @@ public class WitchShootBehaviorEasy extends ShootBehavior {
 	public WitchShootBehaviorEasy(Entity subject, Entity target, BulletStage stage, Color color) {
 		super(subject, stage);
 		
-		this.fireRate = 0.5;
+		this.fireRate = 0.33;
 		
 		this.target = target;
 		this.color = color;
@@ -20,7 +20,7 @@ public class WitchShootBehaviorEasy extends ShootBehavior {
 	public WitchShootBehaviorEasy(Entity subject, Entity target, BulletStage stage, Color color, double expireTime) {
 		super(subject, stage, expireTime);
 		
-		this.fireRate = 0.5;
+		this.fireRate = 0.33;
 		
 		this.target = target;
 		this.color = color;

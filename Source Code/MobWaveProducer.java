@@ -555,7 +555,6 @@ public class MobWaveProducer {
 		
 		WitchEnemy witch = new WitchEnemy(new Vector(360, -100), this.stage, witchColor);
 		witch.setShootBehavior(getShootBehavior(witch, witchColor, WITCH_ENEMY, difficulty) );
-		witch.getShootBehavior().setFireRate( witch.getShootBehavior().getFireRate()*2 );
 		witch.setMoveBehavior(new AccelerateMoveBehavior(witch, new Vector(0, 100), Vector.zero(), 9));
 		combo[0] = new SingleSpawnMobWave(this.stage, 0, witch);
 		

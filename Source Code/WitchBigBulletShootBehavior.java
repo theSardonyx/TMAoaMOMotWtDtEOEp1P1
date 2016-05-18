@@ -8,7 +8,7 @@ public class WitchBigBulletShootBehavior extends ShootBehavior {
 	public WitchBigBulletShootBehavior(Entity subject, Vector velocity, BulletStage stage, Color color) {
 		super(subject, stage);
 		
-		this.fireRate = 0.5;
+		this.fireRate = 0.66;
 		
 		this.color = color;
 		this.baseVelocity = velocity;
@@ -18,7 +18,7 @@ public class WitchBigBulletShootBehavior extends ShootBehavior {
 	public WitchBigBulletShootBehavior(Entity subject, Vector velocity, BulletStage stage, Color color, double expireTime) {
 		super(subject, stage, expireTime);
 		
-		this.fireRate = 0.5;
+		this.fireRate = 0.66;
 		
 		this.color = color;
 		this.baseVelocity = velocity;
