@@ -14,13 +14,13 @@ public class SideScreen
 		private final double linerRuneRow1 = 300;
 		private final double linerRuneRow2 = 350;
 		private SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/runeSheet.png", 64, 64);
-		RuneList runes;
+		PlayerSettings playerSettings;
 		
 		boolean fall = false;
 		
         public SideScreen()
         {
-			runes = RuneList.getInstance();
+			playerSettings = PlayerSettings.getInstance();
 			
             font = FontLoader.getInstance().getFont("Press Start 2P", Font.PLAIN, 10);
             highScoreLabel = new DrawableString(new Vector(linerLabel + 25, 22), "High Score:", font, Color.WHITE);
@@ -57,61 +57,19 @@ public class SideScreen
 		
 		public void update(double delta)
 		{
-			cScoreInc(2);
-			hScoreInc(3);
-			expInc(5);
-			killInc();
-			grazeInc();
-			/*
-			heart render testing
-			if(health == 10) fall = true;
-			else if(health == 1) fall = false;
-				
-			if(fall) decHealth();
-			else incHealth();
-			*/
+			playerSettings.scoreIncrement(1);
+			this.cScore = playerSettings.getScore();
+			if(this.cScore > this.hScore)
+				this.hScore = this.cScore;
+			this.kills = playerSettings.getKills();
+			this.graze = playerSettings.getGraze();
+			this.health = playerSettings.getHearts();
+
 			currentScoreCount = new DrawableString(new Vector(linerCount, 102), Integer.toString(cScore), font, Color.WHITE);
 			highScoreCount = new DrawableString(new Vector(linerCount, 52), Integer.toString(hScore), font, Color.WHITE);
 			killsCount = new DrawableString(new Vector(linerCount, 492), Integer.toString(kills), font, Color.WHITE);
 			expCount = new DrawableString(new Vector(linerCount, 542), Integer.toString(exp), font, Color.WHITE);
 			grazeCount = new DrawableString(new Vector(linerCount, 592), Integer.toString(graze), font, Color.WHITE);
-		}
-		
-		
-		public void cScoreInc(int scoreadd)
-		{
-			cScore+=scoreadd;
-		}
-		
-		public void hScoreInc(int scoreadd)
-		{
-			hScore+=scoreadd;
-		}
-        
-		public void expInc(int expadd)
-		{
-			exp += expadd;
-		}
-		
-		
-		public void killInc()
-		{
-			kills++;
-		}
-		
-		public void grazeInc()
-		{
-			graze++;
-		}
-		
-		public void incHealth()
-		{
-			health++;
-		}
-		
-		public void decHealth()
-		{
-			health--;
 		}
 		
 		public void heartRender(RenderWindow rw)
@@ -145,7 +103,7 @@ public class SideScreen
 		public void runeRender(RenderWindow rw)
 		{
 				//draw the runes based on the list
-				for(int i = 1; i < runes.getRuneNum(); i++)
+				for(int i = 1; i < playerSettings.getRuneNum(); i++)
 				{
 					int adjust = 0;
 					Vector pos;
@@ -161,26 +119,26 @@ public class SideScreen
 					}
 					Vector dim = new Vector(32, 32);
 					
-					switch (runes.getRune (i - 1)) {
-						case "pierce" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 2)));
+					switch (playerSettings.getRune(i - 1)) {
+						case PlayerSettings.PIERCE_RUNE : rw.draw (new DrawableImage (pos, dim, ss.get (0, 2)));
 						break;
-						case "homing" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 3)));
+						case PlayerSettings.HOMING_RUNE : rw.draw (new DrawableImage (pos, dim, ss.get (0, 3)));
 						break;
-						case "explosion" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 4)));
+						case PlayerSettings.SPREAD_RUNE : rw.draw (new DrawableImage (pos, dim, ss.get (0, 4)));
 						break;
-						case "burst" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 5)));
+						case PlayerSettings.EXPLOSION_RUNE : rw.draw (new DrawableImage (pos, dim, ss.get (0, 5)));
 						break;
-						case "snipe" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 6)));
+						case PlayerSettings.SNIPE_RUNE : rw.draw (new DrawableImage (pos, dim, ss.get (0, 6)));
 						break;
-						case "split" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 7)));
+						case PlayerSettings.SPLIT_RUNE : rw.draw (new DrawableImage (pos, dim, ss.get (0, 7)));
 						break;
-						case "spread" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 8)));
+						case PlayerSettings.BURST_RUNE : rw.draw (new DrawableImage (pos, dim, ss.get (0, 8)));
 						break;
-						case "sentinel" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 9)));
+						case PlayerSettings.SENTINEL_RUNE : rw.draw (new DrawableImage (pos, dim, ss.get (0, 9)));
 						break;
-						case "antibullet" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 10)));
+						case PlayerSettings.ANTI_RUNE : rw.draw (new DrawableImage (pos, dim, ss.get (0, 10)));
 						break;
-						case "summon" : rw.draw (new DrawableImage (pos, dim, ss.get (0, 11)));
+						case PlayerSettings.SUMMON_RUNE : rw.draw (new DrawableImage (pos, dim, ss.get (0, 11)));
 						break;
 						default : rw.draw(new DrawableImage(pos, dim, ss.get(1, 0)));
 					}

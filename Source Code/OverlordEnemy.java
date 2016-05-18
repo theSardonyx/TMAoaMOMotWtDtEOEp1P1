@@ -3,8 +3,8 @@ import java.awt.image.BufferedImage;
 
 public class OverlordEnemy extends Entity {
 
-	public OverlordEnemy(Vector position, Vector dimension, BulletStage stage) {
-		super(position, dimension, stage);
+	public OverlordEnemy(Vector position, BulletStage stage) {
+		super(position, new Vector(64, 64), stage);
 		SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/64x64-sheet.png", 64, 64);
 		this.visual = new Sprite(position, dimension, new BufferedImage[] {
 				ss.get(0, 0), ss.get(2, 0)}, 

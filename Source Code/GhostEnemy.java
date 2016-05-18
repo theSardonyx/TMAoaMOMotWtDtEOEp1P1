@@ -3,13 +3,13 @@ import java.awt.image.BufferedImage;
 
 public class GhostEnemy extends Entity {
 
-	public GhostEnemy(Vector position, Vector dimension, BulletStage stage) {
-		super(position, dimension, stage);
+	public GhostEnemy(Vector position, BulletStage stage, Color color) {
+		super(position, new Vector(64, 64), stage);
 		SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/64x64-sheet.png", 64, 64);
 		this.visual = new Sprite(position, dimension, new BufferedImage[] {
 													ss.get(0, 6), ss.get(2, 6)}, 
 												new BufferedImage[] {
-													ss.get(1, 6), ss.get(3, 6)}, Color.GREEN);
+													ss.get(1, 6), ss.get(3, 6)}, color);
 		((Sprite) this.visual).setStateRate(1);
 		
 		//TODO damage & health

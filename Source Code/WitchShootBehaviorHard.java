@@ -36,7 +36,7 @@ public class WitchShootBehaviorHard extends ShootBehavior {
 		Vector velocity = baseVelocity.setAngle( angle );
 		Vector acceleration = baseAcceleration.setAngle(angle);
 		
-		WitchBullet projectile = new WitchBullet(this.subject.getPosition(), new Vector(64, 64), stage, color);
+		WitchBigBullet projectile = new WitchBigBullet(this.subject.getPosition(), stage, color);
 		projectile.setMoveBehavior( new AccelerateMoveBehavior(projectile, velocity, acceleration) );
 		projectile.setShootBehavior(new WitchBigBulletShootBehavior(projectile, velocity, this.stage, this.color));
 		bullets[0] = projectile;

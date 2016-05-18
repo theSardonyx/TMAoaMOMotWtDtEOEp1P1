@@ -1,9 +1,9 @@
 import java.awt.Color;
 
-public class WitchBullet extends Entity {
+public class WitchBigBullet extends Entity {
 
-	public WitchBullet(Vector position, BulletStage stage, Color color) {
-		super(position, new Vector(24 ,24), stage);
+	public WitchBigBullet(Vector position, BulletStage stage, Color color) {
+		super(position, new Vector(64 ,64), stage);
 		SpriteSheet ss = SpriteSheetLoader.getInstance().getSpriteSheet("res/img/enemyBulletSheet.png", 32, 32);
 		this.visual = new DrawableImage(position, dimension, Sprite.integrateSprites(ss.get(0, 4), ss.get(1, 4), color));
 		

@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class SentinelBulletShootBehavior extends UpgradableShootBehavior {
 
@@ -9,12 +10,16 @@ public class SentinelBulletShootBehavior extends UpgradableShootBehavior {
 		super(subject, stage);
 
 		this.fireRate = 1;
+		
+		this.sentinels = new Entity[0];
 	}
 	
 	public SentinelBulletShootBehavior(Entity subject, BulletStage stage, double expireTime) {
 		super(subject, stage, expireTime);
 
 		this.fireRate = 0;
+		
+		this.sentinels = new Entity[0];
 	}
 	
 	@Override
@@ -26,6 +31,21 @@ public class SentinelBulletShootBehavior extends UpgradableShootBehavior {
 				sentinel = null;
 			}
 		}
+	}
+	
+	@Override
+	public void setLevel(int level) {
+		if(this.level != level) {
+			if(sentinels != null) {
+				for(int i = 0; sentinels.length > i; i++) {
+					if(sentinels[i] != null) {
+						sentinels[i].despawn();
+						sentinels[i] = null;
+					}
+				}
+			}
+		}
+		super.setLevel(level);
 	}
 
 	@Override
