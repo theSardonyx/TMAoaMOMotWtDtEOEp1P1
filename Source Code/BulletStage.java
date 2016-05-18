@@ -21,6 +21,7 @@ public class BulletStage {
 	private Queue<Request> requestQueue;
 	
 	private Player player;
+	private MobWave masterWave;
 	
 	public BulletStage() {
 		position = new Vector( 0, 0 );
@@ -45,6 +46,11 @@ public class BulletStage {
 		player.setShootBehavior(sb);
 		addEntity(player);
 		
+		MobWaveProducer mwp = new MobWaveProducer(this);
+		MobWave[] subwaves = new MobWave[10];
+		for(int i=0; i<10; i++)
+			subwaves[i] = mwp.genMobWave9(0);
+		masterWave = new QueueMobWave(this, 3, subwaves);
 	}
 	
 	public void handleInput(InputCollector input) {
@@ -57,6 +63,8 @@ public class BulletStage {
 	}
 	
 	public void update(double delta) {
+		masterWave.update(delta);
+		
 		ambientEntity.forEach( e -> e.update(delta) );
 		allyBulletEntity.forEach( e -> e.update(delta) );
 		allyEntity.forEach( e -> e.update(delta) );
