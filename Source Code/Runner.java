@@ -23,11 +23,13 @@ public class Runner {
 		InputCollector ic = new InputCollector(w);
 		StateManager sm = StateManager.getInstance();
 		
+		GameState game = new GameState();
+		
 		SPLASH_STATE = sm.addState(new SplashState());
 		MENU_STATE = sm.addState(new MenuState());
-		GAME_STATE = sm.addState(new GameState());
+		GAME_STATE = sm.addState(game);
 		OPTION_STATE = sm.addState(new OptionState());
-		PAUSE_STATE = sm.addState(new PauseState());
+		PAUSE_STATE = sm.addState(new PauseState(game));
 		sm.push(SPLASH_STATE, null);
 		
 		double lag = 0;

@@ -10,11 +10,18 @@ import java.awt.Font;
 */
 public class PauseState extends State {
 	/**
-	 * The DrawableRectangle that serves as the overlay
+	 * The GameState that will be shown behind the overlay
+	 * 
+	 * @see	GameState
+	 */
+	GameState game;
+	
+	/**
+	 * The DrawableRectangles that serve as the overlay
 	 * 
 	 * @see	DrawableRectangle
 	 */
-	DrawableRectangle overlay;
+	DrawableRectangle overlay, outline;
 	
 	/**
 	 * The DrawableString that shows the title of the screen
@@ -31,9 +38,9 @@ public class PauseState extends State {
 	DrawableButton btnResume, btnExit;
 	
 	/**
-	 * The list of runes currently being used by the Player
+	 * The object containing the current status of the Player
 	 * 
-	 * @see	RuneList
+	 * @see	PlayerSettings
 	 */
 	PlayerSettings playerSettings;
 	
@@ -66,10 +73,13 @@ public class PauseState extends State {
 	/**
 	 * Creates a Pause Screen containing the player's saved Runes in an arranged order
 	 */
-	public PauseState() {
+	public PauseState(GameState game) {
+		this.game = game;
 		playerSettings = PlayerSettings.getInstance();
 		
-		overlay = new DrawableRectangle (new Vector (Runner.RES_WIDTH / 2, Runner.RES_HEIGHT / 2), new Vector (500, 400), Color.BLUE);
+		overlay = new DrawableRectangle (new Vector (Runner.RES_WIDTH / 2, Runner.RES_HEIGHT / 2), new Vector (500, 400), Color.BLACK);
+		overlay.setFilled (true);
+		outline = new DrawableRectangle (new Vector (Runner.RES_WIDTH / 2, Runner.RES_HEIGHT / 2), new Vector (500, 400), Color.BLUE);
 		
 		Font font = FontLoader.getInstance().getFont ("Press Start 2P", Font.PLAIN, 20);
 		Vector padding = new Vector (10, 10);
@@ -135,7 +145,9 @@ public class PauseState extends State {
 	*/
 	@Override
 	public void render(RenderWindow rw) {
+		game.render(rw);
 		rw.draw (overlay);
+		rw.draw (outline);
 		
 		rw.draw (label);
 		rw.draw (instructions);
