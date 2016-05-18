@@ -35,7 +35,7 @@ public class PauseState extends State {
 	 * 
 	 * @see	RuneList
 	 */
-	RuneList runes;
+	PlayerSettings playerSettings;
 	
 	/**
 	 * CollideRectangles that represent a "compartment" or places where runes appear
@@ -67,10 +67,7 @@ public class PauseState extends State {
 	 * Creates a Pause Screen containing the player's saved Runes in an arranged order
 	 */
 	public PauseState() {
-		runes = RuneList.getInstance();
-		runes.setRune ("spread", 2);
-		runes.setRune ("sentinel", 5);
-		runes.setRune ("antibullet", 10);
+		playerSettings = PlayerSettings.getInstance();
 		
 		overlay = new DrawableRectangle (new Vector (Runner.RES_WIDTH / 2, Runner.RES_HEIGHT / 2), new Vector (500, 400), Color.BLUE);
 		
@@ -276,9 +273,9 @@ public class PauseState extends State {
 	 * Swaps the positions of the two specified runes
 	 */
 	public void swap (int x, int y) {
-		String temp = runes.getRune (x);
-		runes.setRune (runes.getRune (y), x);
-		runes.setRune (temp, y);
+		int temp = playerSettings.getRune(x);
+		playerSettings.setRune(playerSettings.getRune(y), x);
+		playerSettings.setRune (temp, y);
 	}
 	
 	/**
@@ -297,10 +294,10 @@ public class PauseState extends State {
 	 */
 	public void runeRender(RenderWindow rw) {
 			//draw the runes based on the list
-			for(int i = 0; i < runes.getRuneNum(); i++)
+			for(int i = 0; i < playerSettings.getRuneNum(); i++)
 			{
 				Vector pos;
-				if (i < runes.getRuneNum() - 1) {
+				if (i < playerSettings.getRuneNum() - 1) {
 					int adjust = 0;
 					if(i < 5)
 					{
@@ -316,56 +313,56 @@ public class PauseState extends State {
 					pos = new Vector ((Runner.RES_WIDTH / 2) + 192, (Runner.RES_HEIGHT / 2) + 35);
 				}
 				Vector dim = new Vector(64, 64);
-				String curr = runes.getRune (i);
+				int curr = playerSettings.getRune(i);
 				
 				switch (curr) {
-					case "pierce" :
-						if (index < runes.getRuneNum() && runes.getRune (index).equals ("pierce"))
+					case PlayerSettings.PIERCE_RUNE :
+						if (index < playerSettings.getRuneNum() && playerSettings.getRune(index) == curr)
 								rw.draw (new DrawableImage (pos, dim, ss.get (1, 2)));
 						rw.draw (new DrawableImage (pos, dim, ss.get (0, 2)));
 						break;
-					case "homing" :
-						if (index < runes.getRuneNum() && runes.getRune (index).equals ("homing"))
+					case PlayerSettings.HOMING_RUNE :
+						if (index < playerSettings.getRuneNum() && playerSettings.getRune(index) == curr)
 							rw.draw (new DrawableImage (pos, dim, ss.get (1, 3)));
 						rw.draw (new DrawableImage (pos, dim, ss.get (0, 3)));
 						break;
-					case "explosion" :
-						if (index < runes.getRuneNum() && runes.getRune (index).equals ("explosion"))
+					case PlayerSettings.SPREAD_RUNE :
+						if (index < playerSettings.getRuneNum() && playerSettings.getRune(index) == curr)
 							rw.draw (new DrawableImage (pos, dim, ss.get (1, 4)));
 						rw.draw (new DrawableImage (pos, dim, ss.get (0, 4)));
 						break;
-					case "burst" :
-						if (index < runes.getRuneNum() && runes.getRune (index).equals ("burst"))
+					case PlayerSettings.EXPLOSION_RUNE :
+						if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
 							rw.draw (new DrawableImage (pos, dim, ss.get (1, 5)));
 						rw.draw (new DrawableImage (pos, dim, ss.get (0, 5)));
 						break;
-					case "snipe" :
-						if (index < runes.getRuneNum() && runes.getRune (index).equals ("snipe"))
+					case PlayerSettings.SNIPE_RUNE :
+						if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
 							rw.draw (new DrawableImage (pos, dim, ss.get (1, 6)));
 						rw.draw (new DrawableImage (pos, dim, ss.get (0, 6)));
 						break;
-					case "split" :
-						if (index < runes.getRuneNum() && runes.getRune (index).equals ("split"))
+					case PlayerSettings.SPLIT_RUNE :
+						if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
 							rw.draw (new DrawableImage (pos, dim, ss.get (1, 7)));
 						rw.draw (new DrawableImage (pos, dim, ss.get (0, 7)));
 						break;
-					case "spread" :
-						if (index < runes.getRuneNum() && runes.getRune (index).equals ("spread"))
+					case PlayerSettings.BURST_RUNE :
+						if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
 							rw.draw (new DrawableImage (pos, dim, ss.get (1, 8)));
 						rw.draw (new DrawableImage (pos, dim, ss.get (0, 8)));
 						break;
-					case "sentinel" :
-						if (index < runes.getRuneNum() && runes.getRune (index).equals ("sentinel"))
+					case PlayerSettings.SENTINEL_RUNE :
+						if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
 							rw.draw (new DrawableImage (pos, dim, ss.get (1, 9)));
 						rw.draw (new DrawableImage (pos, dim, ss.get (0, 9)));
 						break;
-					case "antibullet" :
-						if (index < runes.getRuneNum() && runes.getRune (index).equals ("antibullet"))
+					case PlayerSettings.ANTI_RUNE :
+						if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
 							rw.draw (new DrawableImage (pos, dim, ss.get (1, 10)));
 						rw.draw (new DrawableImage (pos, dim, ss.get (0, 10)));
 						break;
-					case "summon" :
-						if (index < runes.getRuneNum() && runes.getRune (index).equals ("summon"))
+					case PlayerSettings.SUMMON_RUNE :
+						if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
 							rw.draw (new DrawableImage (pos, dim, ss.get (1, 3)));
 						rw.draw (new DrawableImage (pos, dim, ss.get (0, 11)));
 						break;
