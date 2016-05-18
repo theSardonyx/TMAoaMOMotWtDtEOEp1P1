@@ -12,7 +12,10 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 public class Player extends Entity {
-	HashMap<Integer, Vector> moveVectors;
+	private HashMap<Integer, Vector> moveVectors;
+	private PlayerSettings playerSettings;
+	private EntityHeart heart;
+	private boolean withHeart;
 
 	/*
 	Contructor for a Player object
@@ -28,16 +31,20 @@ public class Player extends Entity {
 													}, new BufferedImage[] {
 													ss.get(1, 0), ss.get(3, 0)
 													}, Color.GREEN);
-		
+		this.playerSettings = PlayerSettings.getInstance();
 		//TODO damage & health pls
-		this.health = 1;
+		this.health = playerSettings.getHearts();
 		this.damage = 1;
 		
 		this.type = Entity.ALLY_TYPE;
-		this.canCollideEnemy = true;
 		this.canCollideEnemyBullet = true;
 		
-		this.collideShape = new CollideShape(this.position, this.dimension.scalarMult(.1)).setCollideEllipse(true);
+		this.collideShape = new CollideShape(this.position, this.dimension)
+				.setCollideRectangle(true);
+		
+		this.heart = new EntityHeart(this, this.position, this.stage);
+		this.spawnEntity(heart);
+		this.withHeart = false;
 	}
 	
 	/*
@@ -53,6 +60,15 @@ public class Player extends Entity {
 			pmb.setLeft(input.isKeyPressed(curr.getLeftKey()));
 			pmb.setRight(input.isKeyPressed(curr.getRightKey()));
 			pmb.setFocus(input.isKeyPressed(curr.getFocusKey()));
+			
+			if(pmb.getFocus() && !this.withHeart) {
+				this.heart.appear();
+				this.withHeart = true;
+			}
+			else if(!pmb.getFocus() && this.withHeart) {
+				this.heart.dissapear();
+				this.withHeart = false;
+			}
 		}
 	}
 	/*
@@ -62,15 +78,28 @@ public class Player extends Entity {
 	@Override
 	public void updateHook(double delta) {
 		((Sprite) visual).update(delta);
-	}
-	
-	@Override
-	public void collideEnemy(Entity e) {
-		this.getDamaged(e.damage);
+		this.heart.setPosition(this.position);
 	}
 	
 	@Override
 	public void collideEnemyBullet(Entity e) {
-		this.getDamaged(e.damage);
+		playerSettings.graze();
+	}
+	
+	@Override
+	public void setHealth(int health) {
+		playerSettings.setHearts(health);
+		this.health = health;
+	}
+	
+	@Override
+	public int getHealth() {
+		return playerSettings.getHearts();
+	}
+	
+	@Override
+	public void getDamaged(int damage) {
+		playerSettings.heartDecrement(damage);
+		super.getDamaged(damage);
 	}
 }
