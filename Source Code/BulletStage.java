@@ -169,6 +169,31 @@ public class BulletStage {
 		}
 	}
 	
+	public void removeType(int type) {
+		ArrayList<Entity> entitiesToRemove = null;
+		switch(type) {
+			case Entity.AMBIENT_TYPE:
+				entitiesToRemove = this.ambientEntity;
+				break;
+			case Entity.ALLY_TYPE:
+				entitiesToRemove = this.allyEntity;
+				break;
+			case Entity.ALLY_BULLET_TYPE:
+				entitiesToRemove = this.allyBulletEntity;
+				break;
+			case Entity.ENEMY_TYPE:
+				entitiesToRemove = this.enemyEntity;
+				break;
+			case Entity.ENEMY_BULLET_TYPE:
+				entitiesToRemove = this.enemyBulletEntity;
+				break;
+			case Entity.DROP_TYPE:
+				entitiesToRemove = this.dropEntity;
+				break;
+		}
+		entitiesToRemove.forEach(e -> e.despawn());
+	}
+	
 	public Entity getRandomAlly() {
 		int randomIndex = (int) (Math.random() * this.allyEntity.size());
 		return allyEntity.get(randomIndex);
