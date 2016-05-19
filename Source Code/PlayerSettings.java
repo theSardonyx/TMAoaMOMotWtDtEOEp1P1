@@ -22,7 +22,7 @@ public class PlayerSettings {
 	 */
 	private int[] runes;
 	
-	private int hearts, score, kills, graze;
+	private int hearts, score, highScore, kills, graze;
 	
 	private boolean changedRunes, changedHearts;
 	
@@ -126,11 +126,23 @@ public class PlayerSettings {
 	}
 	
 	public void setScore(int score) {
+		if(this.hearts <= 0)
+			return;
 		this.score = score;
+		if(this.score > this.highScore)
+			this.setHighScore(this.score);
 	}
 	
 	public int getScore() {
 		return this.score;
+	}
+	
+	public int getHighScore() {
+		return this.highScore;
+	}
+	
+	public void setHighScore(int highScore) {
+		this.highScore = highScore;
 	}
 	
 	public void graze() {
@@ -139,6 +151,7 @@ public class PlayerSettings {
 	
 	public void setGraze(int graze) {
 		this.graze = graze;
+		this.scoreIncrement(graze);
 	}
 	
 	public int getGraze() {

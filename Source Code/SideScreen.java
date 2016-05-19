@@ -59,8 +59,7 @@ public class SideScreen
 		{
 			playerSettings.scoreIncrement(1);
 			this.cScore = playerSettings.getScore();
-			if(this.cScore > this.hScore)
-				this.hScore = this.cScore;
+			this.hScore = playerSettings.getHighScore();
 			this.kills = playerSettings.getKills();
 			this.graze = playerSettings.getGraze();
 			this.health = playerSettings.getHearts();
