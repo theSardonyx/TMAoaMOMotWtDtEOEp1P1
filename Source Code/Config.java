@@ -33,6 +33,11 @@ public class Config {
 	boolean particles;
 	
 	double spf;
+	
+	/**
+	 * The local high score
+	 */
+	int highScore;
 
 	/**
 	* Creates a new Config object to set this game's default settings
@@ -68,6 +73,24 @@ public class Config {
 				instance = new Config();
 		}
 		return instance;
+	}
+	
+	/**
+	 * Gets the current local high score
+	 * 
+	 * @return	#highScore
+	 */
+	public int getHighScore() {
+		return this.highScore;
+	}
+	
+	/**
+	 * Sets a new local high score
+	 * 
+	 * @param	highScore	The new high score
+	 */
+	public void setHighScore (int highScore) {
+		this.highScore = highScore;
 	}
 	
 	/**

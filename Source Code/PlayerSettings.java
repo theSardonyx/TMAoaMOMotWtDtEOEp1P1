@@ -1,9 +1,10 @@
 import java.util.Arrays;
 
 /**
- * The representation of the list of Runes the Player is currently using
+ * The representation of the settings the Player is currently using
  * 
  * @author Kryzl Pascual
+ * @author Ivan Martinez
  */
 public class PlayerSettings {
 	public static final int BASIC_RUNE = 0;
@@ -59,6 +60,7 @@ public class PlayerSettings {
 		this.score = 0;
 		this.kills = 0;
 		this.graze = 0;
+		this.highScore = Config.getInstance().getHighScore();
 	}
 	
 	/**
