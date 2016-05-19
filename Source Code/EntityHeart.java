@@ -25,8 +25,8 @@ public class EntityHeart extends Entity {
 
 	@Override
 	public void updateHook(double delta) {
-		// TODO Auto-generated method stub
-
+		if(this.host.getHealth() <= 0)
+			this.despawn();
 	}
 	
 	@Override

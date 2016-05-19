@@ -24,7 +24,7 @@ public class PlayerSettings {
 	
 	private int hearts, score, kills, graze;
 	
-	private boolean changedRunes;
+	private boolean changedRunes, changedHearts;
 	
 	/**
 	 * A saved instance of a RuneList object
@@ -38,6 +38,7 @@ public class PlayerSettings {
 		this.runes = new int[11];
 		this.reset();
 		this.changedRunes = false;
+		this.changedHearts = false;
 	}
 	
 	/**
@@ -96,10 +97,17 @@ public class PlayerSettings {
 		return this.changedRunes;
 	}
 	
+	public boolean changedHearts() {
+		return this.changedHearts;
+	}
+	
 	public void setChangedRunes(boolean changedRunes) {
 		this.changedRunes = changedRunes;
 	}
 	
+	public void setChangedHearts(boolean changedHearts) {
+		this.changedHearts = true;
+	}
 	/**
 	 * Gets the maximum number of runes that can be put in the RuneList
 	 * 
@@ -110,11 +118,11 @@ public class PlayerSettings {
 	}
 	
 	public void scoreIncrement(int score) {
-		this.score += score;
+		this.setScore(this.score + score);
 	}
 	
 	public void scoreDecrement(int score) {
-		this.score -= score;
+		this.setScore(this.score - score);
 	}
 	
 	public void setScore(int score) {
@@ -126,7 +134,7 @@ public class PlayerSettings {
 	}
 	
 	public void graze() {
-		this.graze++;
+		this.setGraze(this.graze + 1);
 	}
 	
 	public void setGraze(int graze) {
@@ -138,7 +146,7 @@ public class PlayerSettings {
 	}
 	
 	public void kill() {
-		this.kills++;
+		this.setKills(this.kills + 1);
 	}
 	
 	public void setKills(int kills) {
@@ -150,23 +158,24 @@ public class PlayerSettings {
 	}
 	
 	public void heartIncrement(int hearts) {
-		this.hearts += hearts;
+		this.setHearts(this.hearts + hearts);
 	}
 	
 	public void heartIncrement() {
-		this.hearts++;
+		this.setHearts(this.hearts + 1);
 	}
 	
 	public void heartDecrement(int hearts) {
-		this.hearts -= hearts;
+		this.setHearts(this.hearts - hearts);;
 	}
 	
 	public void heartDecrement() {
-		this.hearts--;
+		this.setHearts(this.hearts - 1);
 	}
 	
 	public void setHearts(int hearts) {
 		this.hearts = hearts;
+		this.changedHearts = true;
 	}
 	
 	public int getHearts() {

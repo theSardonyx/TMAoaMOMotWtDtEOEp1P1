@@ -10,18 +10,11 @@ import java.awt.Font;
 */
 public class PauseState extends State {
 	/**
-	 * The GameState that will be shown behind the overlay
-	 * 
-	 * @see	GameState
-	 */
-	GameState game;
-	
-	/**
-	 * The DrawableRectangles that serve as the overlay
+	 * The DrawableRectangle that serves as the overlay
 	 * 
 	 * @see	DrawableRectangle
 	 */
-	DrawableRectangle overlay, outline;
+	DrawableRectangle overlay;
 	
 	/**
 	 * The DrawableString that shows the title of the screen
@@ -38,9 +31,9 @@ public class PauseState extends State {
 	DrawableButton btnResume, btnExit;
 	
 	/**
-	 * The object containing the current status of the Player
+	 * The list of runes currently being used by the Player
 	 * 
-	 * @see	PlayerSettings
+	 * @see	RuneList
 	 */
 	PlayerSettings playerSettings;
 	
@@ -50,6 +43,8 @@ public class PauseState extends State {
 	 * @see	CollideRectangle
 	 */
 	CollideShape rune0, rune1, rune2, rune3, rune4, rune5, rune6, rune7, rune8, rune9, newRune;
+	CollideShape[] collideShapeRunes;
+	int[] runes;
 	
 	/**
 	 * The instance of the SpriteSheet where the rune sprites will be loaded from
@@ -73,13 +68,10 @@ public class PauseState extends State {
 	/**
 	 * Creates a Pause Screen containing the player's saved Runes in an arranged order
 	 */
-	public PauseState(GameState game) {
-		this.game = game;
+	public PauseState() {
 		playerSettings = PlayerSettings.getInstance();
 		
-		overlay = new DrawableRectangle (new Vector (Runner.RES_WIDTH / 2, Runner.RES_HEIGHT / 2), new Vector (500, 400), Color.BLACK);
-		overlay.setFilled (true);
-		outline = new DrawableRectangle (new Vector (Runner.RES_WIDTH / 2, Runner.RES_HEIGHT / 2), new Vector (500, 400), Color.BLUE);
+		overlay = new DrawableRectangle (new Vector (Runner.RES_WIDTH / 2, Runner.RES_HEIGHT / 2), new Vector (500, 400), Color.BLUE);
 		
 		Font font = FontLoader.getInstance().getFont ("Press Start 2P", Font.PLAIN, 20);
 		Vector padding = new Vector (10, 10);
@@ -95,47 +87,25 @@ public class PauseState extends State {
 		font = font.deriveFont (Font.PLAIN, 15);
 		instructions = new DrawableString (new Vector (Runner.RES_WIDTH / 2, (Runner.RES_HEIGHT / 2) - 90), "Click any two runes to swap them", font, Color.WHITE);
 		
+		collideShapeRunes = new CollideShape[] {rune0, rune1, rune2, rune3, rune4, rune5, rune6, rune7, rune8, rune9, newRune};
 		for(int i = 0; i < 10; i++)
 		{
-			int adjust = 0;
 			Vector pos;
 			if(i < 5)
-			{
-				adjust = 64 * i;
-				pos = new Vector((Runner.RES_WIDTH / 2) + (adjust - 192), (Runner.RES_HEIGHT / 2) - 35);
-			}					
+				pos = new Vector((Runner.RES_WIDTH / 2) + (64 * i - 192), (Runner.RES_HEIGHT / 2) - 35);		
 			else 
-			{
-				adjust = 64 * (i - 5);
-				pos = new Vector((Runner.RES_WIDTH / 2) + (adjust - 192), (Runner.RES_HEIGHT / 2) + 35);
-			}
+				pos = new Vector((Runner.RES_WIDTH / 2) + (64 * (i - 5) - 192), (Runner.RES_HEIGHT / 2) + 35);
 			Vector dim = new Vector(64, 64);
 			
-			switch (i) {
-				case 0 : rune0 = new CollideShape (pos, dim).setCollideRectangle(true);
-				break;
-				case 1 : rune1 = new CollideShape (pos, dim).setCollideRectangle(true);
-				break;
-				case 2 : rune2 = new CollideShape (pos, dim).setCollideRectangle(true);
-				break;
-				case 3 : rune3 = new CollideShape (pos, dim).setCollideRectangle(true);
-				break;
-				case 4 : rune4 = new CollideShape (pos, dim).setCollideRectangle(true);
-				break;
-				case 5 : rune5 = new CollideShape (pos, dim).setCollideRectangle(true);
-				break;
-				case 6 : rune6 = new CollideShape (pos, dim).setCollideRectangle(true);
-				break;
-				case 7 : rune7 = new CollideShape (pos, dim).setCollideRectangle(true);
-				break;
-				case 8 : rune8 = new CollideShape (pos, dim).setCollideRectangle(true);
-				break;
-				case 9 : rune9 = new CollideShape (pos, dim).setCollideRectangle(true);
-				break;
-			}
+			collideShapeRunes[i] = new CollideShape (pos, dim).setCollideRectangle(true);
 		}
-		
-		newRune = new CollideShape (new Vector ((Runner.RES_WIDTH / 2) + 192, (Runner.RES_HEIGHT / 2) + 35), new Vector (64, 64)).setCollideRectangle(true);
+		collideShapeRunes[10] = new CollideShape (new Vector ((Runner.RES_WIDTH / 2) + 192, (Runner.RES_HEIGHT / 2) + 35), new Vector (64, 64)).setCollideRectangle(true);
+	
+		runes = new int[] {PlayerSettings.PIERCE_RUNE, PlayerSettings.HOMING_RUNE, 
+				PlayerSettings.SPREAD_RUNE, PlayerSettings.EXPLOSION_RUNE, 
+				PlayerSettings.SNIPE_RUNE, PlayerSettings.SPLIT_RUNE, 
+				PlayerSettings.BURST_RUNE, PlayerSettings.SENTINEL_RUNE, 
+				PlayerSettings.ANTI_RUNE, PlayerSettings.SUMMON_RUNE};
 	}
 
 	/**
@@ -145,9 +115,7 @@ public class PauseState extends State {
 	*/
 	@Override
 	public void render(RenderWindow rw) {
-		game.render(rw);
 		rw.draw (overlay);
-		rw.draw (outline);
 		
 		rw.draw (label);
 		rw.draw (instructions);
@@ -175,108 +143,21 @@ public class PauseState extends State {
 				popSelf (1, null);
 			else if (btnExit.isCollidingWith (input.getMousePosition()))
 				popSelf (2, null);
-			else if (rune0.isCollidingWith (mouse)) {
-				if (!pressed) {
-					pressed = true;
-					index = 0;
-				} else {
-					swap (0, index);
-					pressed = false;
-					index = 12;
+			else {
+				for(int i = 0; 11 > i; i++) {
+					if(collideShapeRunes[i].isCollidingWith(mouse)) {
+						if(!pressed) {
+							if(this.playerSettings.getRune(i) != -1) {
+								pressed = true;
+								index = i;
+							}
+						} else {
+							this.swap(i, index);
+							pressed = false;
+							index = 12;
+						}
+					}
 				}
-			} else if (rune1.isCollidingWith (mouse)) {
-				if (!pressed) {
-					pressed = true;
-					index = 1;
-				} else {
-					swap (1, index);
-					pressed = false;
-					index = 12;
-				}
-			} else if (rune2.isCollidingWith (mouse)) {
-				if (!pressed) {
-					pressed = true;
-					index = 2;
-				} else {
-					swap (2, index);
-					pressed = false;
-					index = 12;
-				}
-			} else if (rune3.isCollidingWith (mouse)) {
-				if (!pressed) {
-					pressed = true;
-					index = 3;
-				} else {
-					swap (3, index);
-					pressed = false;
-					index = 12;
-				}
-			} else if (rune4.isCollidingWith (mouse)) {
-				if (!pressed) {
-					pressed = true;
-					index = 4;
-				} else {
-					swap (4, index);
-					pressed = false;
-					index = 12;
-				}
-			} else if (rune5.isCollidingWith (mouse)) {
-				if (!pressed) {
-					pressed = true;
-					index = 5;
-				} else {
-					swap (5, index);
-					pressed = false;
-					index = 12;
-				}
-			} else if (rune6.isCollidingWith (mouse)) {
-				if (!pressed) {
-					pressed = true;
-					index = 6;
-				} else {
-					swap (6, index);
-					pressed = false;
-					index = 12;
-				}
-			} else if (rune7.isCollidingWith (mouse)) {
-				if (!pressed) {
-					pressed = true;
-					index = 7;
-				} else {
-					swap (7, index);
-					pressed = false;
-					index = 12;
-				}
-			} else if (rune8.isCollidingWith (mouse)) {
-				if (!pressed) {
-					pressed = true;
-					index = 8;
-				} else {
-					swap (8, index);
-					pressed = false;
-					index = 12;
-				}
-			} else if (rune9.isCollidingWith (mouse)) {
-				if (!pressed) {
-					pressed = true;
-					index = 9;
-				} else {
-					swap (9, index);
-					pressed = false;
-					index = 12;
-				}
-			} else if (newRune.isCollidingWith (mouse)) {
-				if (!pressed) {
-					pressed = true;
-					index = 10;
-				} else {
-					swap (10, index);
-					pressed = false;
-					index = 12;
-				}
-			} else {
-				pressed = false;
-				index = 12;
 			}
 		}
 	}
@@ -305,81 +186,94 @@ public class PauseState extends State {
 	 * @see RenderWindow
 	 */
 	public void runeRender(RenderWindow rw) {
-			//draw the runes based on the list
-			for(int i = 0; i < playerSettings.getRuneNum(); i++)
-			{
-				Vector pos;
-				if (i < playerSettings.getRuneNum() - 1) {
-					int adjust = 0;
-					if(i < 5)
-					{
-						adjust = 64 * i;
-						pos = new Vector((Runner.RES_WIDTH / 2) + (adjust - 192), (Runner.RES_HEIGHT / 2) - 35);
-					}					
-					else 
-					{
-						adjust = 64 * (i - 5);
-						pos = new Vector((Runner.RES_WIDTH / 2) + (adjust - 192), (Runner.RES_HEIGHT / 2) + 35);
-					}
-				} else {
-					pos = new Vector ((Runner.RES_WIDTH / 2) + 192, (Runner.RES_HEIGHT / 2) + 35);
-				}
-				Vector dim = new Vector(64, 64);
-				int curr = playerSettings.getRune(i);
-				
-				switch (curr) {
-					case PlayerSettings.PIERCE_RUNE :
-						if (index < playerSettings.getRuneNum() && playerSettings.getRune(index) == curr)
-								rw.draw (new DrawableImage (pos, dim, ss.get (1, 2)));
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 2)));
-						break;
-					case PlayerSettings.HOMING_RUNE :
-						if (index < playerSettings.getRuneNum() && playerSettings.getRune(index) == curr)
-							rw.draw (new DrawableImage (pos, dim, ss.get (1, 3)));
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 3)));
-						break;
-					case PlayerSettings.SPREAD_RUNE :
-						if (index < playerSettings.getRuneNum() && playerSettings.getRune(index) == curr)
-							rw.draw (new DrawableImage (pos, dim, ss.get (1, 4)));
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 4)));
-						break;
-					case PlayerSettings.EXPLOSION_RUNE :
-						if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
-							rw.draw (new DrawableImage (pos, dim, ss.get (1, 5)));
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 5)));
-						break;
-					case PlayerSettings.SNIPE_RUNE :
-						if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
-							rw.draw (new DrawableImage (pos, dim, ss.get (1, 6)));
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 6)));
-						break;
-					case PlayerSettings.SPLIT_RUNE :
-						if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
-							rw.draw (new DrawableImage (pos, dim, ss.get (1, 7)));
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 7)));
-						break;
-					case PlayerSettings.BURST_RUNE :
-						if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
-							rw.draw (new DrawableImage (pos, dim, ss.get (1, 8)));
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 8)));
-						break;
-					case PlayerSettings.SENTINEL_RUNE :
-						if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
-							rw.draw (new DrawableImage (pos, dim, ss.get (1, 9)));
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 9)));
-						break;
-					case PlayerSettings.ANTI_RUNE :
-						if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
-							rw.draw (new DrawableImage (pos, dim, ss.get (1, 10)));
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 10)));
-						break;
-					case PlayerSettings.SUMMON_RUNE :
-						if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
-							rw.draw (new DrawableImage (pos, dim, ss.get (1, 3)));
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 11)));
-						break;
-					default : rw.draw(new DrawableImage(pos, dim, ss.get(1, 0)));
-				}
+		for(int i = 0; i < 11; i++) {
+			Vector pos;
+			if (i < 10) {
+				if(i < 5)
+					pos = new Vector((Runner.RES_WIDTH / 2) + (64 * i - 192), (Runner.RES_HEIGHT / 2) - 35);			
+				else 
+					pos = new Vector((Runner.RES_WIDTH / 2) + (64 * (i - 5) - 192), (Runner.RES_HEIGHT / 2) + 35);
+			} else {
+				pos = new Vector ((Runner.RES_WIDTH / 2) + 192, (Runner.RES_HEIGHT / 2) + 35);
 			}
+			Vector dim = new Vector(64, 64);
+			int curr = playerSettings.getRune(i);
+			
+			for(int j = 0; 10 > j; j++) {
+				if(curr == runes[j]) {
+					if(i == index && playerSettings.getRune(i) == curr)
+						rw.draw (new DrawableImage (pos, dim, ss.get (1, j + 2)));
+					else
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, j + 2)));
+					break;
+				} else 
+					rw.draw(new DrawableImage(pos, dim, ss.get(1, 0)));
+			}
+			/**
+			switch (curr) {
+				case PlayerSettings.PIERCE_RUNE :
+					if (index < playerSettings.getRuneNum() && playerSettings.getRune(index) == curr)
+						rw.draw (new DrawableImage (pos, dim, ss.get (1, 2)));
+					else
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 2)));
+					break;
+				case PlayerSettings.HOMING_RUNE :
+					if (index < playerSettings.getRuneNum() && playerSettings.getRune(index) == curr)
+						rw.draw (new DrawableImage (pos, dim, ss.get (1, 3)));
+					else
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 3)));
+					break;
+				case PlayerSettings.SPREAD_RUNE :
+					if (index < playerSettings.getRuneNum() && playerSettings.getRune(index) == curr)
+						rw.draw (new DrawableImage (pos, dim, ss.get (1, 4)));
+					else
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 4)));
+					break;
+				case PlayerSettings.EXPLOSION_RUNE :
+					if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
+						rw.draw (new DrawableImage (pos, dim, ss.get (1, 5)));
+					else
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 5)));
+					break;
+				case PlayerSettings.SNIPE_RUNE :
+					if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
+						rw.draw (new DrawableImage (pos, dim, ss.get (1, 6)));
+					else
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 6)));
+					break;
+				case PlayerSettings.SPLIT_RUNE :
+					if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
+						rw.draw (new DrawableImage (pos, dim, ss.get (1, 7)));
+					else
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 7)));
+					break;
+				case PlayerSettings.BURST_RUNE :
+					if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
+						rw.draw (new DrawableImage (pos, dim, ss.get (1, 8)));
+					else
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 8)));
+					break;
+				case PlayerSettings.SENTINEL_RUNE :
+					if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
+						rw.draw (new DrawableImage (pos, dim, ss.get (1, 9)));
+					else
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 9)));
+					break;
+				case PlayerSettings.ANTI_RUNE :
+					if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
+						rw.draw (new DrawableImage (pos, dim, ss.get (1, 10)));
+					else
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 10)));
+					break;
+				case PlayerSettings.SUMMON_RUNE :
+					if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
+						rw.draw (new DrawableImage (pos, dim, ss.get (1, 11)));
+					//else
+						rw.draw (new DrawableImage (pos, dim, ss.get (0, 11)));
+					break;
+				default : rw.draw(new DrawableImage(pos, dim, ss.get(1, 0)));
+			}
+			*/
+		}
 	}
 }

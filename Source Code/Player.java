@@ -101,5 +101,7 @@ public class Player extends Entity {
 	public void getDamaged(int damage) {
 		playerSettings.heartDecrement(damage);
 		super.getDamaged(damage);
+		if(this.health > 0)
+			this.stage.removeType(Entity.ENEMY_BULLET_TYPE);
 	}
 }
