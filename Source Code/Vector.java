@@ -142,4 +142,12 @@ public class Vector {
 	public String toString() {
 		return this.x + " " + this.y;
 	}
+	
+	public boolean isClamped(Vector topLeft, Vector bottomRight) {
+		if(topLeft.x < this.x && bottomRight.x > this.x) {
+			if(topLeft.y < this.y && bottomRight.y > this.y)
+				return true;
+		}
+		return false;
+	}
 }
