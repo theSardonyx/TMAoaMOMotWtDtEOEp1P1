@@ -2,6 +2,7 @@
 public class PlayerMoveBehavior extends MoveBehavior {
 	private boolean up, down, left, right, focus;
 	private double speed;
+	private Vector borderLeftMost, borderDimension;
 
 	/*
 	Constructor for PlayerMoveBehavior
@@ -11,6 +12,9 @@ public class PlayerMoveBehavior extends MoveBehavior {
 	public PlayerMoveBehavior(Entity subject, double speed) {
 		super(subject);
 		this.speed = speed;
+		
+		this.borderLeftMost = Vector.zero();
+		this.borderDimension = new Vector(720, 720);
 	}
 	/*
 	Method used to change the position of the given Entity object
@@ -41,7 +45,8 @@ public class PlayerMoveBehavior extends MoveBehavior {
 			base = base.scalarMult(distance);
 
 		Vector newPosition = subject.getPosition().add(base);
-		subject.setPosition(newPosition);
+		if(newPosition.isClamped(this.borderLeftMost, this.borderLeftMost.add(this.borderDimension)))
+			subject.setPosition(newPosition);
 	}
 	
 	/*
@@ -122,5 +127,4 @@ public class PlayerMoveBehavior extends MoveBehavior {
 	public boolean getFocus() {
 		return focus;
 	}
-	
 }

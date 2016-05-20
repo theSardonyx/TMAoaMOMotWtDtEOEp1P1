@@ -9,6 +9,7 @@ public class Runner {
 	public static int GAME_STATE;
 	public static int OPTION_STATE;
 	public static int PAUSE_STATE;
+        public static int GAME_OVER_STATE;
 	
 	/*
 	Function for the main game loop
@@ -30,7 +31,10 @@ public class Runner {
 		GAME_STATE = sm.addState(game);
 		OPTION_STATE = sm.addState(new OptionState());
 		PAUSE_STATE = sm.addState(new PauseState(game));
+                GAME_OVER_STATE = sm.addState(new GameOverState());
+                
 		sm.push(SPLASH_STATE, null);
+                //sm.push(GAME_OVER_STATE, null);
 		
 		double lag = 0;
 		double past = toSecond(System.nanoTime());
