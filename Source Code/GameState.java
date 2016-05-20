@@ -10,7 +10,6 @@ import java.awt.event.*;
 * @author	Kryzl Pascual
 */
 public class GameState extends State {
-        PlayerSettings ps = PlayerSettings.getInstance();
 	/**
 	* A saved instance of the BulletStage class
 	*
@@ -68,11 +67,8 @@ public class GameState extends State {
 	public void update(double delta) {
 		bulletStage.update(delta);
 		sideScreen.update(delta);
-            int health = ps.getHearts();
-            if(health == 0)
-            {
-                sm.push(Runner.GAME_OVER_STATE, null);
-            }
+        if (PlayerSettings.getInstance().getHearts() == 0)
+        	sm.push(Runner.GAME_OVER_STATE, null);
 	}
 
 	/**

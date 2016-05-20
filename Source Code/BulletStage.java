@@ -8,6 +8,7 @@ public class BulletStage {
 	private Vector position;
 	private Vector dimension;
 	
+	private Background background;
 	private DrawableImage visual;
 	private Graphics2D graphics;
 	
@@ -29,6 +30,7 @@ public class BulletStage {
 		BufferedImage image = new BufferedImage(dimension.getX(), dimension.getY(), BufferedImage.TYPE_4BYTE_ABGR);
 		visual = new DrawableImage(position.add( dimension.scalarMult( 0.5 ) ), dimension, image);
 		graphics = (Graphics2D) image.getGraphics();
+		background = new Background(new Vector (0,0), new Vector(0, 0));
 		
 		ambientEntity = new ArrayList<Entity>();
 		allyEntity = new ArrayList<Entity>();
@@ -106,6 +108,8 @@ public class BulletStage {
 	public void render(RenderWindow rw) {
 		graphics.setColor(new Color(0x101010));
 		graphics.fillRect( 0, 0, dimension.getX(), dimension.getY());
+		
+		background.draw(graphics);
 		
 		ambientEntity.forEach( e -> e.draw(graphics) );
 		allyBulletEntity.forEach( e -> e.draw(graphics) );
