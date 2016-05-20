@@ -206,7 +206,7 @@ public class MobWaveProducer {
 		return generated;
 	}
 	
-	private MobWave genMobWaveCat1(int difficulty)
+	public MobWave genMobWaveCat1(int difficulty)
 	{
 		int min = 0;
 		int max = 4;
@@ -238,15 +238,15 @@ public class MobWaveProducer {
 		
 	}
 	
-	private MobWave genMobWaveCat2(int difficulty)
+	public MobWave genMobWaveCat2(int difficulty)
 	{
 		double chance = Math.random();
 		
-		if(chance < 0.3)
+		if(difficulty > 0 && chance < 0.3)
 		{
-			MobWave partOne = genMobWaveCat1(Math.max(0, difficulty-1));
-			MobWave partTwo = genMobWaveCat1(Math.max(0, difficulty-1));
-			return new QueueMobWave(this.stage, 0, new MobWave[] {partOne, partTwo});
+			MobWave partOne = genMobWaveCat1(difficulty-1);
+			MobWave partTwo = genMobWaveCat1(difficulty-1);
+			return new CombinationMobWave(this.stage, 0, new MobWave[] {partOne, partTwo});
 		}
 		
 		int min = 5;
@@ -278,15 +278,15 @@ public class MobWaveProducer {
 		return generated;
 	}
 	
-	private MobWave genMobWaveCat3(int difficulty)
+	public MobWave genMobWaveCat3(int difficulty)
 	{
 		double chance = Math.random();
 		
-		if(chance < 0.3)
+		if(difficulty > 0 && chance < 0.3)
 		{
-			MobWave partOne = genMobWaveCat1(Math.max(0, difficulty-1));
-			MobWave partTwo = genMobWaveCat2(Math.max(0, difficulty-1));
-			return new QueueMobWave(this.stage, 0, new MobWave[] {partOne, partTwo});
+			MobWave partOne = genMobWaveCat1(difficulty-1);
+			MobWave partTwo = genMobWaveCat2(difficulty-1);
+			return new CombinationMobWave(this.stage, 0, new MobWave[] {partOne, partTwo});
 		}
 		
 		int min = 10;
@@ -426,7 +426,7 @@ public class MobWaveProducer {
 		}
 		combo[6] = new VacantMobWave(this.stage, 6.5);
 		
-		return new CombinationMobWave(this.stage, 2.40/(difficulty+1), combo);
+		return new CombinationMobWave(this.stage, 0, combo);
 	}
 
 	public MobWave genMobWave1(int difficulty)
@@ -454,7 +454,7 @@ public class MobWaveProducer {
 		}
 		queue[6] = new VacantMobWave(this.stage, 6);
 		
-		return new QueueMobWave(this.stage, 0.9/(difficulty+1), queue);
+		return new QueueMobWave(this.stage, 0, queue);
 	}
 
 	public MobWave genMobWave2(int difficulty)
@@ -480,7 +480,7 @@ public class MobWaveProducer {
 		}
 		combo[4] = new VacantMobWave(this.stage, 5);
 		
-		return new CombinationMobWave(this.stage, 0.9/(difficulty+1), combo);
+		return new CombinationMobWave(this.stage, 0, combo);
 	}
 
 	public MobWave genMobWave3(int difficulty)
@@ -507,7 +507,7 @@ public class MobWaveProducer {
 		}
 		queue[6] = new VacantMobWave(this.stage, 3);
 		
-		return new QueueMobWave(this.stage, 0.9/(difficulty+1), queue);
+		return new QueueMobWave(this.stage, 0, queue);
 	}
 
 	public MobWave genMobWave4(int difficulty)
@@ -544,7 +544,7 @@ public class MobWaveProducer {
 		}
 		queue[8] = new VacantMobWave(this.stage, 4);
 		
-		return new QueueMobWave(this.stage, 0.9/(difficulty+1), queue);
+		return new QueueMobWave(this.stage, 0, queue);
 	}
 
 	public MobWave genMobWave5(int difficulty)
@@ -580,7 +580,7 @@ public class MobWaveProducer {
 		}
 		combo[3] = new VacantMobWave(stage, 9);
 		
-		return new CombinationMobWave(this.stage, 0.9/(difficulty+1), combo);
+		return new CombinationMobWave(this.stage, 0, combo);
 	}
 
 	public MobWave genMobWave6(int difficulty)
@@ -623,7 +623,7 @@ public class MobWaveProducer {
 		}
 		combo[6] = new VacantMobWave(this.stage, 13);
 		
-		return new CombinationMobWave(this.stage, 0.9/(difficulty+1), combo);
+		return new CombinationMobWave(this.stage, 0, combo);
 	}
 
 	public MobWave genMobWave7(int difficulty)
@@ -652,7 +652,7 @@ public class MobWaveProducer {
 		}
 		queue[6] = new VacantMobWave(this.stage, 3);
 		
-		return new QueueMobWave(this.stage, 0.9/(difficulty+1), queue);
+		return new QueueMobWave(this.stage, 0, queue);
 	}
 
 	public MobWave genMobWave8(int difficulty)
@@ -693,7 +693,7 @@ public class MobWaveProducer {
 		}
 		combo[4] = new VacantMobWave(this.stage, 5);
 		
-		return new CombinationMobWave(this.stage, 0.9/(difficulty+1), combo);
+		return new CombinationMobWave(this.stage, 0, combo);
 	}
 
 	public MobWave genMobWave9(int difficulty)
@@ -725,7 +725,7 @@ public class MobWaveProducer {
 		}
 		queue[6] = new VacantMobWave(this.stage, 7.5);
 		
-		return new QueueMobWave(this.stage, 0.9/(difficulty+1), queue);
+		return new QueueMobWave(this.stage, 0, queue);
 	}
 
 	public MobWave genMobWave10(int difficulty)
@@ -756,7 +756,12 @@ public class MobWaveProducer {
 			}));
 
 			ShootBehavior batShoot = getShootBehavior(bat, batColor, BAT_ENEMY, difficulty);
-			sb.setFireRate( 0.75 );
+			batShoot.setFireRate( 0.75 );
+			if(difficulty==0)
+			{
+				((BatShootBehaviorEasy) batShoot).setOrientationToRight( i % 2 == 0 );
+			}		
+			
 			bat.setShootBehavior(batShoot);
 			
 			combo[i+1] = new SingleSpawnMobWave(this.stage, 0, bat);
@@ -780,36 +785,220 @@ public class MobWaveProducer {
 		}
 		combo[5] = new VacantMobWave(this.stage, 7.2);
 		
-		return new CombinationMobWave(this.stage, 1, combo);
+		return new CombinationMobWave(this.stage, 0, combo);
 	}
 
-	private MobWave genMobWave11(int difficulty)
+	public MobWave genMobWave11(int difficulty)
 	{
-		return null;
+		MobWave[] queue = new MobWave[3];
+		MobWave[] combo = new MobWave[4];
+		
+		Color pixieColor = getRandomColor(PIXIE_ENEMY, difficulty);
+		PixieEnemy pixie = new PixieEnemy(new Vector(360, -100), this.stage, pixieColor);
+		pixie.setMoveBehavior(new QueueMoveBehavior(pixie, new MoveBehavior[] {
+				new TimedGlideMoveBehavior(pixie, new Vector(360, 100), 1, 7),
+				new AccelerateMoveBehavior(pixie, new Vector(0, -150), Vector.zero(), 1)
+		}));
+		ShootBehavior sb = getShootBehavior(pixie, pixieColor, PIXIE_ENEMY, difficulty);
+		
+		pixie.setShootBehavior(sb);
+		combo[0] = new SingleSpawnMobWave(this.stage, 0, pixie);
+		
+		Color spiderColor = getRandomColor(SPIDER_ENEMY, difficulty);
+		SpiderEnemy spider = new SpiderEnemy(new Vector(360, -100), this.stage, spiderColor);
+		spider.setMoveBehavior(new TimedGlideMoveBehavior(spider, new Vector(360, 820), 5, 5));
+		sb = getShootBehavior(spider, spiderColor, SPIDER_ENEMY, difficulty);
+		spider.setShootBehavior(sb);
+		queue[1] = new SingleSpawnMobWave(this.stage, 0, spider);
+		
+		int[] spawnX = {260, 460};
+		int spawnY = -100;
+		int targetY = 150;
+		int[] exitX = {-100, 820};
+		Color witchColor = getRandomColor(WITCH_ENEMY, difficulty);
+		for(int i=0; i<2; i++)
+		{
+			WitchEnemy witch = new WitchEnemy(new Vector(spawnX[i], spawnY), this.stage, witchColor);
+			witch.setMoveBehavior(new QueueMoveBehavior(witch, new MoveBehavior[]{
+					new TimedGlideMoveBehavior(witch, new Vector(spawnX[i], targetY), 1, 7),
+					new TimedGlideMoveBehavior(witch, new Vector(exitX[i], targetY), 1, 1)
+			}));
+
+			ShootBehavior witchShoot = getShootBehavior(witch, witchColor, WITCH_ENEMY, difficulty);
+			witch.setShootBehavior(witchShoot);
+			
+			combo[i+1] = new SingleSpawnMobWave(this.stage, 0, witch);
+		}
+		combo[3] = new VacantMobWave(this.stage, 2);
+		queue[0] = new CombinationMobWave(this.stage, 0.9, combo);
+		queue[2] = new VacantMobWave(this.stage, 7);
+		
+		return new QueueMobWave(this.stage, 0, queue);
 	}
 
-	private MobWave genMobWave12(int difficulty)
+	public MobWave genMobWave12(int difficulty)
 	{
-		return null;
+		MobWave[] combo = new MobWave[4];
+		
+		Color pixieColor = getRandomColor(PIXIE_ENEMY, difficulty);
+		int[] spawnX = {360, -100, 820};
+		int[] spawnY = {-100, 300, 300};
+		int[] targetX = {360, 200, 520};
+		int[] targetY = {250, 300, 300};
+		
+		for(int i=0; i<3; i++)
+		{
+			PixieEnemy pixie = new PixieEnemy(new Vector(spawnX[i], spawnY[i]), this.stage, pixieColor);
+			pixie.setMoveBehavior(new QueueMoveBehavior(pixie, new MoveBehavior[] {
+					new TimedGlideMoveBehavior(pixie, new Vector(targetX[i], targetY[i]), 3, 7),
+					new TimedGlideMoveBehavior(pixie, pixie.getPosition(), 1, 1)
+			}));
+			pixie.setShootBehavior( getShootBehavior(pixie, pixieColor, PIXIE_ENEMY, difficulty) );
+			combo[i] = new SingleSpawnMobWave(this.stage, 0, pixie);
+		}
+		combo[3] = new VacantMobWave(this.stage, 12);
+		
+		return new CombinationMobWave(this.stage, 0, combo);
 	}
 
-	private MobWave genMobWave13(int difficulty)
+	public MobWave genMobWave13(int difficulty)
 	{
-		return null;
+		MobWave[] combo = new MobWave[4];
+		
+		Color pixieColor = getRandomColor(PIXIE_ENEMY, difficulty);
+		PixieEnemy pixie = new PixieEnemy(new Vector(360, -100), this.stage, pixieColor);
+		pixie.setMoveBehavior(new TimedGlideMoveBehavior(pixie, new Vector(360, 820), 10, 10));
+		pixie.setShootBehavior( getShootBehavior(pixie, pixieColor, PIXIE_ENEMY, difficulty) );
+		combo[0] = new SingleSpawnMobWave(this.stage, 0, pixie);
+		
+		Color witchColor = getRandomColor(WITCH_ENEMY, difficulty);
+		int[] spawnX = {200, 520};
+		for(int i=0; i<2; i++)
+		{
+			WitchEnemy witch = new WitchEnemy(new Vector(spawnX[i], -100), this.stage, witchColor);
+			witch.setMoveBehavior(new TimedGlideMoveBehavior(witch, new Vector(spawnX[i], 820), 10, 10));
+			witch.setShootBehavior( getShootBehavior(witch, witchColor, WITCH_ENEMY, difficulty) );
+			combo[i+1] = new SingleSpawnMobWave(this.stage, 0, witch);
+		}
+		combo[3] = new VacantMobWave(this.stage, 12);
+		
+		return new CombinationMobWave(this.stage, 0, combo);
 	}
 
-	private MobWave genMobWave14(int difficulty)
+	public MobWave genMobWave14(int difficulty)
 	{
-		return null;
+		MobWave[][] queue = new MobWave[2][4];
+		
+		Color batColor = getRandomColor(BAT_ENEMY, difficulty);
+		
+		int[] spawnX = { 820, -100 };
+		int spawnY = 410;
+		Vector center = new Vector(360, 410);
+		
+		for(int i=0; i<4; i++)
+		{
+			for(int j=0; j<2; j++)
+			{
+				
+				BatEnemy bat = new BatEnemy(new Vector(spawnX[j], spawnY), this.stage, batColor);
+				bat.setMoveBehavior(new EllipseMoveBehavior( bat, center, 600, 800, 10, 5));
+				if(j == 0)
+					((EllipseMoveBehavior) bat.getMoveBehavior()).reverse();
+				else
+					((EllipseMoveBehavior) bat.getMoveBehavior()).setRotation(Math.PI);
+				
+				bat.setShootBehavior( getShootBehavior(bat, batColor, BAT_ENEMY, difficulty) );
+				bat.getShootBehavior().setFireRate(1.25 + Math.random()*0.75);
+				if(difficulty == 0)
+					((BatShootBehaviorEasy) bat.getShootBehavior()).setHeight(35);
+				else if(difficulty == 2)
+					((BatShootBehaviorHard) bat.getShootBehavior()).setHeight(35);
+				
+				queue[j][i] = new SingleSpawnMobWave(this.stage, 0.5, bat);
+			}
+		}
+		
+		MobWave[] combo = new MobWave[4];
+		combo[0] = new QueueMobWave(this.stage, 0, queue[0]);
+		combo[1] = new QueueMobWave(this.stage, 0, queue[1]);
+		
+		Color pixieColor = getRandomColor(PIXIE_ENEMY, difficulty);
+		PixieEnemy pixie = new PixieEnemy(new Vector(360, -100), this.stage, pixieColor);
+		pixie.setMoveBehavior(new QueueMoveBehavior(pixie, new MoveBehavior[] {
+				new TimedGlideMoveBehavior(pixie, new Vector(360, 300), 3, 10),
+				new TimedGlideMoveBehavior(pixie, pixie.getPosition(), 3, 3)
+		}));
+		pixie.setShootBehavior( getShootBehavior(pixie, pixieColor, PIXIE_ENEMY, difficulty) );
+		combo[2] = new SingleSpawnMobWave(this.stage, 0, pixie);
+		
+		combo[3] = new VacantMobWave(this.stage, 15);
+		
+		return new CombinationMobWave(this.stage, 0, combo);
 	}
 
-	private MobWave genMobWave15(int difficulty)
+	public MobWave genMobWave15(int difficulty)
 	{
-		return null;
+		MobWave[] queue = new MobWave[4];
+		
+		Color pixieColor = getRandomColor(PIXIE_ENEMY, difficulty);
+		Vector center = new Vector(360, 0);
+		int[] height = {200, 400, 600};
+		int width = 920;
+		int rotation = 0;
+		
+		for(int i=0; i<3; i++)
+		{
+			PixieEnemy pixie = new PixieEnemy( new Vector(-820, 0), this.stage, pixieColor);
+			pixie.setMoveBehavior( new EllipseMoveBehavior(pixie, center, height[i], width, 10, 5));
+			pixie.setShootBehavior( getShootBehavior(pixie, pixieColor, PIXIE_ENEMY, difficulty) );
+			pixie.getShootBehavior().setFireRate(0.075);
+			
+			double bulletSpeed = 150;
+			switch(difficulty)
+			{
+			case 0:
+				((PixieShootBehaviorEasy) pixie.getShootBehavior()).setSpeed(bulletSpeed);
+				break;
+			case 1:
+				((PixieShootBehaviorMedium) pixie.getShootBehavior()).setSpeed(bulletSpeed);
+				break;
+			case 2:
+				((PixieShootBehaviorHard) pixie.getShootBehavior()).getTop().setRotationDelta(Math.PI/8);
+				((PixieShootBehaviorHard) pixie.getShootBehavior()).getBottom().setRotationDelta(Math.PI/8);
+				((PixieShootBehaviorHard) pixie.getShootBehavior()).getTop().setSpeed(bulletSpeed);
+				((PixieShootBehaviorHard) pixie.getShootBehavior()).getBottom().setSpeed(bulletSpeed);
+				break;
+			}
+			
+			queue[i] = new SingleSpawnMobWave(this.stage, 0.5, pixie);
+		}
+		queue[3] = new VacantMobWave(this.stage, 7);
+		
+		return new QueueMobWave(this.stage, 0, queue);
 	}
 
-	private MobWave genMobWave16(int difficulty)
+	public MobWave genMobWave16(int difficulty)
 	{
-		return null;
+		MobWave[] combo = new MobWave[5];
+		Color witchColor = getRandomColor(WITCH_ENEMY, difficulty);
+		int[] spawnX = {-100, -100, 820, 820};
+		int[] spawnY = {100, 200, 100, 200};
+		int[] targetX = {200, 100, 520, 620};
+		
+		for(int i=0; i<4; i++)
+		{
+			WitchEnemy witch = new WitchEnemy(new Vector(spawnX[i], spawnY[i]), this.stage, witchColor);
+			witch.setMoveBehavior(new QueueMoveBehavior(witch, new MoveBehavior[] {
+					new TimedGlideMoveBehavior(witch, new Vector(targetX[i], spawnY[i]), 1, 1),
+					new AccelerateMoveBehavior(witch, Vector.zero(), Vector.zero(), 8),
+					new TimedGlideMoveBehavior(witch, new Vector(targetX[i], -100), 2, 2)
+			}));
+			ShootBehavior sb = getShootBehavior(witch, witchColor, WITCH_ENEMY, difficulty);
+			witch.setShootBehavior(sb);
+			combo[i] = new SingleSpawnMobWave(this.stage, 0, witch);
+		}
+		combo[4] = new VacantMobWave(this.stage, 13);
+		
+		return new CombinationMobWave(this.stage, 0, combo);
 	}
 }
