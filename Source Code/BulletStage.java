@@ -40,7 +40,17 @@ public class BulletStage {
 		dropEntity = new ArrayList<Entity>();
 		
 		requestQueue = new ArrayDeque<Request>();
-
+		
+		BulletDespawner bulletDespawnerTop = new BulletDespawner(new Vector(360, -400), new Vector(1320, 400), this);
+		BulletDespawner bulletDespawnerBottom = new BulletDespawner(new Vector(360, 1120), new Vector(1320, 400), this);
+		BulletDespawner bulletDespawnerLeft = new BulletDespawner(new Vector(-400, 360), new Vector(400, 1320), this);
+		BulletDespawner bulletDespawnerRight = new BulletDespawner(new Vector(1120, 360), new Vector(400, 1320), this);
+		this.addEntity( bulletDespawnerTop );
+		this.addEntity( bulletDespawnerBottom );
+		this.addEntity( bulletDespawnerLeft );
+		this.addEntity( bulletDespawnerRight );
+		
+		
 		player = new Player(new Vector(Runner.RES_HEIGHT/2, 200 + Runner.RES_HEIGHT/2), this, Color.BLUE);
 		player.setMoveBehavior(new PlayerMoveBehavior(player, 300));
 		BasicBulletShootBehavior sb = new BasicBulletShootBehavior(player, this);
@@ -51,7 +61,7 @@ public class BulletStage {
 		MobWaveProducer mwp = new MobWaveProducer(this);
 		MobWave[] subwaves = new MobWave[10];
 		for(int i=0; i<10; i++)
-			subwaves[i] = mwp.genMobWave9(0);
+			subwaves[i] = mwp.genMobWave16(2);
 		masterWave = new QueueMobWave(this, 3, subwaves);
 	}
 	
