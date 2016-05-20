@@ -3,7 +3,7 @@ import java.awt.Graphics2D;
 public class Background extends Drawable {
 	DrawableImage[][] background;
 	double speed;
-	int y = -8;
+	double y = 0;
 
 	public Background (Vector position, Vector dimension) {
 		super(position, dimension);
@@ -23,7 +23,7 @@ public class Background extends Drawable {
 	}
 	
 	public void update() {
-		this.y += 1;
+		this.y += 0.33;
 		for (int i = 0; i < 24; i++) {
 			for (int j = 0; j < 23; j++) {
 				background[i][j] = new DrawableImage (new Vector (j * 32, 704 + (y % 32) - (i * 32)), new Vector (32, 32), ImageLoader.getInstance().getFile("res/img/tile.png"));
