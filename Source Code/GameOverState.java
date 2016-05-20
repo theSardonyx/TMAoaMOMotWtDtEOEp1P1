@@ -1,9 +1,8 @@
 import java.awt.*;
 public class GameOverState extends State {
-        //int currentScore = PlayerSettings.getInstance().getScore();
-        int currentScore = 1000; //testing
-        //int highScore = PlayerSettings.getInstance().getHighScore();
-        int highScore = 500; //testing
+        PlayerSettings ps = PlayerSettings.getInstance();
+        int currentScore = 0;
+        int highScore = ps.getHighScore();
         int ctr = 0;
         DrawableString decoration1, decoration2, totalLabel, total, newhighnotif;
         DrawableButton mainMenu, retry;
@@ -20,8 +19,8 @@ public class GameOverState extends State {
             total = new DrawableString(new Vector(center.x + 100, center.y - 100), "lll", font, Color.WHITE);
             newhighnotif = new DrawableString(new Vector(center.x + 320, center.y - 100), "NEW HIGH SCORE", font, Color.YELLOW);
             
-            mainMenu = new DrawableButton(new Vector(center.x - 150, center.y + 150),"Back to main menu", font, padding, Color.WHITE);
-            retry = new DrawableButton(new Vector(center.x + 150, center.y + 150), "Retry", font, padding, Color.WHITE);
+            mainMenu = new DrawableButton(new Vector(center.x, center.y + 200),"Main Menu", font, padding, Color.WHITE);
+            retry = new DrawableButton(new Vector(center.x , center.y + 150), "Retry", font, padding, Color.WHITE);
         }
 	@Override
 	public void handleInput(InputCollector input) {
@@ -40,6 +39,7 @@ public class GameOverState extends State {
                 }
                 else
                 {
+                    //if the screen is clicked, immediately finishes counting
                     ctr = currentScore;
                 }
             }
@@ -48,7 +48,9 @@ public class GameOverState extends State {
 	@Override
 	public void update(double delta) {
             total.setText(Integer.toString(ctr));
+            currentScore = ps.getScore();
             if(ctr < currentScore) ctr++;
+            if(ctr >= highScore) ps.setHighScore(ctr);
 	}
 
 	@Override
