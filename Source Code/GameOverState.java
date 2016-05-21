@@ -7,6 +7,9 @@ import java.awt.*;
 * @author	Kryzl Pascual
 */
 public class GameOverState extends State {
+        PlayerSettings ps = PlayerSettings.getInstance();
+        int currentScore, highScore;
+        int ctr = 0;
 	DrawableButton btnRetry, btnMain;
 	DrawableString label, lblHigh, score;
 	int blink = 0;
@@ -46,6 +49,12 @@ public class GameOverState extends State {
 
 	@Override
 	public void update(double delta) {
+                currentScore = ps.getScore();
+                highScore = ps.getHighScore();
+                
+                if(ctr < currentScore) ctr++;
+                score.setText(Integer.toString(ctr));
+                    
 		int speed = Config.getInstance().getFrameRate();
 		if (blink % speed < (speed / 2) - 1)
 			lblHigh.setColor (Color.BLACK);
@@ -62,6 +71,6 @@ public class GameOverState extends State {
 		rw.draw (score);
 		
 		//if (curr.getScore() > curr.getHighScore())
-			rw.draw (lblHigh);
+		if(ctr == currentScore && ctr >= highScore) rw.draw (lblHigh);
 	}
 }
