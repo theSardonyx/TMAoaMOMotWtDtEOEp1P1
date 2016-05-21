@@ -4,8 +4,8 @@ public class EntityHeart extends Entity {
 	private Entity host;
 	private DrawableOval heart;
 
-	public EntityHeart(Entity host, Vector position, BulletStage stage) {
-		super(position, new Vector(15, 15), stage);
+	public EntityHeart(Entity host, BulletStage stage) {
+		super(host.position, new Vector(15, 15), stage);
 		
 		this.host = host;
 		
