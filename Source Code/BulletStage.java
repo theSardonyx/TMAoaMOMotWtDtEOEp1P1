@@ -208,8 +208,32 @@ public class BulletStage {
 		entitiesToRemove.forEach(e -> e.despawn());
 	}
 	
-	public Entity getRandomAlly() {
-		int randomIndex = (int) (Math.random() * this.allyEntity.size());
-		return allyEntity.get(randomIndex);
+	public Entity getRandomType(int type) {
+		ArrayList<Entity> entitiesToGet = null;
+		switch(type) {
+			case Entity.AMBIENT_TYPE:
+				entitiesToGet = this.allyEntity;
+				break;
+			case Entity.ALLY_TYPE:
+				entitiesToGet = this.allyEntity;
+				break;
+			case Entity.ALLY_BULLET_TYPE:
+				entitiesToGet = this.allyBulletEntity;
+				break;
+			case Entity.ENEMY_TYPE:
+				entitiesToGet = this.enemyEntity;
+				break;
+			case Entity.ENEMY_BULLET_TYPE:
+				entitiesToGet = this.enemyBulletEntity;
+				break;
+			case Entity.DROP_TYPE:
+				entitiesToGet = this.dropEntity;
+				break;
+		}
+		if(entitiesToGet.size() > 0) {
+			int randomIndex = (int) (Math.random() * entitiesToGet.size());
+			return entitiesToGet.get(randomIndex);
+		}
+		return null;
 	}
 }
