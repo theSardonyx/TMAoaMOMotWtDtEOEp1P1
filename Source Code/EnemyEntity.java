@@ -24,8 +24,9 @@ public abstract class EnemyEntity extends Entity {
 	}
 	
 	@Override
-	public void deathAction() {
-		if(Math.random() * 100 <= heartChance) {
+	public void getDamaged(int damage) {
+		super.getDamaged(damage);
+		if(this.health <= 0 && Math.random() * 100 <= heartChance) {
 			Heart heart = new Heart(this.position, this.stage);
 			AccelerateMoveBehavior mb = new AccelerateMoveBehavior(heart, Vector.zero(), new Vector(0, 100), 10);
 			heart.setMoveBehavior(mb);
