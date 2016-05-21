@@ -23,13 +23,14 @@ public class Particle extends Entity {
 	@param color: color of the particle
 	@oaram stage: stage where the particle will be rendered and appear
 	*/
-	public Particle(Vector position, double diameter, Color color, BulletStage stage) {
-		super(position, new Vector(diameter, diameter), stage);
+	public Particle(Vector position, Vector dimension, Color color, BulletStage stage) {
+		super(position, dimension, stage);
 		this.visual = new DrawableOval(position, this.dimension, color);
 		((DrawableShape) this.visual).setFilled(true);
 		
-		this.collideShape = new CollideShape(this.position, new Vector(diameter, diameter)).setCollideEllipse(true);
-		this.move = new AccelerateMoveBehavior(this, new Vector(100, 0), new Vector(0, 0));
+		this.collideShape = new CollideShape(this.position, this.dimension)
+				.setCollideEllipse(true);
+		this.move = null;
 		
 		this.color = color;
 		this.duration = this.timeLeft = 1;
@@ -57,21 +58,6 @@ public class Particle extends Entity {
 	
 	public void setFilled(boolean filled) {
 		((DrawableShape) visual).setFilled(filled);
-	}
-	
-	/*
-	Method to set a new velocity
-	@param velocity: Vector object for setting the velocity
-	*/
-	public void setVelocity(Vector velocity) {
-		((AccelerateMoveBehavior)move).setVelocity(velocity);
-	}
-	/*
-	Method to set a new acceleration
-	@param velocity: Vector object for setting the acceleration
-	*/
-	public void setAcceleration(Vector acceleration) {
-		((AccelerateMoveBehavior)move).setAcceleration(acceleration);
 	}
 
 	/*

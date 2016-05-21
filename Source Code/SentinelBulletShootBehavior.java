@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class SentinelBulletShootBehavior extends UpgradableShootBehavior {
 
 	private Entity[] sentinels;

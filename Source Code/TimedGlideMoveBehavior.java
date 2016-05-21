@@ -22,7 +22,6 @@ public class TimedGlideMoveBehavior extends MoveBehavior{
 			double timeMove = Math.min(delta, timeLeft);
 			
 			Vector totalDisp = this.targetPos.subtract(subject.getPosition());
-			double distance = totalDisp.magnitude();
 			
 			this.velocity = totalDisp.scalarMult(1.0 / this.timeLeft);
 			

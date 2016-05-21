@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.awt.geom.*;
 
 /**
 * This class represents a clickable Drawable

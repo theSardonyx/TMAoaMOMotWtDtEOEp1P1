@@ -6,9 +6,6 @@
 * @author	Ivan Martinez
 */
 import java.awt.*;
-import java.awt.geom.*;
-import java.io.*;
-import java.util.Arrays;
 
 public class MenuState extends State {
 	DrawableButton playButton, optionsButton, exitButton;

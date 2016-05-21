@@ -6,13 +6,9 @@
 * @author	Ivan Martinez
 */
 import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
 
 public class Player extends Entity {
-	private HashMap<Integer, Vector> moveVectors;
 	private PlayerSettings playerSettings;
 	private EntityHeart heart;
 	private boolean withHeart;
@@ -42,7 +38,7 @@ public class Player extends Entity {
 		this.collideShape = new CollideShape(this.position, this.dimension)
 				.setCollideRectangle(true);
 		
-		this.heart = new EntityHeart(this, this.position, this.stage);
+		this.heart = new EntityHeart(this, this.stage);
 		this.spawnEntity(heart);
 		this.withHeart = false;
 	}
