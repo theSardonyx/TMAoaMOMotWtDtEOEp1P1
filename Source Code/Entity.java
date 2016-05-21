@@ -1,6 +1,7 @@
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
-public abstract class Entity extends Drawable {
+public abstract class Entity extends Drawable implements DeathObservable {
 	
 	protected static final int AMBIENT_TYPE = 0;
 	protected static final int ALLY_TYPE = 1;
@@ -23,7 +24,8 @@ public abstract class Entity extends Drawable {
 	
 	protected int type;
 	protected boolean canCollideAmbient, canCollideAlly, canCollideAllyBullet, canCollideEnemy, canCollideEnemyBullet, canCollideDrop;
-
+	protected ArrayList<DeathObserver> observers;
+	
 	public Entity(Vector position, Vector dimension, BulletStage stage) {
 		super(position, dimension);
 		
@@ -45,6 +47,7 @@ public abstract class Entity extends Drawable {
 		this.canCollideEnemy = false;
 		this.canCollideEnemyBullet = false;
 		this.canCollideDrop = false;
+		this.observers =  new ArrayList<DeathObserver>();
 		
 		this.expireTime = Double.POSITIVE_INFINITY;
 	}
@@ -120,8 +123,10 @@ public abstract class Entity extends Drawable {
 	
 	public void getDamaged( int damage ) {
 		this.health -= damage;
-		if(this.health <= 0)
+		if(this.health <= 0) {
 			this.despawn();
+			this.notifyObservers();
+		}
 	}
 	
 	public CollideShape getCollideShape() {
@@ -202,4 +207,19 @@ public abstract class Entity extends Drawable {
 	public void collideEnemy(Entity e) {}
 	public void collideEnemyBullet(Entity e) {}
 	public void collideDrop(Entity e) {}
+
+	@Override
+	public final void registerDeathObserver(DeathObserver observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public final void removeDeathObserver(DeathObserver observer) {
+		observers.remove(observers);
+	}
+
+	@Override
+	public final void notifyObservers() {
+		observers.forEach( o -> o.getDeathNotif(this) );
+	}
 }
