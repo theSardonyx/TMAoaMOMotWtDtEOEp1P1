@@ -44,7 +44,10 @@ public class GameOverState extends State {
 				popSelf (1, null);
 			} else if (btnMain.isCollidingWith (input.getMousePosition()))
 				popSelf (2, null);
+                        else
+                                ctr = currentScore;
 		}
+               if(input.isKeyTyped()) ctr = currentScore;
 	}
 
 	@Override
