@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 public class ExplosionBullet extends Entity {
 
 	public ExplosionBullet(Vector position, BulletStage stage) {
@@ -10,6 +12,9 @@ public class ExplosionBullet extends Entity {
 		
 		this.type = Entity.ALLY_BULLET_TYPE;
 		this.canCollideEnemy = true;
+		
+		this.collideShape = new CollideShape(this.position, this.dimension)
+				.setCollideRectangle(true);
 	}
 
 	@Override
@@ -21,7 +26,7 @@ public class ExplosionBullet extends Entity {
 	@Override
 	public void collideEnemy(Entity e) {
 		//TODO spawn blast particle
-		//TODO damage other Entities of some radius
+		this.spawnEntity(new Explosion(e.position, new Vector(300, 300), this.stage, Color.RED));
 		this.despawn();
 	}
 }
