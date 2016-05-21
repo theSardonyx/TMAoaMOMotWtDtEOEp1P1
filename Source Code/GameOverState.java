@@ -14,6 +14,7 @@ public class GameOverState extends State {
 	DrawableString label, lblHigh, score;
 	int blink = 0;
 	PlayerSettings curr = PlayerSettings.getInstance();
+        Vector center = new Vector(Runner.RES_WIDTH / 2, Runner.RES_HEIGHT / 2);
 	
 	public GameOverState() {
 		Font font = FontLoader.getInstance().getFont ("Press Start 2P", Font.PLAIN, 20);
@@ -45,9 +46,14 @@ public class GameOverState extends State {
 			} else if (btnMain.isCollidingWith (input.getMousePosition()))
 				popSelf (2, null);
                         else
-                                scorectr = currentScore;
+                        {
+                            scorectr = currentScore;
+                        }
 		}
-               if(input.isKeyTyped()) scorectr = currentScore;
+               if(input.isKeyTyped()) 
+               {
+                   scorectr = currentScore;         
+               }
 	}
 
 	@Override
