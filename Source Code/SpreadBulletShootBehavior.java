@@ -56,4 +56,8 @@ public class SpreadBulletShootBehavior extends UpgradableShootBehavior {
 	public void setAngularInterval(double radians) {
 		this.angularInterval = radians;
 	}
+	
+	public void setNumBullets(int numBullets) {
+		this.numBullets = numBullets;
+	}
 }
