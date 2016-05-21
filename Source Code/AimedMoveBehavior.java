@@ -44,4 +44,8 @@ public class AimedMoveBehavior extends MoveBehavior {
 		this.velocity = diff.scalarMult(this.velocityMagnitude);
 		this.acceleration = diff.scalarMult(this.accelerationMagnitude);
 	}
+	
+	public Vector getVelocity() {
+		return this.velocity;
+	}
 }
