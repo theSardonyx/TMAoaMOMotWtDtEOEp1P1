@@ -1,3 +1,4 @@
+import javax.swing.ImageIcon;
 
 public class Runner {
 	public final static int RES_WIDTH = 960;
@@ -21,6 +22,8 @@ public class Runner {
 	*/
 	public static void main(String[] args) {
 		RenderWindow w = new RenderWindow(TITLE, RES_WIDTH, RES_HEIGHT);
+		ImageIcon icon = new ImageIcon ("res/img/icon.png");
+		w.setIconImage (icon.getImage());
 		InputCollector ic = new InputCollector(w);
 		StateManager sm = StateManager.getInstance();
 		
