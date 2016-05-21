@@ -28,7 +28,7 @@ public class HomingMoveBehavior extends MoveBehavior {
 	@Override
 	protected void moveHook(double delta) {
 		Vector displacement = velocity.scalarMult( delta );
-		if( this.target != null)
+		if( this.target != null && this.target.getHealth() > 0)
 		{	
 			Vector newDisplacement = displacement;
 			Vector subjectToTarget = this.target.getPosition().subtract(  this.subject.getPosition() );
@@ -76,6 +76,7 @@ public class HomingMoveBehavior extends MoveBehavior {
 		}
 		
 		Vector newPosition = this.subject.getPosition().add( displacement );
+		((DrawableImage) this.subject.visual).setRotation((Math.PI / 2) + displacement.getAngle());
 		this.subject.setPosition( newPosition );
 	}
 
