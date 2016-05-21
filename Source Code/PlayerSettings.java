@@ -145,6 +145,7 @@ public class PlayerSettings {
 	
 	public void setHighScore(int highScore) {
 		this.highScore = highScore;
+		Config.getInstance().setHighScore (highScore);
 	}
 	
 	public void graze() {
