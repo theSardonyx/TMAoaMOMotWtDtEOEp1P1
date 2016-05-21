@@ -95,6 +95,7 @@ public class Player extends Entity {
 	
 	@Override
 	public void getDamaged(int damage) {
+		this.setHealth(playerSettings.getHearts());
 		playerSettings.heartDecrement(damage);
 		super.getDamaged(damage);
 		if(this.health > 0)
