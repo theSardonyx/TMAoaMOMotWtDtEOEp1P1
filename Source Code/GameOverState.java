@@ -60,7 +60,7 @@ public class GameOverState extends State {
                 //this algorithm adjusts the score text position depending on the number of digits
                 if(scorectr % adjuster == 0)
                 {
-                    score.setPosition(new Vector(score.getPosition().x -= 100, score.getPosition().y));
+                    score.setPosition(new Vector(score.getPosition().x -= (Integer)Runner.RES_WIDTH / 18, score.getPosition().y));
                     adjuster *= 10;
                 }
                 score.setText(Integer.toString(scorectr));
