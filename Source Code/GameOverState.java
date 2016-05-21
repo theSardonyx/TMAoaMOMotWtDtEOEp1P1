@@ -7,9 +7,9 @@ import java.awt.*;
 * @author	Kryzl Pascual
 */
 public class GameOverState extends State {
-        PlayerSettings ps = PlayerSettings.getInstance();
         int currentScore, highScore;
-        int ctr = 0;
+        int scorectr = 0;
+        int adjuster = 10;
 	DrawableButton btnRetry, btnMain;
 	DrawableString label, lblHigh, score;
 	int blink = 0;
@@ -45,18 +45,25 @@ public class GameOverState extends State {
 			} else if (btnMain.isCollidingWith (input.getMousePosition()))
 				popSelf (2, null);
                         else
-                                ctr = currentScore;
+                                scorectr = currentScore;
 		}
-               if(input.isKeyTyped()) ctr = currentScore;
+               if(input.isKeyTyped()) scorectr = currentScore;
 	}
 
 	@Override
 	public void update(double delta) {
-                currentScore = ps.getScore();
-                highScore = ps.getHighScore();
+                currentScore = curr.getScore();
+                highScore = curr.getHighScore();
                 
-                if(ctr < currentScore) ctr++;
-                score.setText(Integer.toString(ctr));
+                if(scorectr < currentScore) scorectr++;
+                
+                //this algorithm adjusts the score text position depending on the number of digits
+                if(scorectr % adjuster == 0)
+                {
+                    score.setPosition(new Vector(score.getPosition().x -= (Integer)Runner.RES_WIDTH / 18, score.getPosition().y));
+                    adjuster *= 10;
+                }
+                score.setText(Integer.toString(scorectr));
                     
 		int speed = Config.getInstance().getFrameRate();
 		if (blink % speed < (speed / 2) - 1)
@@ -74,6 +81,6 @@ public class GameOverState extends State {
 		rw.draw (score);
 		
 		//if (curr.getScore() > curr.getHighScore())
-		if(ctr == currentScore && ctr >= highScore) rw.draw (lblHigh);
+		if(scorectr == currentScore && scorectr >= highScore) rw.draw (lblHigh);
 	}
 }
