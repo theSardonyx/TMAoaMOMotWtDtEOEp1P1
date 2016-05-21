@@ -14,7 +14,6 @@ public class GameOverState extends State {
 	DrawableString label, lblHigh, score;
 	int blink = 0;
 	PlayerSettings curr = PlayerSettings.getInstance();
-        Vector center = new Vector(Runner.RES_WIDTH / 2, Runner.RES_HEIGHT / 2);
 	
 	public GameOverState() {
 		Font font = FontLoader.getInstance().getFont ("Press Start 2P", Font.PLAIN, 20);
@@ -25,7 +24,6 @@ public class GameOverState extends State {
 		
 		lblHigh = new DrawableString (new Vector (Runner.RES_WIDTH / 2, (Runner.RES_HEIGHT / 2) - 150), "New High Score", font, Color.WHITE);
 		
-		System.out.println (curr.getScore());
 		font = font.deriveFont (Font.PLAIN, 40);
 		label = new DrawableString (new Vector (Runner.RES_WIDTH / 2, 100), "Game Over", font, Color.WHITE);
 		
@@ -46,14 +44,9 @@ public class GameOverState extends State {
 			} else if (btnMain.isCollidingWith (input.getMousePosition()))
 				popSelf (2, null);
                         else
-                        {
-                            scorectr = currentScore;
-                        }
+                                scorectr = currentScore;
 		}
-               if(input.isKeyTyped()) 
-               {
-                   scorectr = currentScore;         
-               }
+               if(input.isKeyTyped()) scorectr = currentScore;
 	}
 
 	@Override
@@ -88,5 +81,10 @@ public class GameOverState extends State {
 		
 		//if (curr.getScore() > curr.getHighScore())
 		if(scorectr == currentScore && scorectr >= highScore) rw.draw (lblHigh);
+	}
+
+	@Override
+	public void init() {
+		scorectr = 0;
 	}
 }

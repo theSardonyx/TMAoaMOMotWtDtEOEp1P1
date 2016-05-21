@@ -78,4 +78,6 @@ public class MenuState extends State {
 		rw.draw(epPart);
 	}
 
+	@Override
+	public void init() {}
 }

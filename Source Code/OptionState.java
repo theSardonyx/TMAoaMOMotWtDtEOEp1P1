@@ -340,4 +340,7 @@ public class OptionState extends State {
 		
 		rw.draw (btnRestore);
 	}
+
+	@Override
+	public void init() {}
 }

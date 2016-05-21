@@ -75,4 +75,6 @@ public abstract class State {
 	public boolean isActive() {
 		return isActive;
 	}
+	
+	public abstract void init();
 }

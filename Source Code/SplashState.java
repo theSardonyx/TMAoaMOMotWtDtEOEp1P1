@@ -97,12 +97,11 @@ public class SplashState extends State {
 	@Override
 	public void onActivate(String s) {
 		super.onActivate(s);
-		reset();
+		this.init();
 	}
-	/*
-	Reinitializes all variables
-	*/
-	private void reset() {
+
+	@Override
+	public void init() {
 		fadeIn = true;
 		stay = false;
 		fadeOut = false;

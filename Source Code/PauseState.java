@@ -221,71 +221,9 @@ public class PauseState extends State {
 				} else 
 					rw.draw(new DrawableImage(pos, dim, ss.get(1, 0)));
 			}
-			/**
-			switch (curr) {
-				case PlayerSettings.PIERCE_RUNE :
-					if (index < playerSettings.getRuneNum() && playerSettings.getRune(index) == curr)
-						rw.draw (new DrawableImage (pos, dim, ss.get (1, 2)));
-					else
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 2)));
-					break;
-				case PlayerSettings.HOMING_RUNE :
-					if (index < playerSettings.getRuneNum() && playerSettings.getRune(index) == curr)
-						rw.draw (new DrawableImage (pos, dim, ss.get (1, 3)));
-					else
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 3)));
-					break;
-				case PlayerSettings.SPREAD_RUNE :
-					if (index < playerSettings.getRuneNum() && playerSettings.getRune(index) == curr)
-						rw.draw (new DrawableImage (pos, dim, ss.get (1, 4)));
-					else
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 4)));
-					break;
-				case PlayerSettings.EXPLOSION_RUNE :
-					if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
-						rw.draw (new DrawableImage (pos, dim, ss.get (1, 5)));
-					else
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 5)));
-					break;
-				case PlayerSettings.SNIPE_RUNE :
-					if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
-						rw.draw (new DrawableImage (pos, dim, ss.get (1, 6)));
-					else
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 6)));
-					break;
-				case PlayerSettings.SPLIT_RUNE :
-					if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
-						rw.draw (new DrawableImage (pos, dim, ss.get (1, 7)));
-					else
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 7)));
-					break;
-				case PlayerSettings.BURST_RUNE :
-					if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
-						rw.draw (new DrawableImage (pos, dim, ss.get (1, 8)));
-					else
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 8)));
-					break;
-				case PlayerSettings.SENTINEL_RUNE :
-					if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
-						rw.draw (new DrawableImage (pos, dim, ss.get (1, 9)));
-					else
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 9)));
-					break;
-				case PlayerSettings.ANTI_RUNE :
-					if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
-						rw.draw (new DrawableImage (pos, dim, ss.get (1, 10)));
-					else
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 10)));
-					break;
-				case PlayerSettings.SUMMON_RUNE :
-					if (index < playerSettings.getRuneNum() && playerSettings.getRune (index) == curr)
-						rw.draw (new DrawableImage (pos, dim, ss.get (1, 11)));
-					//else
-						rw.draw (new DrawableImage (pos, dim, ss.get (0, 11)));
-					break;
-				default : rw.draw(new DrawableImage(pos, dim, ss.get(1, 0)));
-			}
-			*/
 		}
 	}
+	
+	@Override
+	public void init() {}
 }

@@ -85,4 +85,10 @@ public class GameState extends State {
 		bulletStage.render(rw);
         sideScreen.render(rw);
 	}
+
+	@Override
+	public void init() {
+		PlayerSettings.getInstance().reset();
+		bulletStage = new BulletStage();
+	}
 }
