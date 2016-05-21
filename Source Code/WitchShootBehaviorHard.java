@@ -4,7 +4,7 @@ public class WitchShootBehaviorHard extends ShootBehavior {
 
 	private Entity target;
 	private Color color;
-	private Vector baseVelocity, baseAcceleration;
+	private double speed, acceleration;
 	
 	public WitchShootBehaviorHard(Entity subject, Entity target, BulletStage stage, Color color) {
 		super(subject, stage);
@@ -13,8 +13,8 @@ public class WitchShootBehaviorHard extends ShootBehavior {
 		
 		this.target = target;
 		this.color = color;
-		this.baseVelocity = new Vector(150, 0);
-		this.baseAcceleration = Vector.zero();
+		this.speed = 150;
+		this.acceleration = 0;
 	}
 	
 	public WitchShootBehaviorHard(Entity subject, Entity target, BulletStage stage, Color color, double expireTime) {
@@ -24,31 +24,28 @@ public class WitchShootBehaviorHard extends ShootBehavior {
 		
 		this.target = target;
 		this.color = color;
-		this.baseVelocity = new Vector(150, 0);
-		this.baseAcceleration = Vector.zero();
+		this.speed = 150;
+		this.acceleration = 0;
 	}
 
 	@Override
 	public Entity[] getBullets() {
 		Entity[] bullets = new Entity[1];
 		
-		double angle = this.target.getPosition().subtract( this.subject.getPosition() ).getAngle();
-		Vector velocity = baseVelocity.setAngle( angle );
-		Vector acceleration = baseAcceleration.setAngle(angle);
-		
 		WitchBigBullet projectile = new WitchBigBullet(this.subject.getPosition(), stage, color);
-		projectile.setMoveBehavior( new AccelerateMoveBehavior(projectile, velocity, acceleration) );
-		projectile.setShootBehavior(new WitchBigBulletShootBehavior(projectile, velocity, this.stage, this.color));
+		AimedMoveBehavior mb = new AimedMoveBehavior(projectile, this.target, this.speed, this.acceleration);
+		projectile.setMoveBehavior(mb);
+		projectile.setShootBehavior(new WitchBigBulletShootBehavior(projectile, mb.getVelocity(), this.stage, this.color));
 		bullets[0] = projectile;
 		
 		return bullets;
 	}
 
-	public void setVelocity(Vector velocity) {
-		this.baseVelocity = velocity;
+	public void setSpeed(double speed) {
+		this.speed = speed;
 	}
 	
-	public void setAcceleration(Vector acceleration) {
-		this.baseAcceleration = acceleration;
+	public void setAcceleration(double acceleration) {
+		this.acceleration = acceleration;
 	}
 }
