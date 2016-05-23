@@ -45,7 +45,7 @@ public class MenuState extends State {
 		
 		if(input.getMouseReleased(InputCollector.MOUSE_BUTTON1)) {
 			if(playButton.isCollidingWith(input.getMousePosition()))
-				sm.push(Runner.GAME_STATE, null);
+				sm.push(Runner.GAME_STATE, "reset");
 			else if(optionsButton.isCollidingWith(input.getMousePosition()))
 				sm.push(Runner.OPTION_STATE, null);
 			else if(exitButton.isCollidingWith(input.getMousePosition()))

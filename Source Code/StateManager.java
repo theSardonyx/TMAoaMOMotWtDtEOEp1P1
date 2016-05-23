@@ -56,7 +56,6 @@ public class StateManager {
 			state_stack.peek().onDeactivate();
 		state_stack.push( state_list.get( id ) );
 		state_stack.peek().onActivate(s);
-		state_stack.peek().init();
 	}
 	/*
 	Pops a State from the top of the stack and removes it

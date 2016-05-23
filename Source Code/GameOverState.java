@@ -38,9 +38,7 @@ public class GameOverState extends State {
 		
 		if (input.getMouseReleased (InputCollector.MOUSE_BUTTON1)) {
 			if (btnRetry.isCollidingWith (input.getMousePosition())) {
-				curr.setHearts (3);
-				curr.setScore (0);
-				popSelf (1, null);
+				popSelf (1, "reset");
 			} else if (btnMain.isCollidingWith (input.getMousePosition()))
 				popSelf (2, null);
                         else

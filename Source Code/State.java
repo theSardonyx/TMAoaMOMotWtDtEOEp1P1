@@ -40,6 +40,8 @@ public abstract class State {
 	@param string: Name of the state to be popped
 	*/
 	public void onActivate (String s) {
+		if(s != null && s.equals("reset"))
+			this.init();
 		isActive = true;
 	}
 	/*
