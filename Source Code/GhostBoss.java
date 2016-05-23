@@ -16,6 +16,9 @@ public class GhostBoss extends BossEntity {
 		this.health = 1;
 
 		this.canCollideAllyBullet = true;
+		
+		this.collideShape = new CollideShape(this.position, this.dimension)
+				.setCollideRectangle(true);
 	}
 	
 	public GhostBoss(Vector position, BulletStage stage, Color color, double expireTime) {

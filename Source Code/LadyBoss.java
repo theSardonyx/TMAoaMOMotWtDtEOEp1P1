@@ -16,6 +16,9 @@ public class LadyBoss extends BossEntity {
 		this.health = 1;
 		
 		this.canCollideAllyBullet = true;
+		
+		this.collideShape = new CollideShape(this.position, this.dimension.mult(.5, 1))
+				.setCollideRectangle(true);
 	}
 	
 	public LadyBoss(Vector position, BulletStage stage, Color color, double expireTime) {
