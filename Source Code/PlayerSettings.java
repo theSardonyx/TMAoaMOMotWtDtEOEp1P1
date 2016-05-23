@@ -23,7 +23,7 @@ public class PlayerSettings {
 	 */
 	private int[] runes;
 	
-	private int hearts, score, highScore, kills, graze;
+	private int hearts, heartsCap, score, highScore, kills, graze;
 	
 	private boolean changedRunes, changedHearts;
 	
@@ -57,6 +57,7 @@ public class PlayerSettings {
 	public void reset() {
 		Arrays.fill(this.runes, -1);
 		this.hearts = 3;
+		this.heartsCap = 8;
 		this.score = 0;
 		this.kills = 0;
 		this.graze = 0;
@@ -190,7 +191,7 @@ public class PlayerSettings {
 	}
 	
 	public void setHearts(int hearts) {
-		this.hearts = hearts;
+		this.hearts = Math.min(hearts, heartsCap);
 		this.changedHearts = true;
 	}
 	
