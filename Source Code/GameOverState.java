@@ -5,11 +5,12 @@ import java.awt.*;
 *
 * @author	Jino Basilio
 * @author	Kryzl Pascual
+* @author	Ivan Martinez
 */
 public class GameOverState extends State {
-        int currentScore, highScore;
-        int scorectr = 0;
-        int adjuster = 10;
+    int currentScore, highScore;
+    int scorectr = 0;
+    int adjuster = 10;
 	DrawableButton btnRetry, btnMain;
 	DrawableString label, lblHigh, score;
 	int blink = 0;
@@ -39,12 +40,15 @@ public class GameOverState extends State {
 		if (input.getMouseReleased (InputCollector.MOUSE_BUTTON1)) {
 			if (btnRetry.isCollidingWith (input.getMousePosition())) {
 				popSelf (1, "reset");
-			} else if (btnMain.isCollidingWith (input.getMousePosition()))
+			} else if (btnMain.isCollidingWith (input.getMousePosition())) {
+				if (currentScore > highScore)
+					curr.setHighScore(currentScore);
 				popSelf (2, null);
-                        else
-                                scorectr = currentScore;
+			} else scorectr = currentScore;
 		}
-               if(input.isKeyTyped()) scorectr = currentScore;
+        
+		if(input.isKeyTyped())
+			scorectr = currentScore;
 	}
 
 	@Override
@@ -77,8 +81,8 @@ public class GameOverState extends State {
 		rw.draw (label);
 		rw.draw (score);
 		
-		//if (curr.getScore() > curr.getHighScore())
-		if(scorectr == currentScore && scorectr >= highScore) rw.draw (lblHigh);
+		if(scorectr == currentScore && scorectr >= highScore)
+			rw.draw (lblHigh);
 	}
 
 	@Override
