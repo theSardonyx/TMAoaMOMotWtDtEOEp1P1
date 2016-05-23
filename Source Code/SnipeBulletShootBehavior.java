@@ -6,7 +6,7 @@ public class SnipeBulletShootBehavior extends UpgradableShootBehavior {
 	public SnipeBulletShootBehavior(Entity subject, BulletStage stage) {
 		super(subject, stage);
 
-		this.fireRate = 1;
+		this.fireRate = 5;
 		
 		this.speed = 3000;
 	}
