@@ -47,8 +47,11 @@ public class GameOverState extends State {
 			} else scorectr = currentScore;
 		}
         
-		if(input.isKeyTyped())
+		if(input.isKeyTyped()) {
 			scorectr = currentScore;
+			score.setText (Integer.toString (scorectr));
+			score.setPosition(new Vector(score.getPosition().x -= ((int) score.getDimension().x / 2), score.getPosition().y));
+		}
 	}
 
 	@Override
