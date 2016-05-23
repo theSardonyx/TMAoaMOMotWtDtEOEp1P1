@@ -7,7 +7,7 @@ public class BurstBullet extends Entity {
 		this.visual = new DrawableImage(position, dimension, ss.get(0, 6));
 		
 		//TODO damage pls
-		this.damage = 0;
+		this.damage = 1;
 		
 		this.type = Entity.ALLY_BULLET_TYPE;
 		this.canCollideEnemy = true;
